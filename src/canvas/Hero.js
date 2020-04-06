@@ -135,7 +135,7 @@ export default function Hero(x, y, keysDown) {
       y = newVals[1]
     }
 
-    weapon.update(ctx, gametime)
+    weapon.update(ctx, gametime, xVel, yVel)
 
     let image
     let imageIndex = 0

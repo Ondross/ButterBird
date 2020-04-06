@@ -7,6 +7,14 @@ const images = [
   return imageObj
 })
 
+const poppedImages = [
+  "/images/bullet/bubble/popped.png"
+].map(src => {
+  const imageObj = new Image()
+  imageObj.src = src
+  return imageObj
+})
+
 export default function Bullet(initialX, initialY, xDir, yDir) {
   let x = initialX
   let y = initialY
@@ -14,9 +22,11 @@ export default function Bullet(initialX, initialY, xDir, yDir) {
   let height = 32
   this.destroyed = false
   let speed = 12
-  if (xDir && yDir) {
-    speed = .71 * speed
-  }
+
+  // Only for 45 deg bullets
+  // if (xDir && yDir) {
+  //   speed = .71 * speed
+  // }
   if (!xDir && !yDir) {
     console.error('floating bullet')
     xDir = 1
@@ -29,15 +39,18 @@ export default function Bullet(initialX, initialY, xDir, yDir) {
   }
 
   const update = (ctx) => {
-    if (this.destroyed) {
+    if (this.popped) {
       return
+    }
+    let image = images[Math.floor(Math.random() * images.length)]
+    if (this.destroyed) {
+      image = poppedImages[0]
+      this.popped = true
     }
     x += xVel
     y += yVel
     ctx.drawImage(
-      images[
-      Math.floor(Math.random() * 10) % images.length
-      ],
+      image,
       x - width / 2,
       y - height / 2,
       width,

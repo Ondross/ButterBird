@@ -47,11 +47,13 @@ export default function World(canvasElement, worldWidth, worldHeight) {
     new Wall("/images/walls/wood/vertical.png", worldWidth - 8, 250, 16, 100),
     new Wall("/images/walls/wood/vertical.png", worldWidth - 8, 350, 16, 100),
     new Wall("/images/walls/wood/horizontalTopLeft.png", 50, 8, 100, 16),
-    new Wall("/images/walls/wood/horizontalTopLeft.png", 300, 400, 100, 16)
+    new Wall("/images/walls/wood/horizontalTopLeft.png", 300, 400, 100, 16),
+    new Wall("/images/walls/wood/horizontalTopLeft.png", 400, 400, 100, 16),
+    new Wall("/images/walls/wood/horizontalTopLeft.png", 500, 400, 100, 16),
   ]
 
   function findCollisions() {
-    // Enemies need to check for hero bullets, other enemies (todo), and the hero
+    // Enemies need to check for other enemies (todo), and the hero
     enemies.forEach(e => {
       if (e.destroyed) {
         return
@@ -65,22 +67,37 @@ export default function World(canvasElement, worldWidth, worldHeight) {
           hero.destroy()
         }
       }
+    })
 
-      hero.weapon && hero.weapon.bullets.forEach(b => {
-        if (b.destroyed) {
+    // Each bullet finds enemies and walls
+    hero.weapon && hero.weapon.bullets.forEach(b => {
+      if (b.destroyed) {
+        return
+      }
+      enemies.forEach(e => {
+        if (e.destroyed) {
           return
         }
-        const xOverlap = Math.abs(b.x() - e.x()) < (e.width() / 2 + b.width() / 2)
-        const yOverlap = Math.abs(b.y() - e.y()) < (e.height() / 2 + b.height() / 2)
+        const xOverlap = Math.abs(b.x() - e.x()) < e.width() / 2 + b.width() / 2
+        const yOverlap =
+          Math.abs(b.y() - e.y()) < e.height() / 2 + b.height() / 2
 
         if (xOverlap && yOverlap) {
           e.destroy()
           b.destroy()
         }
       })
+      walls.forEach(w => {
+        const xOverlap = Math.abs(b.x() - w.x()) < w.width() / 2 + b.width() / 2
+        const yOverlap =
+          Math.abs(b.y() - w.y()) < w.height() / 2 + b.height() / 2
+
+        if (xOverlap && yOverlap) {
+          b.destroy()
+        }
+      })
     })
 
-    // We check for wall collisions as we move, in the character code.
   }
 
   function update(delta) {

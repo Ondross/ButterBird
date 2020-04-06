@@ -20,28 +20,33 @@ export default function Weapon(char, keysDown) {
   const fireRate = 5 // bullets per second
   let lastFire = Infinity * -1
 
-  const update = (ctx, gametime) => {
+  const update = (ctx, gametime, charXVel, charYVel) => {
     let xDir = 0
     let yDir = 0
     keysDown.forEach((key) => {
+      // this weapon only allows 90deg shots (must earn the upgrade)
       switch(key) {
         case('ArrowUp'):
             yDir = -1
+            xDir = 0
             return
         case ('ArrowDown'):
             yDir = 1
+            xDir = 0
             return
         case ('ArrowLeft'):
             xDir = -1
+            yDir = 0
             return
         case ('ArrowRight'):
             xDir = 1
+            yDir = 0
             return
       }
     })
     const reloaded = (gametime - lastFire) > (1 / fireRate)
     if ((xDir || yDir) && reloaded) {
-      bullets.push(new Bullet(char.x(), char.y(), xDir, yDir))
+      bullets.push(new Bullet(char.x(), char.y(), xDir + charXVel * .02, yDir + charYVel * .02))
       const sound = sounds[Math.floor(Math.random() * sounds.length)]
       sound.currentTime = 0
       sound.play()
