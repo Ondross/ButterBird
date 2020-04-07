@@ -1,8 +1,18 @@
 import Util from "./Util/Util"
 import {astar} from "./Util/Astar"
-
-
-
+const sounds = [
+  "/sounds/ow/1.m4a",
+  "/sounds/ow/3.m4a",
+  "/sounds/ow/4.m4a",
+  "/sounds/ow/5.m4a",
+  "/sounds/ow/7.m4a",
+  "/sounds/ow/8.m4a",
+  "/sounds/ow/9.m4a",
+].map(src => {
+  const sound = new Audio()
+  sound.src = src
+  return sound
+})
 
 export default function Enemy(x, y, hero) {  
   const speed = 2 // px / frame
@@ -15,7 +25,6 @@ export default function Enemy(x, y, hero) {
 
   const destroy = () => {
     this.destroyed = true
-    const sounds = document.getElementsByClassName("ow")
     const sound = sounds[Math.floor(Math.random() * sounds.length) ]
     sound.currentTime = 0
     sound.play()

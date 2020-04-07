@@ -31,11 +31,6 @@ function App() {
     <div className="App">
       <header className="App-header">Game</header>
       <canvas ref={canvas} width={GAMEWIDTH} height={GAMEHEIGHT} />
-      <audio src="sounds/ow/1.m4a" className="ow" />
-      <audio src="sounds/ow/2.m4a" className="ow" />
-      <audio src="sounds/ow/3.m4a" className="ow" />
-      <audio src="sounds/ow/4.m4a" className="ow" />
-      <audio src="sounds/ow/5.m4a" className="ow" />
     </div>
   )
 }
