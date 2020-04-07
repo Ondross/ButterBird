@@ -61,7 +61,7 @@ const images = {
 }
 
 export default function Hero(x, y, keysDown) {  
-  const speed = 4 // px / frame
+  const speed = 3 // px / frame
   const weapon = new Weapon(this, keysDown)
   const width = 100
   const height = 100

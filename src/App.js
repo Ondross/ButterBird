@@ -3,8 +3,8 @@ import './App.css';
 import World from './canvas/World'
 
 const GAMEWIDTH = "800"
-const GAMEHEIGHT = "600"
-const FPS = 60
+const GAMEHEIGHT = "800"
+const FPS = 45
 
 function App() {
 
