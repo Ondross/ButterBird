@@ -27,21 +27,23 @@ export default function Weapon(char) {
       // this weapon only allows 90deg shots (must earn the upgrade)
       switch(key) {
         case('ArrowUp'):
-            yDir = -1
-            xDir = 0
-            return
+          yDir = -1
+          xDir = 0
+          return
         case ('ArrowDown'):
-            yDir = 1
-            xDir = 0
-            return
+          yDir = 1
+          xDir = 0
+          return
         case ('ArrowLeft'):
-            xDir = -1
-            yDir = 0
-            return
+          xDir = -1
+          yDir = 0
+          return
         case ('ArrowRight'):
-            xDir = 1
-            yDir = 0
-            return
+          xDir = 1
+          yDir = 0
+          return
+        default:
+          return
       }
     })
     const reloaded = (gametime - lastFire) > (1 / fireRate)

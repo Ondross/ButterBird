@@ -1,23 +1,24 @@
 import React, { useRef, useEffect } from 'react';
 import './App.css';
-import World from './canvas/World'
+import World from './canvas/UnderworldGame'
 
-const GAMEWIDTH = "800"
-const GAMEHEIGHT = "800"
-const FPS = 45
+window.GAMEWIDTH = 24
+window.GAMEHEIGHT = 18
+window.FPS = 45
+// pixels per grid square
+window.GRIDSCALE = 32
 
 function App() {
 
   function gameLoop(world) {
-    world.update(1000 / FPS)
-    //console.log(world.getState())
+    world.update(1000 / window.FPS)
 
-    setTimeout(() => gameLoop(world), 1000 / FPS)
+    setTimeout(() => gameLoop(world), 1000 / window.FPS)
   }
 
   function init() {
     if (canvas) {
-      const world = new World(canvas.current, GAMEWIDTH, GAMEHEIGHT)
+      const world = new World(canvas.current)
       gameLoop(world)
     } else {
       setTimeout(init, 100)
@@ -30,7 +31,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">Game</header>
-      <canvas ref={canvas} width={GAMEWIDTH} height={GAMEHEIGHT} />
+      <canvas ref={canvas} width={window.GAMEWIDTH * window.GRIDSCALE} height={window.GAMEHEIGHT * window.GRIDSCALE} />
     </div>
   )
 }

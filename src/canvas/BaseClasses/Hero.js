@@ -4,10 +4,10 @@ import Util from "../Util/Util"
 
 
 export default function Hero(x, y, images, sounds) {  
-  const speed = 3 // px / frame
+  const speed = .1 // px / frame
   const weapon = new Weapon(this)
-  const width = 100
-  const height = 100
+  const width = 3
+  const height = 3
   this.destroyed = false
   this.facing = 'down'
 
@@ -43,6 +43,8 @@ export default function Hero(x, y, images, sounds) {
           xVel = speed
           this.facing = 'right'
           return
+        default:
+          return
       }
     })
 
@@ -60,6 +62,8 @@ export default function Hero(x, y, images, sounds) {
           return
         case ('ArrowRight'):
           this.facing = 'right'
+          return
+        default:
           return
       }
     })
@@ -95,19 +99,32 @@ export default function Hero(x, y, images, sounds) {
     }
     ctx.drawImage(
       image,
-      x - width / 2,
-      y - height / 2,
-      width,
-      height
+      (x - width / 2) * window.GRIDSCALE,
+      (y - height / 2) * window.GRIDSCALE,
+      width * window.GRIDSCALE,
+      height * window.GRIDSCALE
     )
+  }
+
+  const enterDoor = (door) => {
+    if (door.whichWall === 'E') {
+      x = window.GAMEWIDTH / 2 - door.nextRoom.width / 2
+    } else if (door.whichWall === 'W') {
+      x = window.GAMEWIDTH / 2 + door.nextRoom.width / 2
+    } else if (door.whichWall === 'S') {
+      y = window.GAMEHEIGHT / 2 + door.nextRoom.height / 2
+    } else if (door.whichWall === 'N') {
+      y = window.GAMEHEIGHT / 2 + door.nextRoom.height / 2
+    }
   }
 
   this.x = () => x
   this.y = () => y
+  this.enterDoor = enterDoor
   this.update = update
   this.weapon = weapon
   this.destroy = destroy
-  this.hitboxWidthOffset = 25
+  this.hitboxWidthOffset = width / 4
   this.width = () => width
   this.height = () => height
 }

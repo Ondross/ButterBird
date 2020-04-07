@@ -18,10 +18,10 @@ const poppedImages = [
 export default function Bullet(initialX, initialY, xDir, yDir) {
   let x = initialX
   let y = initialY
-  let width = 32
-  let height = 32
+  let width = 1
+  let height = 1
   this.destroyed = false
-  let speed = 12
+  let speed = .8
 
   // Only for 45 deg bullets
   // if (xDir && yDir) {
@@ -51,10 +51,10 @@ export default function Bullet(initialX, initialY, xDir, yDir) {
     y += yVel
     ctx.drawImage(
       image,
-      x - width / 2,
-      y - height / 2,
-      width,
-      height
+      (x - width / 2) * window.GRIDSCALE,
+      (y - height / 2) * window.GRIDSCALE,
+      width * window.GRIDSCALE,
+      height * window.GRIDSCALE
     )
   }
 
