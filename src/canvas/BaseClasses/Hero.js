@@ -1,68 +1,11 @@
 import Weapon from "./Weapon"
-import Util from "./Util/Util"
+import Util from "../Util/Util"
 
-const sounds = [
-  "/sounds/deadHero/1.m4a",
-].map(src => {
-  const sound = new Audio()
-  sound.src = src
-  return sound
-})
 
-const downImages = [
-  "/images/squid/forward/1.png",
-  "/images/squid/forward/3.png",
-].map(src => {
-  const imageObj = new Image()
-  imageObj.src = src
-  return imageObj
-})
 
-const blinkImages = ["/images/squid/forward/2.png"].map(src => {
-  const imageObj = new Image()
-  imageObj.src = src
-  return imageObj
-})
-
-const upImages = ["/images/squid/up/1.png",
-  "/images/squid/up/2.png"
-].map(
-  src => {
-    const imageObj = new Image()
-    imageObj.src = src
-    return imageObj
-  }
-)
-
-const leftImages = ["/images/squid/left/1.png", "/images/squid/left/2.png"].map(
-  src => {
-    const imageObj = new Image()
-    imageObj.src = src
-    return imageObj
-  }
-)
-const rightImages = [
-  "/images/squid/right/1.png",
-  "/images/squid/right/2.png"
-].map(src => {
-  const imageObj = new Image()
-  imageObj.src = src
-  imageObj.style.background = "blue"
-  imageObj.class = "foo"
-  return imageObj
-})
-
-const images = {
-  down: downImages,
-  up: upImages,
-  left: leftImages,
-  right: rightImages,
-  blink: blinkImages
-}
-
-export default function Hero(x, y, keysDown) {  
+export default function Hero(x, y, images, sounds) {  
   const speed = 3 // px / frame
-  const weapon = new Weapon(this, keysDown)
+  const weapon = new Weapon(this)
   const width = 100
   const height = 100
   this.destroyed = false
@@ -76,8 +19,7 @@ export default function Hero(x, y, keysDown) {
     this.destroyed = true
   }
 
-
-  const update = (ctx, gametime, walls) => {
+  const update = (ctx, keysDown, gametime, walls) => {
     if (this.destroyed) {
       return
     }
@@ -135,7 +77,7 @@ export default function Hero(x, y, keysDown) {
       y = newVals[1]
     }
 
-    weapon.update(ctx, gametime, xVel, yVel)
+    weapon.update(ctx, keysDown, gametime, xVel, yVel)
 
     let image
     let imageIndex = 0

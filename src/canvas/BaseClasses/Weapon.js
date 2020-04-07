@@ -15,12 +15,12 @@ const sounds = [
   return sound
 })
 
-export default function Weapon(char, keysDown) {
+export default function Weapon(char) {
   const bullets = []
   const fireRate = 5 // bullets per second
   let lastFire = Infinity * -1
 
-  const update = (ctx, gametime, charXVel, charYVel) => {
+  const update = (ctx, keysDown, gametime, charXVel, charYVel) => {
     let xDir = 0
     let yDir = 0
     keysDown.forEach((key) => {

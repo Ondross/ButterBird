@@ -1,27 +1,12 @@
-import Util from "./Util/Util"
-import {astar} from "./Util/Astar"
-const sounds = [
-  "/sounds/ow/1.m4a",
-  "/sounds/ow/3.m4a",
-  "/sounds/ow/4.m4a",
-  "/sounds/ow/5.m4a",
-  "/sounds/ow/7.m4a",
-  "/sounds/ow/8.m4a",
-  "/sounds/ow/9.m4a",
-].map(src => {
-  const sound = new Audio()
-  sound.src = src
-  return sound
-})
+import Util from "../Util/Util"
+import {astar} from "../Util/Astar"
 
-export default function Enemy(x, y, hero) {  
+export default function Enemy(x, y, images, sounds) {  
   const speed = 2 // px / frame
   this.destroyed = false
   const width = 32
   const height = 32
-
-  const imageObj = new Image()
-  imageObj.src = "/images/blobBoy.png"
+  this.facing = 'down'
 
   const destroy = () => {
     this.destroyed = true
@@ -30,7 +15,7 @@ export default function Enemy(x, y, hero) {
     sound.play()
   }
 
-  const update = (ctx, gametime, walls, worldGraph) => {
+  const update = (ctx, hero, gametime, walls, worldGraph) => {
     if (this.destroyed) {
       return
     }
@@ -68,8 +53,9 @@ export default function Enemy(x, y, hero) {
     // ctx.fillStyle = "#FF0000";
     // ctx.fillRect(result[0].x * 32, result[0].y * 32, 32, 32);
 
-
-    ctx.drawImage(imageObj, x - width / 2, y - height / 2, width, height)
+    const imageIndex = Math.floor(gametime * 10) % images[this.facing].length
+    const image = images[this.facing][imageIndex]
+    ctx.drawImage(image, x - width / 2, y - height / 2, width, height)
   }
 
   this.update = update
