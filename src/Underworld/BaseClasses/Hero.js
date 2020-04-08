@@ -99,10 +99,10 @@ export default function Hero(x, y, images, sounds) {
     }
     ctx.drawImage(
       image,
-      (x - width / 2) * window.GRIDSCALE,
-      (y - height / 2) * window.GRIDSCALE,
-      width * window.GRIDSCALE,
-      height * window.GRIDSCALE
+      (x - width / 2),
+      (y - height / 2),
+      width,
+      height
     )
   }
 

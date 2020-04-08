@@ -111,10 +111,10 @@ export default function Enemy(x, y, images, sounds) {
     const image = images[this.facing][imageIndex]
     ctx.drawImage(
       image,
-      (x - width / 2) * window.GRIDSCALE,
-      (y - height / 2) * window.GRIDSCALE,
-      width * window.GRIDSCALE,
-      height * window.GRIDSCALE
+      (x - width / 2),
+      (y - height / 2),
+      width,
+      height
     )
   }
 

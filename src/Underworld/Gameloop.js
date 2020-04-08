@@ -7,7 +7,7 @@ const background = new Image()
 background.src = '/images/backgrounds/space.jpg'
 
 export default function World(canvasElement) {
-  const canvas = new Canvas(canvasElement)
+  const canvas = new Canvas(canvasElement, this)
   let gametime = 0 // seconds
 
   const keysDown = [] // ordered array: most recent click wins
@@ -112,19 +112,19 @@ export default function World(canvasElement) {
 
     gametime += delta / 1000
     canvas.clear()
-    canvas.ctx.drawImage(
+    canvas.drawImage(
       background,
       0,
       0,
-      window.GAMEWIDTH * window.GRIDSCALE,
-      window.GAMEHEIGHT * window.GRIDSCALE
+      level.currentRoom.width,
+      level.currentRoom.height
     )
-    hero.update(canvas.ctx, keysDown, gametime, room.walls.concat(Object.values(room.doors)))
+    hero.update(canvas, keysDown, gametime, room.walls.concat(Object.values(room.doors)))
     room.enemies.forEach(enemy =>
-      enemy.update(canvas.ctx, hero, gametime, room.walls.concat(room.enemies), room.graph, room.id)
+      enemy.update(canvas, hero, gametime, room.walls.concat(room.enemies), room.graph, room.id)
     )
-    room.walls.forEach(wall => wall.update(canvas.ctx))
-    Object.values(room.doors).forEach(door => door.update(canvas.ctx))
+    room.walls.forEach(wall => wall.update(canvas))
+    Object.values(room.doors).forEach(door => door.update(canvas))
 
     findCollisions()
   }
@@ -139,4 +139,5 @@ export default function World(canvasElement) {
   restart()
   this.update = update
   this.getState = getState
+  this.getLevel = () => level
 }

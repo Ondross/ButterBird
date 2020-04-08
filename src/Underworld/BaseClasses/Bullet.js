@@ -21,7 +21,7 @@ export default function Bullet(initialX, initialY, xDir, yDir) {
   let width = .7
   let height = .7
   this.destroyed = false
-  let speed = .8
+  let speed = .2
 
   // Only for 45 deg bullets
   // if (xDir && yDir) {
@@ -51,10 +51,10 @@ export default function Bullet(initialX, initialY, xDir, yDir) {
     y += yVel
     ctx.drawImage(
       image,
-      (x - width / 2) * window.GRIDSCALE,
-      (y - height / 2) * window.GRIDSCALE,
-      width * window.GRIDSCALE,
-      height * window.GRIDSCALE
+      (x - width / 2),
+      (y - height / 2),
+      width,
+      height,
     )
   }
 

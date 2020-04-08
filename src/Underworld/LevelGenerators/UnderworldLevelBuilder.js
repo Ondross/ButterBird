@@ -1,7 +1,7 @@
 import RoomBuilder from './RoomBuilder'
 
 function Level(maxWidth, maxHeight, numRooms) {
-  this.currentRoom = RoomBuilder(maxWidth, maxHeight, maxWidth, maxHeight, 2)
+  this.currentRoom = RoomBuilder(maxWidth, maxHeight, maxWidth, maxHeight, 0)
   this.currentRoom.visited = true
   this.rooms = [this.currentRoom]
 
@@ -14,7 +14,7 @@ function Level(maxWidth, maxHeight, numRooms) {
       maxHeight,
       maxWidth,
       Math.floor(maxHeight / (1 + (Math.random() * .5))),
-      Math.floor(Math.random() * 3)
+      Math.floor(Math.random() * 4)
     )
     room.addDoor('E', newRoom)
     newRoom.addDoor('W', room)
