@@ -13,7 +13,8 @@ function Dialogue(props) {
 
     let timeout
     if (props.lines[lineIndex] && props.lines[lineIndex][textIndex + 1]) {
-      const pauseLength = props.lines[lineIndex][textIndex] === '.' ? 200 / speed : 50 / speed
+      const punctuation = ['.', '?', '!'].indexOf(props.lines[lineIndex][textIndex]) > -1
+      const pauseLength = punctuation ? 350 / speed : 30 / speed
       timeout = setTimeout(typeText, pauseLength)
     }
     return () => {clearTimeout(timeout)}
@@ -33,13 +34,14 @@ function Dialogue(props) {
     if (props.lines[lineIndex]) {
       document.addEventListener('keydown', nextLine)
       return () => document.removeEventListener('keydown', nextLine)
+    } else {
+      props.done(true)
     }
-  }, [setSpeed, setLineIndex, setTextIndex, lineIndex, props.lines, textIndex])
+  }, [setSpeed, setLineIndex, setTextIndex, lineIndex, props, textIndex])
 
   const boxStyle = {width: `${props.width}px`}
 
   if (!props.lines[lineIndex]) {
-    props.done(true)
     return (null)
   }
 
