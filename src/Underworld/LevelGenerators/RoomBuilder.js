@@ -19,21 +19,39 @@ function EmptyGrid(width, height) {
 function Room(width, height) {
   this.id = Math.floor(Math.random() * Date.now())
   // this.grid[x][y]
-  const addWall = (row, column, width, height) => {
-    for (let i = Math.floor(row); i < row + width; i++) {
-      for (let j = column; j < column + height; j++) {
-        this.grid[i][j] = 0
+
+  const addWall = (x, y, width, height) => {
+    // walls can only have integer dimensions, because they are used in pathfinding.
+    width = Math.round(width)
+    height = Math.round(height)
+
+    // xs/ys must be half-sized if the height/width is odd. eg, if height is 3, it's centered around n.5
+    if (width % 2) {
+      x = Math.floor(x) + .5
+    } else {
+      x = Math.round(x)
+    }
+    if (height % 2) {
+      y = Math.floor(y) + .5
+    } else {
+      y = Math.round(y)
+    }
+
+    // we work in center coordinates, but we need prefer to work top-left to bottom-right for the grid
+    for (let i = y - height / 2; i < y + (height / 2); i++) {
+      for (let j = x - width / 2; j < x + (width / 2); j++) {
+        this.grid[j][i] = 0
       }
     }
 
-    // objects are stored by the center coordinates
     let src = "/images/walls/wood/vertical.png"
     if (width > height) {
       src = "/images/walls/wood/horizontalTopLeft.png"
     }
+
     this.walls.push(new Wall(src,
-      (row + width / 2),
-      (column + height / 2),
+      x,
+      y,
       width,
       height))
   }
@@ -56,35 +74,35 @@ function Room(width, height) {
 
   const generateWalls = () => {
     const walls = {
+      'W': {
+        height: height / 3,
+        width: 1,
+        xIncrement: 0,
+        xOffset: .5,
+        yIncrement: height / 3,
+        yOffset: height / 6,
+      },
       'E': {
         height: height / 3,
         width: 1,
         xIncrement: 0,
         xOffset: width - 1,
         yIncrement: height / 3,
-        yOffset: 0,
-      },
-      'W': {
-        height: height / 3,
-        width: 1,
-        xIncrement: 0,
-        xOffset: 0,
-        yIncrement: height / 3,
-        yOffset: 0,
+        yOffset: height / 6,
       },
       'N': {
         height: 1,
         width: width / 3,
         xIncrement: width / 3,
-        xOffset: 0,
+        xOffset: width / 6,
         yIncrement: 0,
-        yOffset: 0,
+        yOffset: .5,
       },
       'S': {
         height: 1,
         width: width / 3,
         xIncrement: width / 3,
-        xOffset: 0,
+        xOffset: width / 6,
         yIncrement: 0,
         yOffset: height - 1,
       },
@@ -107,9 +125,21 @@ function Room(width, height) {
       }
     })
 
-    // obstacle
-    addWall(Math.round(width / 2), Math.round(height / 2), Math.round(width / 4), 1)
-    addWall(Math.round(width / 2), Math.round(height / 2), 1, Math.round(height / 5))
+    // randomly add obstacles
+    // todo: make better rules than this.
+    // idea: start with as many obstacles as possible that don't screw up the game, then remove randomly.
+
+    const minPassageSize = 4.5 // hack: hardcoded hero height + edge
+    const wallHeight = Math.round(height / 6)
+    const maxWalls = Math.floor((height - minPassageSize) / wallHeight)
+
+    for (var i = 0; i < maxWalls; i++) {
+      Math.random() > .5 && addWall(Math.round(width / 4 * 1), 1+ wallHeight * (i + .5), 1, wallHeight)
+      Math.random() > .5 && addWall(Math.round(width / 2 * 1), height - 1 - wallHeight * (i + .5), 1, wallHeight)
+      Math.random() > .5 && addWall(Math.round(width / 4 * 3), 1+ wallHeight * (i + .5), 1, wallHeight)
+    }
+
+    Math.random() > .5 && addWall(Math.round(width / 2), Math.round(height / 2), Math.round(width / 5), 1)
 
     this.generateGraph()
   }

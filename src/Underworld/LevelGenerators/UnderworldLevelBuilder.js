@@ -1,7 +1,7 @@
 import RoomBuilder from './RoomBuilder'
 
 function Level(maxWidth, maxHeight, numRooms) {
-  this.currentRoom = RoomBuilder(maxWidth, maxHeight, maxWidth, maxHeight, 0)
+  this.currentRoom = RoomBuilder(maxWidth, maxHeight, maxWidth, maxHeight, 3)
   this.currentRoom.visited = true
   this.rooms = [this.currentRoom]
 
