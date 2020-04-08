@@ -3,6 +3,7 @@ import Wall from '../Objects/Obstacles/Wall'
 import Door from '../Objects/Obstacles/Door'
 import Blob from "../Objects/Enemies/Blob"
 import Squid from "../Objects/Enemies/Squid"
+import Prune from "../Objects/Enemies/Prune"
 import Util from "../Util/Util"
 
 function EmptyGrid(width, height) {
@@ -44,9 +45,9 @@ function Room(width, height) {
       }
     }
 
-    let src = "/images/walls/wood/vertical.png"
+    let src = "/images/obstacles/walls/wood/vertical.png"
     if (width > height) {
-      src = "/images/walls/wood/horizontalTopLeft.png"
+      src = "/images/obstacles/walls/wood/horizontalTopLeft.png"
     }
 
     this.walls.push(new Wall(src,
@@ -62,7 +63,7 @@ function Room(width, height) {
       'W': {x: .3, y: height / 2 },
     }
     const location = locations[whichWall]
-    this.doors[whichWall] = new Door("/images/doors/vertical.png",
+    this.doors[whichWall] = new Door("/images/obstacles/doors/vertical.png",
       location.x,
       location.y,
       1,
@@ -145,7 +146,7 @@ function Room(width, height) {
   }
 
   const addEnemy = () => {
-    const enemyClass = Math.random() < .5 ? Blob : Squid
+    const enemyClass = [Blob, Prune, Squid][Math.floor(Math.random() * 3)]
     const enemy = new enemyClass(
       6 + Math.random() * (width - 12) ,
       2 + Math.random() * (height - 4))

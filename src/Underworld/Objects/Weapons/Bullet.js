@@ -1,6 +1,6 @@
 const images = [
-  "/images/bullet/bubble/1.png",
-  "/images/bullet/bubble/2.png"
+  "/images/weapons/bullet/bubble/1.png",
+  "/images/weapons/bullet/bubble/2.png"
 ].map(src => {
   const imageObj = new Image()
   imageObj.src = src
@@ -8,7 +8,7 @@ const images = [
 })
 
 const poppedImages = [
-  "/images/bullet/bubble/popped.png"
+  "/images/weapons/bullet/bubble/popped.png"
 ].map(src => {
   const imageObj = new Image()
   imageObj.src = src

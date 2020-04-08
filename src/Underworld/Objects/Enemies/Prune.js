@@ -16,19 +16,19 @@ const sounds = [
 
 const imagePaths = {
   down: [
-    "/images/characters/blobBoySmall.png",
+    "/images/characters/prunyToonSmall.png",
   ],
   up: [
-    "/images/characters/blobBoySmall.png",
+    "/images/characters/prunyToonSmall.png",
   ],
   left: [
-    "/images/characters/blobBoySmall.png",
+    "/images/characters/prunyToonSmall.png",
   ],
   right: [
-    "/images/characters/blobBoySmall.png",
+    "/images/characters/prunyToonSmall.png",
   ],
   blink: [
-    "/images/characters/blobBoySmall.png",
+    "/images/characters/prunyToonSmall.png",
   ],
 }
 
@@ -42,10 +42,10 @@ Object.keys(imagePaths).forEach(type => {
   })
 })
 
-export default function Blob(x, y) {
+export default function Prune(x, y) {
   const enemy = new Enemy(x, y, images, sounds)
   enemy.scream = () => {
-    console.log("I AM Blob!")
+    console.log("I AM Prune!")
   }
   return enemy
 }

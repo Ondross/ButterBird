@@ -16,23 +16,23 @@ const sounds = [
 
 const imagePaths = {
   down: [
-    "/images/squid/forward/1.png",
-    "/images/squid/forward/3.png",
+    "/images/characters/squid/down/1.png",
+    "/images/characters/squid/down/2.png",
   ],
   up: [
-    "/images/squid/up/1.png",
-    "/images/squid/up/2.png",
+    "/images/characters/squid/up/1.png",
+    "/images/characters/squid/up/2.png",
   ],
   left: [
-    "/images/squid/left/1.png",
-    "/images/squid/left/2.png",
+    "/images/characters/squid/left/1.png",
+    "/images/characters/squid/left/2.png",
   ],
   right: [
-    "/images/squid/right/1.png",
-    "/images/squid/right/2.png",
+    "/images/characters/squid/right/1.png",
+    "/images/characters/squid/right/2.png",
   ],
   blink: [
-    "/images/squid/forward/2.png",
+    "/images/characters/squid/blink/1.png",
   ],
 }
 
