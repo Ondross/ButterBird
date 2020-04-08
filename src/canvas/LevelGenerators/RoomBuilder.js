@@ -16,7 +16,7 @@ function EmptyGrid(width, height) {
   return grid
 }
 
-function Room(width, height, xOffset, yOffset) {
+function Room(width, height) {
   this.id = Math.floor(Math.random() * Date.now())
   // this.grid[x][y]
   const addWall = (row, column, width, height) => {
@@ -32,8 +32,8 @@ function Room(width, height, xOffset, yOffset) {
       src = "/images/walls/wood/horizontalTopLeft.png"
     }
     this.walls.push(new Wall(src,
-      (xOffset + row + width / 2),
-      (yOffset + column + height / 2),
+      (row + width / 2),
+      (column + height / 2),
       width,
       height))
   }
@@ -45,8 +45,8 @@ function Room(width, height, xOffset, yOffset) {
     }
     const location = locations[whichWall]
     this.doors[whichWall] = new Door("/images/doors/vertical.png",
-      (xOffset + location.x),
-      (yOffset + location.y),
+      location.x,
+      location.y,
       1,
       height/3,
       room,
@@ -117,8 +117,8 @@ function Room(width, height, xOffset, yOffset) {
   const addEnemy = () => {
     const enemyClass = Math.random() < .5 ? Blob : Squid
     const enemy = new enemyClass(
-      xOffset + 6 + Math.random() * (width - 12) ,
-      yOffset + 2 + Math.random() * (height - 4))
+      6 + Math.random() * (width - 12) ,
+      2 + Math.random() * (height - 4))
 
     let nearDoor = false
     Object.values(this.doors).forEach((door) => {
