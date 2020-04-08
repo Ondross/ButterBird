@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import './Underworld.css';
 import Gameloop from './Gameloop'
 
-function Underworld() {
+function Underworld(props) {
 
 
   function gameLoop(world) {
@@ -17,7 +17,7 @@ function Underworld() {
 
   const underWorld = useRef(null)
   function init() {
-    if (underWorld) {
+    if (underWorld && props.active) {
       const world = new Gameloop(underWorld.current)
       gameLoop(world)
     } else {
@@ -25,7 +25,7 @@ function Underworld() {
     }
   }
 
-  useEffect(init, [])
+  useEffect(init, [props.active])
 
   const containerStyle = { width: window.CANVASWIDTH * window.GRIDSCALE, height: window.CANVASHEIGHT * window.GRIDSCALE }
   return (
