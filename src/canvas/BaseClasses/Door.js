@@ -3,9 +3,13 @@
 export default function Door(src, x, y, width, height, nextRoom, whichWall) {
   const image = new Image()
   image.src = src
-  this.locked = false
+  this.locked = true
 
   const update = (ctx) => {
+    // unlocked doors are invisible.
+    if (!this.locked) {
+      return
+    }
     ctx.drawImage(
       image,
       (x - width / 2) * window.GRIDSCALE,

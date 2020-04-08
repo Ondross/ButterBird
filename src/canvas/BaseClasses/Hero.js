@@ -6,8 +6,8 @@ import Util from "../Util/Util"
 export default function Hero(x, y, images, sounds) {  
   const speed = .1 // px / frame
   const weapon = new Weapon(this)
-  const width = 3
-  const height = 3
+  const width = 2.5
+  const height = 2.5
   this.destroyed = false
   this.facing = 'down'
 
@@ -19,7 +19,7 @@ export default function Hero(x, y, images, sounds) {
     this.destroyed = true
   }
 
-  const update = (ctx, keysDown, gametime, walls) => {
+  const update = (ctx, keysDown, gametime, obstacles) => {
     if (this.destroyed) {
       return
     }
@@ -51,16 +51,16 @@ export default function Hero(x, y, images, sounds) {
     // shooting overrides movement for which way you're facing
     keysDown.forEach((key) => {
       switch (key) {
-        case ('ArrowDown'):
+        case ('arrowdown'):
           this.facing = 'down'
           return
-        case ('ArrowUp'):
+        case ('arrowup'):
           this.facing = 'up'
           return
-        case ('ArrowLeft'):
+        case ('arrowleft'):
           this.facing = 'left'
           return
-        case ('ArrowRight'):
+        case ('arrowright'):
           this.facing = 'right'
           return
         default:
@@ -76,7 +76,7 @@ export default function Hero(x, y, images, sounds) {
     if (xVel || yVel) {
       const newX = x + xVel
       const newY = y + yVel
-      const newVals = Util.tryUpdatingPosition(walls, this, newX, newY)
+      const newVals = Util.tryUpdatingPosition(obstacles, this, newX, newY)
       x = newVals[0]
       y = newVals[1]
     }
@@ -108,13 +108,17 @@ export default function Hero(x, y, images, sounds) {
 
   const enterDoor = (door) => {
     if (door.whichWall === 'E') {
-      x = window.GAMEWIDTH / 2 - door.nextRoom.width / 2
+      x = window.GAMEWIDTH / 2 - door.nextRoom.width / 2 + 3
+      y = window.GAMEHEIGHT / 2
     } else if (door.whichWall === 'W') {
-      x = window.GAMEWIDTH / 2 + door.nextRoom.width / 2
+      x = window.GAMEWIDTH / 2 + door.nextRoom.width / 2 - 3
+      y = window.GAMEHEIGHT / 2
     } else if (door.whichWall === 'S') {
-      y = window.GAMEHEIGHT / 2 + door.nextRoom.height / 2
+      y = window.GAMEHEIGHT / 2 + door.nextRoom.height / 2 - 3
+      x = window.GAMEWIDTH / 2
     } else if (door.whichWall === 'N') {
-      y = window.GAMEHEIGHT / 2 + door.nextRoom.height / 2
+      y = window.GAMEHEIGHT / 2 + door.nextRoom.height / 2 + 3
+      x = window.GAMEWIDTH / 2
     }
   }
 

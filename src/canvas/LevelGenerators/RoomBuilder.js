@@ -2,7 +2,8 @@ import { Graph } from "../Util/Astar"
 import Wall from '../BaseClasses/Wall'
 import Door from '../BaseClasses/Door'
 import Blob from "../Enemies/Blob"
-import Flower from "../Enemies/Flower"
+import Squid from "../Enemies/Squid"
+import Util from "../Util/Util"
 
 function EmptyGrid(width, height) {
   const grid = []
@@ -16,6 +17,7 @@ function EmptyGrid(width, height) {
 }
 
 function Room(width, height, xOffset, yOffset) {
+  this.id = Math.floor(Math.random() * Date.now())
   // this.grid[x][y]
   const addWall = (row, column, width, height) => {
     for (let i = Math.floor(row); i < row + width; i++) {
@@ -29,13 +31,17 @@ function Room(width, height, xOffset, yOffset) {
     if (width > height) {
       src = "/images/walls/wood/horizontalTopLeft.png"
     }
-    this.walls.push(new Wall(src, (xOffset + row + width / 2), ( yOffset + column + height / 2), width, height))
+    this.walls.push(new Wall(src,
+      (xOffset + row + width / 2),
+      (yOffset + column + height / 2),
+      width,
+      height))
   }
 
   const addDoor = (whichWall, room) => {
     const locations = {
-      'E': {x: width - 1, y: height / 2},
-      'W': {x: 1, y: height / 2 },
+      'E': {x: width - .5, y: height / 2},
+      'W': {x: .5, y: height / 2 },
     }
     const location = locations[whichWall]
     this.doors[whichWall] = new Door("/images/doors/vertical.png",
@@ -102,12 +108,28 @@ function Room(width, height, xOffset, yOffset) {
     })
 
     // obstacle
-    addWall(width / 2, height / 2, width / 4, 1)
-    addWall(width / 2, height / 2, 1, height / 4)
+    addWall(Math.round(width / 2), Math.round(height / 2), Math.round(width / 4), 1)
+    addWall(Math.round(width / 2), Math.round(height / 2), 1, Math.round(height / 5))
+
+    this.generateGraph()
   }
 
-  // todo: add smarts
-  const addEnemy = (enemy) => {
+  const addEnemy = () => {
+    const enemyClass = Math.random() < .5 ? Blob : Squid
+    const enemy = new enemyClass(
+      xOffset + 6 + Math.random() * (width - 12) ,
+      yOffset + 2 + Math.random() * (height - 4))
+
+    let nearDoor = false
+    Object.values(this.doors).forEach((door) => {
+      if (Util.checkForOverlap(enemy, door)) {
+        nearDoor = true
+      }
+    })
+    if (nearDoor) {
+      return addEnemy()
+    }
+
     this.enemies.push(enemy)
   }
 
@@ -117,7 +139,7 @@ function Room(width, height, xOffset, yOffset) {
   this.width = width
   this.height = height
   this.walls = []
-  this.doors = []
+  this.doors = {}
   this.enemies = []
   this.grid = EmptyGrid(width, height)
   this.generateGraph = () => {
@@ -133,10 +155,7 @@ export default function RoomBuilder(screenWidth, screenHeight, width, height, nu
 
   // enemies
   for (let i = 0; i < numEnemies; i++) {
-    room.addEnemy(new Blob(Math.random() * 10 + 3, 3))
-    // Blob or Flower
+    room.addEnemy()
   }
-
-  room.generateGraph()
   return room
 }

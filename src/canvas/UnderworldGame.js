@@ -1,6 +1,7 @@
 import Canvas from './Canvas'
 import LevelBuilder from './LevelGenerators/UnderworldLevelBuilder'
 import Squid from "./Heroes/Squid"
+import Util from "./Util/Util"
 
 const background = new Image()
 background.src = '/images/backgrounds/space.jpg'
@@ -12,22 +13,17 @@ export default function World(canvasElement) {
   const keysDown = [] // ordered array: most recent click wins
 
   document.addEventListener("keydown", e => {
-    const index = keysDown.indexOf(e.key)
-    if (index === -1) keysDown.push(e.key)
+    const key = e.key.toLowerCase()
+    const index = keysDown.indexOf(key)
+    if (index === -1) keysDown.push(key)
   })
   document.addEventListener("keyup", e => {
-    // this is fine because the array is probably not more than length 5.
-    const index = keysDown.indexOf(e.key)
+    const key = e.key.toLowerCase()
+    // the performance fine because the array is probably not more than length 5.
+    const index = keysDown.indexOf(key)
     if (index !== -1) keysDown.splice(index, 1)
   })
 
-  function overlaps(a, b) {
-    const xOverlap =
-      Math.abs(a.x() - b.x()) < b.width() / 2 + a.width() / 2
-    const yOverlap =
-      Math.abs(a.y() - b.y()) < b.height() / 2 + a.height() / 2
-    return xOverlap && yOverlap
-  }
 
   let alreadyInDoorway = false
   function findCollisions() {
@@ -39,7 +35,7 @@ export default function World(canvasElement) {
         return
       }
       if (!hero.destroyed) {
-        if (overlaps(e, hero)) {
+        if (Util.checkForOverlap(e, hero)) {
           hero.destroy()
         }
       }
@@ -56,14 +52,14 @@ export default function World(canvasElement) {
           return
         }
 
-        if (overlaps(b, e)) {
-          e.destroy()
+        if (Util.checkForOverlap(b, e)) {
+          e.damage(.4)
           b.destroy()
           enemyDestroyed = true
         }
       })
       level.currentRoom.walls.forEach(w => {
-        if (overlaps(b, w)) {
+        if (Util.checkForOverlap(b, w)) {
           b.destroy()
         }
       })
@@ -77,7 +73,10 @@ export default function World(canvasElement) {
     // Doors x Hero
     let enteredDoorway = false
     Object.values(level.currentRoom.doors).forEach(door => {
-      if (overlaps(hero, door)) {
+      if (door.locked) {
+        return
+      }
+      if (Util.checkForOverlap(hero, door)) {
         if (!alreadyInDoorway) {
           level.enterDoor(door.whichWall)
           hero.enterDoor(door)
@@ -93,7 +92,7 @@ export default function World(canvasElement) {
   let hero, level
   function restart() {
     level = levelBuilder.build(24, 18)
-    hero = Squid(10, 15)
+    hero = Squid(3, window.GAMEHEIGHT / 2)
   }
 
   function update(delta) {
@@ -102,7 +101,13 @@ export default function World(canvasElement) {
     }
     const room = level.currentRoom
     if (room.enemies.length === 0) {
-      console.log("NICE!")
+      Object.values(room.doors).forEach(door => {
+        door.locked = false
+      })
+    }
+
+    if (level.rooms.every(room => room.enemies.length === 0 && room.visited)) {
+      this.congratulations = true
     }
 
     gametime += delta / 1000
@@ -114,18 +119,20 @@ export default function World(canvasElement) {
       window.GAMEWIDTH * window.GRIDSCALE,
       window.GAMEHEIGHT * window.GRIDSCALE
     )
-    hero.update(canvas.ctx, keysDown, gametime, room.walls)
-    room.enemies.forEach(enemy => enemy.update(canvas.ctx, hero, gametime, room.walls, room.graph))
+    hero.update(canvas.ctx, keysDown, gametime, room.walls.concat(Object.values(room.doors)))
+    room.enemies.forEach(enemy =>
+      enemy.update(canvas.ctx, hero, gametime, room.walls.concat(room.enemies), room.graph, room.id)
+    )
     room.walls.forEach(wall => wall.update(canvas.ctx))
     Object.values(room.doors).forEach(door => door.update(canvas.ctx))
 
     findCollisions()
-    
   }
 
   function getState() {
     return {
-      heroes: [hero]
+      heroes: [hero],
+      congratulations: this.congratulations
     }
   }
   

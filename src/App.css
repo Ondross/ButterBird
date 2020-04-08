@@ -22,6 +22,17 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+.win {
+  animation: flashing .5s infinite;
+}
+@keyframes flashing {
+  0% {
+    background: green;
+  }
+  50% {
+    background: blue;
+  }
+}
 
 .App-link {
   color: #61dafb;

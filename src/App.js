@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import './App.css';
 import World from './canvas/UnderworldGame'
 
@@ -10,8 +10,11 @@ window.GRIDSCALE = 32
 
 function App() {
 
+  
   function gameLoop(world) {
     world.update(1000 / window.FPS)
+
+    setDone(world.getState().congratulations || false)
 
     setTimeout(() => gameLoop(world), 1000 / window.FPS)
   }
@@ -25,12 +28,13 @@ function App() {
     }
   }
 
-  useEffect(init)
+  useEffect(init, [])
+  const [done, setDone] = useState(false)
   const canvas = useRef(null)
 
   return (
     <div className="App">
-      <header className="App-header">Game</header>
+      <header className={"App-header " + ( done && ' win')} >{ done ? "You win!!" : "Play the game" }</header>
       <canvas ref={canvas} width={window.GAMEWIDTH * window.GRIDSCALE} height={window.GAMEHEIGHT * window.GRIDSCALE} />
     </div>
   )

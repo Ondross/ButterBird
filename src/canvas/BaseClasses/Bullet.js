@@ -18,8 +18,8 @@ const poppedImages = [
 export default function Bullet(initialX, initialY, xDir, yDir) {
   let x = initialX
   let y = initialY
-  let width = 1
-  let height = 1
+  let width = .7
+  let height = .7
   this.destroyed = false
   let speed = .8
 

@@ -1,10 +1,20 @@
+const checkForOverlap= (a, b) => {
+  const xOverlap =
+    Math.abs(a.x() - b.x()) < b.width() / 2 + a.width() / 2
+  const yOverlap =
+    Math.abs(a.y() - b.y()) < b.height() / 2 + a.height() / 2
+  return xOverlap && yOverlap
+}
 
-const checkPositionForWalls = (walls, character, newX, newY) => {
+const checkPositionForObstacles = (obstacles, character, newX, newY) => {
   const directionsOkay = [true, true]
 
   const characterWidth = character.width() - (character.hitboxWidthOffset || 0)
   const characterHeight = character.height() - (character.hitboxHeightOffset || 0)
-  walls.forEach(w => {
+  obstacles.forEach(w => {
+    if (w.locked === false || w.destroyed) {
+      return
+    }
     const currentXOverlap =
       Math.abs(w.x() - character.x()) < (characterWidth / 2 + w.width() / 2)
     const currentYOverlap =
@@ -26,8 +36,8 @@ const checkPositionForWalls = (walls, character, newX, newY) => {
   return directionsOkay
 }
 
-const tryUpdatingPosition = (walls, character, newX, newY) => {
-  const [xOkay, yOkay] = checkPositionForWalls(walls, character, newX, newY)
+const tryUpdatingPosition = (obstacles, character, newX, newY) => {
+  const [xOkay, yOkay] = checkPositionForObstacles(obstacles, character, newX, newY)
 
   if (xOkay && yOkay) {
     return [newX, newY]
@@ -37,9 +47,9 @@ const tryUpdatingPosition = (walls, character, newX, newY) => {
     return [character.x(), newY]
   } else {
     // we've hit a corner. Try just moving one way.
-    if (checkPositionForWalls(walls, character, newX, character.y())[0]) {
+    if (checkPositionForObstacles(obstacles, character, newX, character.y())[0]) {
       return [newX, character.y()]
-    } else if (checkPositionForWalls(walls, character, character.x(), newY)[1]) {
+    } else if (checkPositionForObstacles(obstacles, character, character.x(), newY)[1]) {
       return [character.x(), newY]
     }
   }
@@ -47,5 +57,6 @@ const tryUpdatingPosition = (walls, character, newX, newY) => {
 }
 
 export default {
-  tryUpdatingPosition
+  tryUpdatingPosition,
+  checkForOverlap
 }

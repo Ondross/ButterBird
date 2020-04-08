@@ -26,19 +26,19 @@ export default function Weapon(char) {
     keysDown.forEach((key) => {
       // this weapon only allows 90deg shots (must earn the upgrade)
       switch(key) {
-        case('ArrowUp'):
+        case('arrowup'):
           yDir = -1
           xDir = 0
           return
-        case ('ArrowDown'):
+        case ('arrowdown'):
           yDir = 1
           xDir = 0
           return
-        case ('ArrowLeft'):
+        case ('arrowleft'):
           xDir = -1
           yDir = 0
           return
-        case ('ArrowRight'):
+        case ('arrowright'):
           xDir = 1
           yDir = 0
           return
