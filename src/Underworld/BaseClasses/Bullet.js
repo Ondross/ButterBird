@@ -15,6 +15,20 @@ const poppedImages = [
   return imageObj
 })
 
+const sounds = [
+  "/sounds/pow/1.m4a",
+  "/sounds/pow/3.m4a",
+  "/sounds/pow/4.m4a",
+  "/sounds/pow/5.m4a",
+  "/sounds/pow/7.m4a",
+  "/sounds/pow/8.m4a",
+  "/sounds/pow/9.m4a",
+].map(src => {
+  const sound = new Audio()
+  sound.src = src
+  return sound
+})
+
 export default function Bullet(initialX, initialY, xDir, yDir) {
   let x = initialX
   let y = initialY
@@ -35,8 +49,15 @@ export default function Bullet(initialX, initialY, xDir, yDir) {
   const yVel = speed * yDir
 
   const destroy = () => {
+    const sound = sounds[Math.floor(Math.random() * sounds.length)]
+    sound.currentTime = 0
+    sound.play()
     this.destroyed = true
   }
+
+  const sound = sounds[Math.floor(Math.random() * sounds.length)]
+  sound.currentTime = 0
+  sound.play()
 
   const update = (ctx) => {
     if (this.popped) {
