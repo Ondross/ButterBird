@@ -43,7 +43,7 @@ export default function World(canvasElement) {
 
     // Bullets x enemies and walls
     let enemyDestroyed = false
-    hero.weapon && hero.weapon.bullets.forEach(b => {
+    hero.weapon && hero.weapon.bullets().forEach(b => {
       if (b.destroyed) {
         return
       }

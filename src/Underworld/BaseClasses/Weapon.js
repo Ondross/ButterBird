@@ -59,5 +59,8 @@ export default function Weapon(char) {
   }
 
   this.update = update
-  this.bullets = bullets
+  this.bullets = () => bullets
+  this.clearBullets = () => {
+    bullets.splice(0)
+  }
 }

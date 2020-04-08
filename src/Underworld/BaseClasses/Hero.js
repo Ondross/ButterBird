@@ -120,6 +120,7 @@ export default function Hero(x, y, images, sounds) {
       y = window.GAMEHEIGHT / 2 + door.nextRoom.height / 2 + 3
       x = window.GAMEWIDTH / 2
     }
+    this.weapon.clearBullets()
   }
 
   this.x = () => x
