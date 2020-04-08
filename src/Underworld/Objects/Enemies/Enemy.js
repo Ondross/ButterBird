@@ -20,8 +20,8 @@ export default function Enemy(x, y, images, sounds) {
   }
   const damage = (val) => {
     health -= val
-    width = Math.log(health + 1) * baseWidth
-    height = Math.log(health + 1) * baseHeight
+    width =  baseWidth * (health / 1) * .5 + .5
+    height =  baseHeight * (health / 1) * .5 + .5
     if (health <= 0) {
       destroy()
     }
