@@ -56,10 +56,6 @@ export default function Enemy(x, y, images, sounds) {
         console.error(e)
         console.log(start, end, worldGraph.grid)
         console.log(xGridLocation, yGridLocation)
-        debugger
-      }
-      if (!result.length) {
-      //  console.log(start, end)
       }
     
       if (result.length) {
@@ -105,8 +101,8 @@ export default function Enemy(x, y, images, sounds) {
         }
 
         // // for debugging a-star
-        ctx.fillStyle = "#FF0000";
-        ctx.fillRect(result[0].x * window.GRIDSCALE, result[0].y * window.GRIDSCALE, window.GRIDSCALE, window.GRIDSCALE);
+        // ctx.fillStyle = "#FF0000";
+        // ctx.fillRect(result[0].x * window.GRIDSCALE, result[0].y * window.GRIDSCALE, window.GRIDSCALE, window.GRIDSCALE);
       }
 
     }
