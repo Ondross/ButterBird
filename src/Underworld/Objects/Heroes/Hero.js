@@ -1,10 +1,10 @@
-import Weapon from "./Weapon"
-import Util from "../Util/Util"
+import Weapon from "../Weapons/Weapon"
+import Util from "../../Util/Util"
 
 
 
 export default function Hero(x, y, images, sounds) {  
-  const speed = .1 // px / frame
+  const speed = .3 // px / frame
   const weapon = new Weapon(this)
   const width = 2.5
   const height = 2.5
@@ -107,18 +107,20 @@ export default function Hero(x, y, images, sounds) {
   }
 
   const enterDoor = (door) => {
+    // don't start on the edge of the room, or you'll be inside a door.
+    const doorOffset = 3
     if (door.whichWall === 'E') {
-      x = window.GAMEWIDTH / 2 - door.nextRoom.width / 2 + 3
-      y = window.GAMEHEIGHT / 2
+      x = doorOffset
+      y = door.nextRoom.height / 2
     } else if (door.whichWall === 'W') {
-      x = window.GAMEWIDTH / 2 + door.nextRoom.width / 2 - 3
-      y = window.GAMEHEIGHT / 2
+      x = door.nextRoom.width - doorOffset
+      y = door.nextRoom.height / 2
     } else if (door.whichWall === 'S') {
-      y = window.GAMEHEIGHT / 2 + door.nextRoom.height / 2 - 3
-      x = window.GAMEWIDTH / 2
+      y = door.nextRoom.height - doorOffset
+      x = door.nextRoom.width / 2
     } else if (door.whichWall === 'N') {
-      y = window.GAMEHEIGHT / 2 + door.nextRoom.height / 2 + 3
-      x = window.GAMEWIDTH / 2
+      y = doorOffset
+      x = door.nextRoom.width / 2
     }
     this.weapon.clearBullets()
   }

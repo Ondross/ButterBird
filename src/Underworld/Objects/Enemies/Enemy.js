@@ -1,5 +1,5 @@
-import Util from "../Util/Util"
-import {astar} from "../Util/Astar"
+import Util from "../../Util/Util"
+import {astar} from "../../Util/Astar"
 
 export default function Enemy(x, y, images, sounds) {  
   const speed = .05 // px / frame

@@ -8,8 +8,8 @@ export default function Canvas(canvasElement, game) {
   }
 
   function drawImage(image, x, y, width, height) {
-    const xOffset = (window.GAMEWIDTH - game.getLevel().currentRoom.width) / 2
-    const yOffset = (window.GAMEHEIGHT - game.getLevel().currentRoom.height) / 2
+    const xOffset = (window.CANVASWIDTH - game.getLevel().currentRoom.width) / 2
+    const yOffset = (window.CANVASHEIGHT - game.getLevel().currentRoom.height) / 2
     ctx.drawImage(
       image,
       (x + xOffset) * window.GRIDSCALE,

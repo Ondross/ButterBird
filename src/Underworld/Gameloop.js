@@ -1,6 +1,6 @@
 import Canvas from './Canvas'
 import LevelBuilder from './LevelGenerators/UnderworldLevelBuilder'
-import Squid from "./Heroes/Squid"
+import Squid from "./Objects/Heroes/Squid"
 import Util from "./Util/Util"
 
 const background = new Image()
@@ -91,8 +91,8 @@ export default function World(canvasElement) {
   const levelBuilder = new LevelBuilder()
   let hero, level
   function restart() {
-    level = levelBuilder.build(24, 18)
-    hero = Squid(3, window.GAMEHEIGHT / 2)
+    level = levelBuilder.build(window.CANVASWIDTH, window.CANVASHEIGHT)
+    hero = Squid(3, window.CANVASHEIGHT / 2)
   }
 
   function update(delta) {

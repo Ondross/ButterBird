@@ -2,12 +2,6 @@ import React, { useRef, useEffect } from 'react';
 import './Underworld.css';
 import Gameloop from './Gameloop'
 
-window.GAMEWIDTH = 24
-window.GAMEHEIGHT = 18
-window.FPS = 45
-// pixels per grid square
-window.GRIDSCALE = 32
-
 function Underworld() {
 
 
@@ -33,10 +27,10 @@ function Underworld() {
 
   useEffect(init, [])
 
-  const containerStyle = { width: window.GAMEWIDTH * window.GRIDSCALE, height: window.GAMEHEIGHT * window.GRIDSCALE }
+  const containerStyle = { width: window.CANVASWIDTH * window.GRIDSCALE, height: window.CANVASHEIGHT * window.GRIDSCALE }
   return (
     <div className="underworld-container" style={containerStyle}>
-      <canvas ref={underWorld} width={window.GAMEWIDTH * window.GRIDSCALE} height={window.GAMEHEIGHT * window.GRIDSCALE} />
+      <canvas ref={underWorld} width={window.CANVASWIDTH * window.GRIDSCALE} height={window.CANVASHEIGHT * window.GRIDSCALE} />
     </div>
   )
 }

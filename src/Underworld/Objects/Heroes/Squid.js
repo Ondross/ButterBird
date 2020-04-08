@@ -1,13 +1,7 @@
-import Enemy from '../BaseClasses/Enemy'
+import Hero from './Hero'
 
 const sounds = [
-  "/sounds/ow/1.m4a",
-  "/sounds/ow/3.m4a",
-  "/sounds/ow/4.m4a",
-  "/sounds/ow/5.m4a",
-  "/sounds/ow/7.m4a",
-  "/sounds/ow/8.m4a",
-  "/sounds/ow/9.m4a",
+  "/sounds/deadHero/1.m4a",
 ].map(src => {
   const sound = new Audio()
   sound.src = src
@@ -47,5 +41,5 @@ Object.keys(imagePaths).forEach(type => {
 })
 
 export default function Squid (x, y) {
-  return new Enemy(x, y, images, sounds)
+  return new Hero(x, y, images, sounds)
 }

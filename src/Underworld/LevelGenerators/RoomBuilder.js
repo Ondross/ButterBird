@@ -1,8 +1,8 @@
 import { Graph } from "../Util/Astar"
-import Wall from '../BaseClasses/Wall'
-import Door from '../BaseClasses/Door'
-import Blob from "../Enemies/Blob"
-import Squid from "../Enemies/Squid"
+import Wall from '../Objects/Obstacles/Wall'
+import Door from '../Objects/Obstacles/Door'
+import Blob from "../Objects/Enemies/Blob"
+import Squid from "../Objects/Enemies/Squid"
 import Util from "../Util/Util"
 
 function EmptyGrid(width, height) {
@@ -58,8 +58,8 @@ function Room(width, height) {
 
   const addDoor = (whichWall, room) => {
     const locations = {
-      'E': {x: width - .5, y: height / 2},
-      'W': {x: .5, y: height / 2 },
+      'E': {x: width - .2, y: height / 2},
+      'W': {x: .3, y: height / 2 },
     }
     const location = locations[whichWall]
     this.doors[whichWall] = new Door("/images/doors/vertical.png",

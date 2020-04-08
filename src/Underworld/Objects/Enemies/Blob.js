@@ -1,4 +1,4 @@
-import Enemy from '../BaseClasses/Enemy'
+import Enemy from './Enemy'
 
 const sounds = [
   "/sounds/ow/1.m4a",
