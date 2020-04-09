@@ -19,6 +19,7 @@ export default function Hero(x, y, images, sounds) {
     this.destroyed = true
   }
 
+  let blinkStart = 0
   const drawSelf = (gametime, canvas, xv, yv) => {
     let imageIndex
 
@@ -31,7 +32,12 @@ export default function Hero(x, y, images, sounds) {
 
       // blink every now and then
     let image
-    if (this.facing === 'down' && Math.random() > .95) {
+    let blinking = gametime - blinkStart < .1
+    if (Math.random() > .97 && !blinking) {
+      blinkStart = gametime
+      blinking = true
+    }
+    if (this.facing === 'down' && blinking) {
       image = images['blink'][
         Math.floor(gametime * 10) % images['blink'].length
       ]
