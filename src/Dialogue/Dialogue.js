@@ -1,9 +1,9 @@
 import React, {useState, useEffect } from 'react';
 import './Dialogue.css';
-import Level1Lines from './Scripts/Level1'
+import Level1Lines from './Scripts/Underworld/Level1'
 
 const Script = {
-  1: Level1Lines
+  Underworld1: Level1Lines
 }
 
 let spacebarDown
@@ -15,7 +15,9 @@ function Dialogue(props) {
   const [nextLineReady, setNextLineReady] = useState(false)
 
   useEffect(() => {
-    setLines(Script[props.level][props.scene])
+    if (props.level && props.scene) {
+      setLines(Script[props.level][props.scene])
+    }
   }, [props.level, props.scene])
 
   useEffect(() => {
