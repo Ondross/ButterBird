@@ -11,22 +11,16 @@ function Dialogue(props) {
   const [textIndex, setTextIndex] = useState(0)
   const [lineIndex, setLineIndex] = useState(0)
   const [speed, setSpeed] = useState(1)
-  const [lines, setLines] = useState([])
+  const [lines, setLines] = useState(null)
   const [nextLineReady, setNextLineReady] = useState(false)
 
   useEffect(() => {
-    if (props.level && props.scene) {
-      setLines(Script[props.level][props.scene])
-    }
-  }, [props.level, props.scene])
-
-  useEffect(() => {
     const typeText = () => {
-      setTextIndex(textIndex + 1)
+      setTextIndex(val => val + 1)
     }
 
     let timeout
-    if (lines[lineIndex] && lines[lineIndex][textIndex + 1]) {
+    if (lines && lines[lineIndex] && lines[lineIndex][textIndex + 1]) {
       const punctuation = ['.', '?', '!'].indexOf(lines[lineIndex][textIndex]) > -1
       const pauseLength = punctuation ? 350 / speed : 30 / speed
       timeout = setTimeout(typeText, pauseLength)
@@ -38,13 +32,16 @@ function Dialogue(props) {
 
 
   useEffect(() => {
+    const newLines = (props.level && props.scene) && Script[props.level][props.scene]
+    setLines(newLines)
+
     const nextLine = (event) => {
       if (event.key === ' ' && !spacebarDown) {
         if (!nextLineReady) {
           spacebarDown = true
           setSpeed(5)
         } else {
-          setLineIndex(lineIndex + 1)
+          setLineIndex(val => val + 1)
           setNextLineReady(false)
           setTextIndex(0)
           setSpeed(1)
@@ -57,22 +54,23 @@ function Dialogue(props) {
       }
     }
 
-    if (lines[lineIndex]) {
-      props.done(false)
+    if (newLines && newLines[lineIndex]) {
       document.addEventListener('keydown', nextLine)
       document.addEventListener('keyup', releaseSpacebar)
       return () => {
         document.removeEventListener('keydown', nextLine)
         document.removeEventListener('keyup', releaseSpacebar)
       }
-    } else {
-      props.done(true)
+    } else if (props.scene) {
+      props.done()
+      setLineIndex(0)
+      setTextIndex(0)
     }
   }, [setSpeed, setLineIndex, setTextIndex, lineIndex, props, lines, textIndex, nextLineReady])
 
   const boxStyle = {width: `${props.width}px`}
 
-  if (!lines[lineIndex]) {
+  if (!lines || !lines[lineIndex]) {
     return (null)
   }
 

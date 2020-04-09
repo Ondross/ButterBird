@@ -15,7 +15,6 @@ window.GRIDSCALE = 32
 
 const level = new Level1()
 function App() {
-  const [underWorldActive, setUnderWorldActive] = useState(false)
 
   const setUnderworldState = (state) => {
     const command = level.update(state)
@@ -26,13 +25,16 @@ function App() {
     }
   }
   const [gameState, setGameState] = useState({})
-
   return (
     <div className="App">
-      <Underworld active={underWorldActive} paused={!underWorldActive} setGameState={setUnderworldState} />
+      <Underworld paused={gameState.scene} setGameState={setUnderworldState} />
       <Dialogue
         width={window.DEFAULTGAMEWIDTH * window.GRIDSCALE - 120}
-        done={setUnderWorldActive}
+        done={() => {
+          setGameState((state) => {
+            return { ...state, scene: null }
+          })
+        }}
         level="Underworld1"
         scene={gameState.scene}
       />

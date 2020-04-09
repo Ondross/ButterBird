@@ -24,6 +24,7 @@ export default function Enemy(x, y, images, sounds) {
     height =  baseHeight * (health / 1) * .5 + .5
     if (health <= 0) {
       destroy()
+      return true
     }
   }
 

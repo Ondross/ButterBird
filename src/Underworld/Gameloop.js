@@ -9,6 +9,7 @@ background.src = '/images/backgrounds/space.jpg'
 export default function World() {
   let canvas
   let gametime = 0 // seconds
+  let gameEvents = {}
 
   const keysDown = [] // ordered array: most recent click wins
 
@@ -53,9 +54,8 @@ export default function World() {
         }
 
         if (Util.checkForOverlap(b, e)) {
-          e.damage(.4)
+          enemyDestroyed = e.damage(.4)
           b.destroy()
-          enemyDestroyed = true
         }
       })
       level.currentRoom.walls.concat(Object.values(level.currentRoom.doors)).forEach(w => {
@@ -68,6 +68,7 @@ export default function World() {
     // stop tracking dead enemies
     if (enemyDestroyed) {
       room.enemies = room.enemies.filter(e => !e.destroyed)
+      gameEvents.enemyDestroyed = true
     }
 
     // Doors x Hero
@@ -101,6 +102,7 @@ export default function World() {
       return
     }
     if (hero.destroyed) {
+      // use gameEvents instead
       restart()
     }
     const room = level.currentRoom
@@ -134,10 +136,13 @@ export default function World() {
   }
 
   function getState() {
-    return {
+    const state = {
+      events: Object.assign({}, gameEvents),
       heroes: [hero],
-      congratulations: this.congratulations
+      level: level
     }
+    gameEvents = {}
+    return state
   }
   
   restart()

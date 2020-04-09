@@ -11,5 +11,8 @@ export default {
   ],
   'FoundFood': [
     "Yum. I feel a bit better.",
+  ],
+  'ExplainEnemies': [
+    "Nice! What was that thing doing here?",
   ]
 }
