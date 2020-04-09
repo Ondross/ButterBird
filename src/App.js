@@ -3,16 +3,7 @@ import './App.css';
 import Underworld from './Underworld/Underworld'
 import Dialogue from './Dialogue/Dialogue'
 
-const lines = [
-  "My god...",
-  "I woke up again?",
-  "I can barely see a thing down here.",
-  "This place smells like trash... So do I... And my only friend seems to have gone missing.",
-  "It's been silent for... days? Who knows?",
-  "*sigh* ... I should collect some food.",
-  "Ugh... Come on... get motivated.",
-  "Remember how to move? WASD.",
-]
+
 
 window.CANVASWIDTH = 50
 window.CANVASHEIGHT = 18
@@ -29,7 +20,8 @@ function App() {
       <Dialogue
         width={window.DEFAULTGAMEWIDTH * window.GRIDSCALE - 120}
         done={setUnderWorldActive}
-        lines={lines}
+        level={1}
+        scene="Intro"
       />
     </div>
   )
