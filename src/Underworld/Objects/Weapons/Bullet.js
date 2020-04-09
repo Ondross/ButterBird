@@ -59,18 +59,22 @@ export default function Bullet(initialX, initialY, xDir, yDir) {
   sound.currentTime = 0
   sound.play()
 
-  const update = (ctx) => {
+
+  const update = (paused, canvas) => {
     if (this.popped) {
       return
     }
+    if (!paused) {
+      x += xVel
+      y += yVel
+    }
+
     let image = images[Math.floor(Math.random() * images.length)]
     if (this.destroyed) {
       image = poppedImages[0]
       this.popped = true
     }
-    x += xVel
-    y += yVel
-    ctx.drawImage(
+    canvas.drawImage(
       image,
       (x - width / 2),
       (y - height / 2),
