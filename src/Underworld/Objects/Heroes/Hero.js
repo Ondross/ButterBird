@@ -19,13 +19,18 @@ export default function Hero(x, y, images, sounds) {
     this.destroyed = true
   }
 
-  const drawSelf = (gametime, canvas) => {
+  const drawSelf = (gametime, canvas, xv, yv) => {
+    let imageIndex
 
-    let image
-
-    const imageIndex = Math.floor(gametime * 10) % images[this.facing].length
+    // wiggle while moving.
+    if (xv || yv) {
+      imageIndex = Math.floor(gametime * 10) % images[this.facing].length
+    } else {
+      imageIndex = 0
+    }
 
       // blink every now and then
+    let image
     if (this.facing === 'down' && Math.random() > .95) {
       image = images['blink'][
         Math.floor(gametime * 10) % images['blink'].length
@@ -48,7 +53,7 @@ export default function Hero(x, y, images, sounds) {
     }
     if (paused) {
       weapon.update(paused, canvas, keysDown, gametime, 0, 0)
-      drawSelf(gametime, canvas)
+      drawSelf(gametime, canvas, 0, 0)
       return
     }
     let xVel = 0
@@ -110,7 +115,7 @@ export default function Hero(x, y, images, sounds) {
     }
 
     weapon.update(paused, canvas, keysDown, gametime, xVel, yVel)
-    drawSelf(gametime, canvas)
+    drawSelf(gametime, canvas, xVel, yVel)
   }
 
   const enterDoor = (door) => {
