@@ -7,6 +7,7 @@ const Script = {
 }
 
 let spacebarDown
+let lineReadyTimeout
 function Dialogue(props) {
   const [textIndex, setTextIndex] = useState(0)
   const [lineIndex, setLineIndex] = useState(0)
@@ -19,13 +20,18 @@ function Dialogue(props) {
       setTextIndex(val => val + 1)
     }
 
+    if (textIndex < 1) {
+      clearTimeout(lineReadyTimeout)
+    }
+
     let timeout
     if (lines && lines[lineIndex] && lines[lineIndex][textIndex + 1]) {
       const punctuation = ['.', '?', '!'].indexOf(lines[lineIndex][textIndex]) > -1
       const pauseLength = punctuation ? 350 / speed : 30 / speed
       timeout = setTimeout(typeText, pauseLength)
     } else {
-      setTimeout(() => setNextLineReady(true), 500)
+      clearTimeout(lineReadyTimeout)
+      lineReadyTimeout = setTimeout(() => setNextLineReady(true), 500)
     }
     return () => {clearTimeout(timeout)}
   })
@@ -39,7 +45,7 @@ function Dialogue(props) {
       if (event.key === ' ' && !spacebarDown) {
         if (!nextLineReady) {
           spacebarDown = true
-          setSpeed(5)
+          setSpeed(3)
         } else {
           setLineIndex(val => val + 1)
           setNextLineReady(false)
