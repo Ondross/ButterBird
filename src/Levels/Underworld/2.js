@@ -1,5 +1,8 @@
 import Overworld1 from '../Overworld/1.js'
-import script from '../Scripts/Underworld/1.js'
+import script from '../Scripts/Underworld/2.js'
+
+const background = new Image()
+background.src = '/images/backgrounds/junk.jpg'
 
 export default function Underworld1() {
   let introPlayed = false
@@ -22,7 +25,8 @@ export default function Underworld1() {
 
   this.levelParameters = {
     numRooms: 5,
-    averageEnemiesPerRoom: 5
+    averageEnemiesPerRoom: 5,
+    background: background,
   }
 
   this.script = script

@@ -3,9 +3,6 @@ import LevelBuilder from './LevelGenerators/LevelBuilder'
 import Squid from "./Objects/Heroes/Squid"
 import Util from "./Util/Util"
 
-const background = new Image()
-background.src = '/images/backgrounds/space.jpg'
-
 export default function World() {
   let gametime = 0 // seconds
   let gameEvents = {}
@@ -107,7 +104,7 @@ export default function World() {
     gametime += delta / 1000
     canvas.clear()
     canvas.drawImage(
-      background,
+      level.currentRoom.backgroundImage,
       0,
       0,
       level.currentRoom.width,
@@ -144,6 +141,9 @@ export default function World() {
   this.newLevel = newLevel
   this.setCanvas = (canvasElement) => {
     canvas = new Canvas(canvasElement, this)
+  }
+  this.setScale = (scale) => {
+    canvas && canvas.setScale(scale)
   }
   this.pause = (pause) => {
     paused = pause

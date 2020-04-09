@@ -17,7 +17,7 @@ function EmptyGrid(width, height) {
   return grid
 }
 
-function Room(width, height) {
+function Room(width, height, background) {
   this.id = Math.floor(Math.random() * Date.now())
   // this.grid[x][y]
 
@@ -172,17 +172,16 @@ function Room(width, height) {
   this.walls = []
   this.doors = {}
   this.enemies = []
+  this.backgroundImage = background
   this.grid = EmptyGrid(width, height)
   this.generateGraph = () => {
     this.graph = new Graph(this.grid, { diagonal: true })
   }
 }
 
-export default function RoomBuilder(screenWidth, screenHeight, width, height, numEnemies) {
-  const xZero = screenWidth / 2 - width / 2
-  const yZero = screenHeight / 2 - height / 2
-
-  const room = new Room(width, height, xZero, yZero)
+export default function RoomBuilder(width, height, numEnemies, background) {
+  
+  const room = new Room(width, height, background)
 
   // enemies
   for (let i = 0; i < numEnemies; i++) {

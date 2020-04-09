@@ -1,4 +1,5 @@
 import React from 'react';
+import './UnderworldComplete.css';
 
 
 function UnderworldComplete(props) {
@@ -6,8 +7,11 @@ function UnderworldComplete(props) {
     return (null)
   }
   return (
-    <div className="underworld-complete" onClick={props.finish}>
-      Done!
+    <div className="underworld-complete-container">
+      <div className="underworld-complete" onClick={props.finish}>
+        Congratulations!
+        <div className="done-button">next level</div>
+      </div>   
     </div>
   )
 }

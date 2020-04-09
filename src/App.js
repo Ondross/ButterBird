@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './App.css';
 import Overworld from './Overworld/Overworld'
 import Underworld from './Underworld/Underworld'
@@ -8,14 +8,9 @@ import Underworld1 from './Levels/Underworld/1'
 
 window.CANVASWIDTH = 50
 window.CANVASHEIGHT = 18
-window.DEFAULTGAMEWIDTH = 32
 window.FPS = 45
-// pixels per grid square
-// TODO: base it on the window size. Add a resize listener.
-window.GRIDSCALE = 32
 
 function App() {
-
   const processUnderworldState = (state) => {
     const command = gameState.level.update(state)
     if (command.playScene) {
@@ -29,13 +24,10 @@ function App() {
       })
     }
   }
-  const setLevel = (level) => {
-    setGameState((state) => {
-      return { ...state, level: level }
-    })
-  }
   const leaveUnderworld = () => {
-    setLevel(gameState.level.nextLevel())
+    setGameState((state) => {
+      return { ...state, level: gameState.level.nextLevel(), showUnderworldComplete: false }
+    })
   }
   const setScene = (scene) => {
     setGameState((state) => {
@@ -51,7 +43,6 @@ function App() {
       <UnderworldComplete finish={leaveUnderworld} show={gameState.showUnderworldComplete} />
       <Overworld />
       <Dialogue
-        width={window.DEFAULTGAMEWIDTH * window.GRIDSCALE - 120}
         done={() => setScene(null)}
         level={gameState.level}
         scene={gameState.scene}

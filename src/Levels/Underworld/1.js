@@ -2,6 +2,10 @@ import Overworld1 from '../Overworld/1.js'
 import Underworld2 from '../Underworld/2.js'
 import script from '../Scripts/Underworld/1.js'
 
+
+const background = new Image()
+background.src = '/images/backgrounds/space.jpg'
+
 export default function Underworld1() {
   let introPlayed = false
   let enemiesExplained = false
@@ -35,6 +39,7 @@ export default function Underworld1() {
     numRooms: 2,
     averageEnemiesPerRoom: 2,
     minimumEnemiesPerRoom: 1,
+    background: background,
   }
 
   this.script = script

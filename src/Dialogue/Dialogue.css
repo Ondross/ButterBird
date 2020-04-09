@@ -6,10 +6,11 @@
 }
 
 .dialogue {
+  width: 66%;
   margin: auto;
   position: relative;
   margin-bottom: 40px;
-  background: #09101a;
+  background: rgba(9, 16, 25, .7);
   box-shadow: 0px 0px 3px 3px rgba(240, 240, 240,.7),
         1px 1px 8px 8px rgba(255,0,0,.3);
   border-radius: 4px;

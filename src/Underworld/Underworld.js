@@ -2,10 +2,11 @@ import React, { useRef, useEffect, useCallback } from 'react';
 import './Underworld.css';
 import Gameloop from './Gameloop'
 
+
 let gameloopTimeout
 const gameloop = new Gameloop()
 function Underworld(props) {
-  const canvas = useRef(null)
+  const canvasElement = useRef(null)
   const updateGame = useCallback(() => {
     gameloop.update(1000 / window.FPS)
 
@@ -23,22 +24,19 @@ function Underworld(props) {
   }, [props.level])
   useEffect(pause, [props.paused])
   useEffect(() => {
-    if (canvas.current) {
-      gameloop.setCanvas(canvas.current)
+    if (canvasElement.current) {
+      gameloop.setCanvas(canvasElement.current)
       updateGame()
     }
     return () => {clearTimeout(gameloopTimeout)}
-  }, [canvas, updateGame])
+  }, [canvasElement, updateGame])
 
   if (props.level.type !== 'underworld') {
     return (null)
   }
 
-  const containerStyle = { width: window.CANVASWIDTH * window.GRIDSCALE, height: window.CANVASHEIGHT * window.GRIDSCALE }
   return (
-    <div className="underworld-container" style={containerStyle}>
-      <canvas ref={canvas} width={window.CANVASWIDTH * window.GRIDSCALE} height={window.CANVASHEIGHT * window.GRIDSCALE} />
-    </div>
+      <canvas ref={canvasElement} />
   )
 }
 

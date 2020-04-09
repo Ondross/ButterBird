@@ -1,0 +1,41 @@
+.underworld-complete-container {
+  position: absolute;
+  display: flex;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+
+.underworld-complete {
+  position: relative;
+  background: #09101a;
+  box-shadow: 0px 0px 3px 3px rgba(240, 240, 240,.7),
+        1px 1px 8px 8px rgba(255,0,0,.3);
+  border-radius: 4px;
+  color: yellow;
+  height: 100%;
+  text-align:left;
+  padding: 20px;
+  font-size: 42px;
+  font-weight: bold;
+  font-style: italic;
+  font-family: 'Karla', sans-serif;
+  height: auto;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.done-button {
+  margin-top: 20px;
+  cursor: pointer;
+  background: grey;
+  border-radius: 4px;
+  color: black;
+  text-align: center;
+}
+
+.done-button:hover {
+  opacity: .8;
+}

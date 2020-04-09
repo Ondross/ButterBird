@@ -1,7 +1,7 @@
 import RoomBuilder from './RoomBuilder'
 
 function Level(parameters, maxWidth, maxHeight) {
-  this.currentRoom = RoomBuilder(maxWidth, maxHeight, window.DEFAULTGAMEWIDTH, maxHeight, 0)
+  this.currentRoom = RoomBuilder(maxWidth, maxHeight, 0, parameters.background)
   this.currentRoom.visited = true
   this.rooms = [this.currentRoom]
 
@@ -9,14 +9,13 @@ function Level(parameters, maxWidth, maxHeight) {
   for (let i = 0; i < parameters.numRooms -1; i++) {
     // any side with a door should go up against the edge of the screen.
     // that makes it easier so you can end up outside the walls.
-    const minEnemies = parameters.minimumEnemiesPerRoom
-    const avgEnemies = parameters.averageEnemiesPerRoom
+    const minEnemies = parameters.minimumEnemiesPerRoom || 0
+    const avgEnemies = parameters.averageEnemiesPerRoom || 0
     const newRoom = RoomBuilder(
-      maxWidth,
-      maxHeight,
       Math.floor(maxWidth / (1 + (Math.random() * .5))),
       Math.floor(maxHeight / (1 + (Math.random() * .5))),
-      Math.floor(Math.random() * (avgEnemies * 2 - minEnemies)) + minEnemies
+      Math.floor(Math.random() * (avgEnemies * 2 - minEnemies)) + minEnemies,
+      parameters.background
     )
     room.addDoor('E', newRoom)
     newRoom.addDoor('W', room)

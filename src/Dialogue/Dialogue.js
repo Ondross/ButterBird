@@ -70,15 +70,13 @@ function Dialogue(props) {
     }
   }, [setSpeed, setLineIndex, setTextIndex, lineIndex, props, lines, textIndex, nextLineReady])
 
-  const boxStyle = {width: `${props.width}px`}
-
   if (!lines || !lines[lineIndex]) {
     return (null)
   }
 
   return (
     <div className="dialogue-container">
-      <div style={boxStyle} className="dialogue">
+      <div className="dialogue">
         {lines[lineIndex].slice(0, textIndex + 1)}
         {nextLineReady && <img alt="" src="/images/icons/spacebar.png" className="spacebar-icon" />}
       </div>
