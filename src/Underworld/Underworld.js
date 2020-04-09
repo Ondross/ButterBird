@@ -1,36 +1,37 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 import './Underworld.css';
 import Gameloop from './Gameloop'
 
 function Underworld(props) {
+  const canvas = useRef(null)
+  const [world] = useState(new Gameloop(canvas.current))
 
-
-  function gameLoop(world) {
+  const gameLoop = useCallback(() => {
     world.update(1000 / window.FPS)
 
     if (world.getState().congratulations) {
       console.log('boom')
     }
 
-    setTimeout(() => gameLoop(world), 1000 / window.FPS)
+    setTimeout(() => gameLoop(), 1000 / window.FPS)
+  }, [world])
+
+  function pause() {
+    world.pause(props.paused)
   }
 
-  const underWorld = useRef(null)
-  function init() {
-    if (underWorld && props.active) {
-      const world = new Gameloop(underWorld.current)
-      gameLoop(world)
-    } else {
-      setTimeout(init, 100)
+  useEffect(pause, [props.paused])
+  useEffect(() => {
+    if (canvas) {
+      world.setCanvas(canvas.current)
+      gameLoop()
     }
-  }
-
-  useEffect(init, [props.active])
+  }, [canvas, world, gameLoop])
 
   const containerStyle = { width: window.CANVASWIDTH * window.GRIDSCALE, height: window.CANVASHEIGHT * window.GRIDSCALE }
   return (
     <div className="underworld-container" style={containerStyle}>
-      <canvas ref={underWorld} width={window.CANVASWIDTH * window.GRIDSCALE} height={window.CANVASHEIGHT * window.GRIDSCALE} />
+      <canvas ref={canvas} width={window.CANVASWIDTH * window.GRIDSCALE} height={window.CANVASHEIGHT * window.GRIDSCALE} />
     </div>
   )
 }

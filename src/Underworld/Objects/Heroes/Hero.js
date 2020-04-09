@@ -19,8 +19,36 @@ export default function Hero(x, y, images, sounds) {
     this.destroyed = true
   }
 
-  const update = (ctx, keysDown, gametime, obstacles) => {
+  const drawSelf = (gametime, canvas) => {
+
+    let image
+
+    const imageIndex = Math.floor(gametime * 10) % images[this.facing].length
+
+      // blink every now and then
+    if (this.facing === 'down' && Math.random() > .95) {
+      image = images['blink'][
+        Math.floor(gametime * 10) % images['blink'].length
+      ]
+    } else {
+      image = images[this.facing][imageIndex]
+    }
+    canvas.drawImage(
+      image,
+      (x - width / 2),
+      (y - height / 2),
+      width,
+      height
+    )
+  }
+
+  const update = (paused, canvas, keysDown, gametime, obstacles) => {
     if (this.destroyed) {
+      return
+    }
+    if (paused) {
+      weapon.update(paused, canvas, keysDown, gametime, 0, 0)
+      drawSelf(gametime, canvas)
       return
     }
     let xVel = 0
@@ -81,29 +109,8 @@ export default function Hero(x, y, images, sounds) {
       y = newVals[1]
     }
 
-    weapon.update(ctx, keysDown, gametime, xVel, yVel)
-
-    let image
-    let imageIndex = 0
-    // wiggle if you're moving
-    if (xVel || yVel) {
-      imageIndex = Math.floor(gametime * 10) % images[this.facing].length
-    }
-    // blink every now and then
-    if (this.facing === 'down' && Math.random() > .95) {
-      image = images['blink'][
-        Math.floor(gametime * 10) % images['blink'].length
-      ]
-    } else {
-      image = images[this.facing][imageIndex]
-    }
-    ctx.drawImage(
-      image,
-      (x - width / 2),
-      (y - height / 2),
-      width,
-      height
-    )
+    weapon.update(paused, canvas, keysDown, gametime, xVel, yVel)
+    drawSelf(gametime, canvas)
   }
 
   const enterDoor = (door) => {

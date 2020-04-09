@@ -6,8 +6,8 @@ import Util from "./Util/Util"
 const background = new Image()
 background.src = '/images/backgrounds/space.jpg'
 
-export default function World(canvasElement) {
-  const canvas = new Canvas(canvasElement, this)
+export default function World() {
+  let canvas
   let gametime = 0 // seconds
 
   const keysDown = [] // ordered array: most recent click wins
@@ -95,7 +95,11 @@ export default function World(canvasElement) {
     hero = Squid(3, window.CANVASHEIGHT / 2)
   }
 
+  let paused = false
   function update(delta) {
+    if (!canvas) {
+      return
+    }
     if (hero.destroyed) {
       restart()
     }
@@ -119,9 +123,9 @@ export default function World(canvasElement) {
       level.currentRoom.width,
       level.currentRoom.height
     )
-    hero.update(canvas, keysDown, gametime, room.walls.concat(Object.values(room.doors)))
+    hero.update(paused, canvas, keysDown, gametime, room.walls.concat(Object.values(room.doors)))
     room.enemies.forEach(enemy =>
-      enemy.update(canvas, hero, gametime, room.walls.concat(room.enemies), room.graph, room.id)
+      enemy.update(paused, canvas, hero, gametime, room.walls.concat(room.enemies), room.graph, room.id)
     )
     room.walls.forEach(wall => wall.update(canvas))
     Object.values(room.doors).forEach(door => door.update(canvas))
@@ -140,4 +144,10 @@ export default function World(canvasElement) {
   this.update = update
   this.getState = getState
   this.getLevel = () => level
+  this.setCanvas = (canvasElement) => {
+    canvas = new Canvas(canvasElement, this)
+  }
+  this.pause = (pause) => {
+    paused = pause
+  }
 }

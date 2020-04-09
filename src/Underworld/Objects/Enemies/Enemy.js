@@ -27,10 +27,26 @@ export default function Enemy(x, y, images, sounds) {
     }
   }
 
+  const drawSelf = (canvas, gametime) => {
+    const imageIndex = Math.floor(gametime * 10) % images[this.facing].length
+    const image = images[this.facing][imageIndex]
+    canvas.drawImage(
+      image,
+      (x - width / 2),
+      (y - height / 2),
+      width,
+      height
+    )
+  }
+
   let lastRoomId = null
   let sameRoomCounter = 0
-  const update = (ctx, hero, gametime, obstacles, worldGraph, roomId) => {
+  const update = (paused, canvas, hero, gametime, obstacles, worldGraph, roomId) => {
     if (this.destroyed) {
+      return
+    }
+    if (paused) {
+      drawSelf(canvas, gametime)
       return
     }
 
@@ -101,21 +117,12 @@ export default function Enemy(x, y, images, sounds) {
         }
 
         // // for debugging a-star
-        // ctx.fillStyle = "#FF0000";
-        // ctx.fillRect(result[0].x * window.GRIDSCALE, result[0].y * window.GRIDSCALE, window.GRIDSCALE, window.GRIDSCALE);
+        // canvas.fillStyle = "#FF0000";
+        // canvas.fillRect(result[0].x * window.GRIDSCALE, result[0].y * window.GRIDSCALE, window.GRIDSCALE, window.GRIDSCALE);
       }
 
     }
-
-    const imageIndex = Math.floor(gametime * 10) % images[this.facing].length
-    const image = images[this.facing][imageIndex]
-    ctx.drawImage(
-      image,
-      (x - width / 2),
-      (y - height / 2),
-      width,
-      height
-    )
+    drawSelf(canvas, gametime)
   }
 
   this.update = update

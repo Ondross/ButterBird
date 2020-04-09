@@ -11,6 +11,7 @@ const lines = [
   "It's been silent for... days? Who knows?",
   "*sigh* ... I should collect some food.",
   "Ugh... Come on... get motivated.",
+  "Remember how to move? WASD.",
 ]
 
 window.CANVASWIDTH = 50
@@ -24,8 +25,12 @@ function App() {
   const [underWorldActive, setUnderWorldActive] = useState(false)
   return (
     <div className="App">
-      <Underworld active={underWorldActive} />
-      <Dialogue width={window.DEFAULTGAMEWIDTH * window.GRIDSCALE - 120} done={setUnderWorldActive} lines={lines} />
+      <Underworld active={underWorldActive} paused={!underWorldActive} />
+      <Dialogue
+        width={window.DEFAULTGAMEWIDTH * window.GRIDSCALE - 120}
+        done={setUnderWorldActive}
+        lines={lines}
+      />
     </div>
   )
 }

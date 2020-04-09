@@ -5,7 +5,14 @@ export default function Weapon(char) {
   const fireRate = 5 // bullets per second
   let lastFire = Infinity * -1
 
-  const update = (ctx, keysDown, gametime, charXVel, charYVel) => {
+  const drawSelf = (paused, canvas) => {
+    bullets.forEach(b => b.update(paused, canvas))
+  }
+  const update = (paused, canvas, keysDown, gametime, charXVel, charYVel) => {
+    if (paused) {
+      drawSelf(true, canvas)
+      return
+    }
     let xDir = 0
     let yDir = 0
     keysDown.forEach((key) => {
@@ -36,8 +43,7 @@ export default function Weapon(char) {
       bullets.push(new Bullet(char.x(), char.y(), xDir + charXVel * .02, yDir + charYVel * .02))
       lastFire = gametime
     }
-
-    bullets.forEach(b => b.update(ctx))
+    drawSelf(false, canvas)
   }
 
   this.update = update
