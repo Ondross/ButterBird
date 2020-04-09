@@ -52,6 +52,8 @@ function Dialogue(props) {
           setTextIndex(0)
           setSpeed(1)
         }
+      } else if (event.key === 'Escape') {
+        setLineIndex(newLines.length)
       }
     }
     const releaseSpacebar = (event) => {
