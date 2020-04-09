@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import Overworld from './Overworld/Overworld'
 import Underworld from './Underworld/Underworld'
@@ -7,7 +7,7 @@ import Dialogue from './Dialogue/Dialogue'
 import Underworld1 from './Levels/Underworld/1'
 
 window.CANVASWIDTH = 50
-window.CANVASHEIGHT = 18
+window.CANVASHEIGHT = 24
 window.FPS = 45
 
 function App() {

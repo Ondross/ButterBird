@@ -2,7 +2,7 @@ import Overworld1 from '../Overworld/1.js'
 import script from '../Scripts/Underworld/2.js'
 
 const background = new Image()
-background.src = '/images/backgrounds/junk.jpg'
+background.src = '/images/backgrounds/dirt.jpg'
 
 export default function Underworld1() {
   let introPlayed = false
