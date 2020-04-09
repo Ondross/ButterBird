@@ -41,7 +41,7 @@ export default function World() {
       }
     })
 
-    // Bullets x enemies and walls
+    // Bullets x enemies, doors, and walls
     let enemyDestroyed = false
     hero.weapon && hero.weapon.bullets().forEach(b => {
       if (b.destroyed) {
@@ -58,7 +58,7 @@ export default function World() {
           enemyDestroyed = true
         }
       })
-      level.currentRoom.walls.forEach(w => {
+      level.currentRoom.walls.concat(Object.values(level.currentRoom.doors)).forEach(w => {
         if (Util.checkForOverlap(b, w)) {
           b.destroy()
         }
