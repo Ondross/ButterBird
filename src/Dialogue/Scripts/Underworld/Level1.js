@@ -13,6 +13,11 @@ export default {
     "Yum. I feel a bit better.",
   ],
   'ExplainEnemies': [
-    "Nice! What was that thing doing here?",
+    "Huh... What is that thing doing here?",
+    "Better kill it to be safe.",
+    "Use the arrow keys. Ready?",
+  ],
+  'FirstKill': [
+    "Nice! Something strange going on...",
   ]
 }

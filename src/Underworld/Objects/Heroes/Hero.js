@@ -4,7 +4,7 @@ import Util from "../../Util/Util"
 
 
 export default function Hero(x, y, images, sounds) {  
-  const speed = .3 // px / frame
+  const speed = .2 // px / frame
   const weapon = new Weapon(this)
   const width = 2.5
   const height = 2.5
