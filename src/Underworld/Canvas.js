@@ -18,16 +18,29 @@ export default function Canvas(canvasElement, game) {
     ctx.fillRect(0, 0, canvasElement.width, canvasElement.height)
   }
 
-  const drawImage = (image, x, y, width, height) => {
+  const drawImage = (image, x, y, width, height, preserveAspectRatio) => {
     const xOffset = (window.CANVASWIDTH - game.getLevel().currentRoom.width) / 2
     const yOffset = (window.CANVASHEIGHT - game.getLevel().currentRoom.height) / 2
 
+    let ogImageWidth = image.width
+    let ogImageHeight = image.height
+    if (preserveAspectRatio) {
+      if (ogImageWidth / ogImageHeight > width / height) {
+        ogImageWidth = width * ogImageHeight / height
+      } else {
+        ogImageHeight = height * ogImageWidth / width
+      }
+    }
     ctx.drawImage(
       image,
+      0, 0,
+      ogImageWidth,
+      ogImageHeight,
       (x + xOffset) * gridScale,
       (y + yOffset) * gridScale,
       width * gridScale,
       height * gridScale,
+
     )
   }
 

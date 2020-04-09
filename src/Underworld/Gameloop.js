@@ -103,12 +103,14 @@ export default function World() {
 
     gametime += delta / 1000
     canvas.clear()
+
     canvas.drawImage(
       level.currentRoom.backgroundImage,
       0,
       0,
       level.currentRoom.width,
-      level.currentRoom.height
+      level.currentRoom.height,
+      true
     )
     hero.update(paused, canvas, keysDown, gametime, room.walls.concat(Object.values(room.doors)))
     room.enemies.forEach(enemy =>
