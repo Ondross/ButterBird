@@ -1,10 +1,5 @@
 import React, {useState, useEffect } from 'react';
 import './Dialogue.css';
-import Level1Lines from './Scripts/Underworld/Level1'
-
-const Script = {
-  Underworld1: Level1Lines
-}
 
 let spacebarDown
 let lineReadyTimeout
@@ -14,7 +9,6 @@ function Dialogue(props) {
   const [speed, setSpeed] = useState(1)
   const [lines, setLines] = useState(null)
   const [nextLineReady, setNextLineReady] = useState(false)
-
   useEffect(() => {
     const typeText = () => {
       setTextIndex(val => val + 1)
@@ -34,11 +28,11 @@ function Dialogue(props) {
       lineReadyTimeout = setTimeout(() => setNextLineReady(true), 500)
     }
     return () => {clearTimeout(timeout)}
-  })
+  }, [props, lineIndex, lines, speed, textIndex])
 
 
   useEffect(() => {
-    const newLines = (props.level && props.scene) && Script[props.level][props.scene]
+    const newLines = (props.level && props.level.script && props.level.script[props.scene])
     setLines(newLines)
 
     const nextLine = (event) => {

@@ -1,5 +1,5 @@
 import Canvas from './Canvas'
-import LevelBuilder from './LevelGenerators/UnderworldLevelBuilder'
+import LevelBuilder from './LevelGenerators/LevelBuilder'
 import Squid from "./Objects/Heroes/Squid"
 import Util from "./Util/Util"
 
@@ -7,12 +7,12 @@ const background = new Image()
 background.src = '/images/backgrounds/space.jpg'
 
 export default function World() {
-  let canvas
   let gametime = 0 // seconds
   let gameEvents = {}
+  let hero, level, canvas
+  const levelBuilder = new LevelBuilder()
 
-  const keysDown = [] // ordered array: most recent click wins
-
+  const keysDown = [] // ordered array: oldest to newest events
   document.addEventListener("keydown", e => {
     const key = e.key.toLowerCase()
     const index = keysDown.indexOf(key)
@@ -20,14 +20,13 @@ export default function World() {
   })
   document.addEventListener("keyup", e => {
     const key = e.key.toLowerCase()
-    // the performance fine because the array is probably not more than length 5.
     const index = keysDown.indexOf(key)
     if (index !== -1) keysDown.splice(index, 1)
   })
 
 
   let alreadyInDoorway = false
-  function findCollisions() {
+  function findAllCollisions() {
     const room = level.currentRoom
 
     // Enemies x Hero
@@ -89,31 +88,20 @@ export default function World() {
     alreadyInDoorway = enteredDoorway
   }
 
-  const levelBuilder = new LevelBuilder()
-  let hero, level
-  function restart() {
-    level = levelBuilder.build(window.CANVASWIDTH, window.CANVASHEIGHT)
-    hero = Squid(3, window.CANVASHEIGHT / 2)
-  }
-
   let paused = false
   function update(delta) {
-    if (!canvas) {
+    if (!canvas || !level) {
       return
     }
     if (hero.destroyed) {
       // use gameEvents instead
-      restart()
+      // newLevel()
     }
     const room = level.currentRoom
     if (room.enemies.length === 0) {
       Object.values(room.doors).forEach(door => {
         door.locked = false
       })
-    }
-
-    if (level.rooms.every(room => room.enemies.length === 0 && room.visited)) {
-      this.congratulations = true
     }
 
     gametime += delta / 1000
@@ -132,7 +120,7 @@ export default function World() {
     room.walls.forEach(wall => wall.update(canvas))
     Object.values(room.doors).forEach(door => door.update(canvas))
 
-    findCollisions()
+    findAllCollisions()
   }
 
   function getState() {
@@ -144,11 +132,16 @@ export default function World() {
     gameEvents = {}
     return state
   }
-  
-  restart()
+
+  const newLevel = (levelParameters) => {
+    level = levelBuilder.build(levelParameters, window.CANVASWIDTH, window.CANVASHEIGHT)
+    hero = Squid(3, window.CANVASHEIGHT / 2) // make this an argument too.
+  }
+
   this.update = update
   this.getState = getState
   this.getLevel = () => level
+  this.newLevel = newLevel
   this.setCanvas = (canvasElement) => {
     canvas = new Canvas(canvasElement, this)
   }
