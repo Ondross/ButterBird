@@ -20,8 +20,8 @@ function Dialogue(props) {
     }
 
     let timeout
-    if (lines && lines[lineIndex] && lines[lineIndex][textIndex + 1]) {
-      const punctuation = ['.', '?', '!'].indexOf(lines[lineIndex][textIndex]) > -1
+    if (lines && lines[lineIndex] && lines[lineIndex].line[textIndex + 1]) {
+      const punctuation = ['.', '?', '!'].indexOf(lines[lineIndex].line[textIndex]) > -1
       const pauseLength = punctuation ? 350 / speed : 30 / speed
       timeout = setTimeout(typeText, pauseLength)
     } else {
@@ -75,10 +75,12 @@ function Dialogue(props) {
     return (null)
   }
 
+  const speaker = props.level.getAvatar(lines[lineIndex].speaker)
   return (
     <div className="dialogue-container">
       <div className="dialogue">
-        {lines[lineIndex].slice(0, textIndex + 1)}
+        {speaker && <><div className="avatar-highlight" /> <img alt="avatar" className="avatar" src={speaker.src} /></>}
+        {lines[lineIndex].line.slice(0, textIndex + 1)}
         {nextLineReady && <img alt="" src="/images/icons/spacebar.png" className="spacebar-icon" />}
       </div>
     </div>

@@ -1,6 +1,6 @@
 export default {
   'Welcome': [
-    "Wow, that's interesting.",
-    "How is it so bright up here?",
+    {line: "Wow, that's interesting.", speaker: 0},
+    {line: "How is it so bright up here?", speaker: 0},
   ]
 }

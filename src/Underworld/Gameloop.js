@@ -135,11 +135,12 @@ export default function World() {
     return state
   }
 
-  const newLevel = (levelParameters) => {
+  const newLevel = (levelParameters, party) => {
     gametime = 0
     lastUpdate = Date.now()
     level = levelBuilder.build(levelParameters, window.CANVASWIDTH, window.CANVASHEIGHT)
-    hero = Squid(3, window.CANVASHEIGHT / 2) // make this an argument too.
+    hero = party[0]
+    hero.setPos(5, window.CANVASHEIGHT / 2)
   }
 
   this.update = update

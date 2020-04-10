@@ -14,7 +14,7 @@ function Underworld(props) {
       gameloop.update()
     }
 
-    props.level.update(gameloop.getState(), props.playScene, props.setUnderworldComplete)
+    props.level.update(gameloop.getState(), props.playScene, props.underworldComplete)
 
     // requestAnimationFrame itself was too fast. Seems weird to be using this and a timeout.
     gameloopTimeout = setTimeout(() => requestAnimationFrame(updateGame), 15)
@@ -26,7 +26,7 @@ function Underworld(props) {
 
   useEffect(() => {
     if (props.level.type === 'underworld') {
-      gameloop.newLevel(props.level.levelParameters)
+      gameloop.newLevel(props.level.levelParameters, props.party)
     }
   }, [props.level])
   useEffect(pause, [props.paused])

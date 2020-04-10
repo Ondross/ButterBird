@@ -28,6 +28,7 @@ const imagePaths = {
   blink: [
     "/images/characters/squid/blink/1.png",
   ],
+  avatar: ["/images/characters/squid/down/1.png"],
 }
 
 const images = {}
@@ -40,6 +41,6 @@ Object.keys(imagePaths).forEach(type => {
   })
 })
 
-export default function Squid (x, y) {
-  return new Hero(x, y, images, sounds)
+export default function Squid () {
+  return new Hero(images, sounds)
 }

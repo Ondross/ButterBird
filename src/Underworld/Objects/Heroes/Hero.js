@@ -3,13 +3,16 @@ import Util from "../../Util/Util"
 
 
 
-export default function Hero(x, y, images, sounds) {  
+export default function Hero(images, sounds) {  
   const speed = 9 // units / sec
   const weapon = new Weapon(this)
   const width = 2.5
   const height = 2.5
   this.destroyed = false
   this.facing = 'down'
+  this.images = images
+  let x = 0
+  let y = 0
 
   const destroy = () => {
     if (this.destroyed === false) {
@@ -147,6 +150,7 @@ export default function Hero(x, y, images, sounds) {
 
   this.x = () => x
   this.y = () => y
+  this.setPos = (newX, newY) => {x = newX; y = newY;}
   this.enterDoor = enterDoor
   this.update = update
   this.weapon = weapon

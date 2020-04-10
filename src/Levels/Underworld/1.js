@@ -5,7 +5,7 @@ import script from '../Scripts/Underworld/1.js'
 const background = new Image()
 background.src = '/images/backgrounds/space.jpg'
 
-export default function Underworld1() {
+export default function Underworld1(party) {
   let introPlayed = false
   let enemiesExplained = false
   let firstKill = false
@@ -47,4 +47,9 @@ export default function Underworld1() {
   this.name = 'Underworld1'
   this.type = "underworld"
   this.nextLevel = Underworld2
+
+  // scripts have numbers for each line.
+  // 0 usually refers to the first character in your party.
+  // each level has to figure it out.
+  this.getAvatar = characterId => party[characterId].images.avatar[0]
 }
