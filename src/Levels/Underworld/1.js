@@ -12,31 +12,28 @@ export default function Underworld1() {
   let levelComplete = false
   let died = false
 
-  this.update = (gamestate) => {
-    const command = {}
+  this.update = (gamestate, playScene, setUnderWorldComplete) => {
     if (!introPlayed) {
-      command.playScene = 'Intro'
+      playScene('Intro')
       introPlayed = true
     }
 
     if (gamestate.level.currentRoom.enemies.length > 0 && !enemiesExplained) {
-      command.playScene = 'ExplainEnemies'
+      playScene('ExplainEnemies')
       enemiesExplained = true
     }
     if (gamestate.events.enemyDestroyed  && !firstKill) {
-      command.playScene = 'FirstKill'
+      playScene('FirstKill')
       firstKill = true
     }
     if (!levelComplete && gamestate.level.rooms.every(room => room.enemies.length === 0 && room.visited)) {
-      command.underWorldComplete = true
+      setUnderWorldComplete(true)
       levelComplete = true
     }
     if (gamestate.events.dead && !died) {
-      command.playScene = 'YouDied'
+      playScene('YouDied')
       died = true
     }
-
-    return command
   }
 
   this.levelParameters = {

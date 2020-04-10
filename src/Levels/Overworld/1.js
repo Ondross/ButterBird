@@ -5,13 +5,11 @@ import script from '../Scripts/Overworld/1.js'
 function Overworld1() {
   let introPlayed = false
 
-  this.update = () => {
-    const command = {}
+  this.update = (playScene) => {
     if (!introPlayed) {
-      command.playScene = 'Welcome'
+      playScene('Welcome')
       introPlayed = true
     }
-    return command
   }
 
   this.shops = {

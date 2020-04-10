@@ -12,41 +12,42 @@ window.CANVASHEIGHT = 24
 window.FPS = 45
 
 function App() {
-  const processLevelState = (state) => {
-    const command = gameState.level.update(state)
-    if (command.playScene) {
-      setGameState((state) => {
-        return {...state, scene: command.playScene}
-      })
-    }
-    if (command.underWorldComplete) {
-      setGameState((state) => {
-        return { ...state, showUnderworldComplete: true }
-      })
-    }
-  }
+
   const leaveUnderworld = () => {
-    setGameState((state) => {
-      return { ...state, level: gameState.level.nextLevel(), showUnderworldComplete: false }
+    setAppState((state) => {
+      return { ...state, level: appState.level.nextLevel(), showUnderworldComplete: false }
     })
   }
-  const setScene = (scene) => {
-    setGameState((state) => {
+  const playScene = (scene) => {
+    setAppState((state) => {
       return { ...state, scene: scene }
     })
   }
+  const setUnderworldComplete = () => {
+    setAppState((state) => {
+      return { ...state, showUnderworldComplete: true }
+    })
+  }
 
-  const [gameState, setGameState] = useState({level: new Underworld1()})
+  const [appState, setAppState] = useState({level: new Underworld1()})
 
   return (
     <div className="App">
-      <Underworld paused={gameState.scene} setGameState={processLevelState} level={gameState.level} />
-      <UnderworldComplete finish={leaveUnderworld} show={gameState.showUnderworldComplete} />
-      {gameState.level.type === 'overworld' && <Overworld level={gameState.level} setGameState={processLevelState} />}
+      <Underworld
+        paused={appState.scene}
+        playScene={playScene}
+        setUnderworldComplete={setUnderworldComplete}
+        level={appState.level}
+      />
+      <UnderworldComplete finish={leaveUnderworld} show={appState.showUnderworldComplete} />
+      {appState.level.type === 'overworld' && <Overworld
+        level={appState.level}
+        playScene={playScene}
+      />}
       <Dialogue
-        done={() => setScene(null)}
-        level={gameState.level}
-        scene={gameState.scene}
+        done={() => playScene(null)}
+        level={appState.level}
+        scene={appState.scene}
       />
     </div>
   )

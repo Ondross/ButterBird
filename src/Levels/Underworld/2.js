@@ -9,28 +9,25 @@ function Underworld2() {
   let levelComplete = false
   let died = false
 
-  this.update = (gamestate) => {
-    const command = {}
+  this.update = (gamestate, playScene, setUnderWorldComplete) => {
     if (!introPlayed) {
-      command.playScene = 'Intro'
+      playScene('Intro')
       introPlayed = true
     }
 
     if (!levelComplete && gamestate.level.rooms.every(room => room.enemies.length === 0 && room.visited)) {
-      command.underWorldComplete = true
+      setUnderWorldComplete(true)
       levelComplete = true
     }
     if (gamestate.events.dead && !died) {
-      command.playScene = 'YouDied'
+      playScene('YouDied')
       died = true
     }
-
-    return command
   }
 
   this.levelParameters = {
-    numRooms: 5,
-    averageEnemiesPerRoom: 5,
+    numRooms: 2,
+    averageEnemiesPerRoom: 3,
     background: background,
   }
 

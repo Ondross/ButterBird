@@ -148,7 +148,7 @@ function Room(width, height, background) {
   const addEnemy = () => {
     const enemyClass = [Blob, Prune, Squid][Math.floor(Math.random() * 3)]
     const enemy = new enemyClass(
-      6 + Math.random() * (width - 12) ,
+      7 + Math.random() * (width - 12) ,
       2 + Math.random() * (height - 4))
 
     let nearDoor = false
