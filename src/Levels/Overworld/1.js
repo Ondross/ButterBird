@@ -2,7 +2,7 @@ import Underworld1 from '../Underworld/1.js'
 import Underworld2 from '../Underworld/2.js'
 import script from '../Scripts/Overworld/1.js'
 
-function Overworld1() {
+function Overworld1(party) {
   let introPlayed = false
 
   this.update = (playScene) => {
@@ -33,5 +33,8 @@ function Overworld1() {
 }
 
 // overworld levels don't get re-inited when we need them.
-const overworld = new Overworld1()
-export default () => overworld
+let overworld
+export default (party) => {
+  overworld = overworld || new Overworld1()
+  return overworld
+}

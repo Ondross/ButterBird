@@ -4,7 +4,7 @@ import script from '../Scripts/Underworld/2.js'
 const background = new Image()
 background.src = '/images/backgrounds/art.png'
 
-function Underworld2() {
+function Underworld2(party) {
   let introPlayed = false
   let levelComplete = false
   let died = false
