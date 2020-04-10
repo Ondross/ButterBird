@@ -1,6 +1,5 @@
 import Canvas from './Canvas'
 import LevelBuilder from './LevelGenerators/LevelBuilder'
-import Squid from "./Objects/Heroes/Squid"
 import Util from "./Util/Util"
 
 export default function World() {
