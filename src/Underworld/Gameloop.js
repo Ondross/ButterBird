@@ -86,13 +86,13 @@ export default function World() {
   }
 
   let paused = false
-  function update(delta) {
+  let lastUpdate
+  function update() {
     if (!canvas || !level) {
       return
     }
     if (hero.destroyed) {
-      // use gameEvents instead
-      // newLevel()
+      gameEvents.dead = true
     }
     const room = level.currentRoom
     if (room.enemies.length === 0) {
@@ -101,7 +101,10 @@ export default function World() {
       })
     }
 
-    gametime += delta / 1000
+    const now = Date.now()
+    const delta = (now - lastUpdate) / 1000
+    lastUpdate = now
+    gametime += delta
     canvas.clear()
 
     canvas.drawImage(
@@ -112,9 +115,9 @@ export default function World() {
       level.currentRoom.height,
       true
     )
-    hero.update(paused, canvas, keysDown, gametime, room.walls.concat(Object.values(room.doors)))
+    hero.update(delta, paused, canvas, keysDown, gametime, room.walls.concat(Object.values(room.doors)))
     room.enemies.forEach(enemy =>
-      enemy.update(paused, canvas, hero, gametime, room.walls.concat(room.enemies), room.graph, room.id)
+      enemy.update(delta, paused, canvas, hero, gametime, room.walls.concat(room.enemies), room.graph, room.id)
     )
     room.walls.forEach(wall => wall.update(canvas))
     Object.values(room.doors).forEach(door => door.update(canvas))
@@ -133,6 +136,8 @@ export default function World() {
   }
 
   const newLevel = (levelParameters) => {
+    gametime = 0
+    lastUpdate = Date.now()
     level = levelBuilder.build(levelParameters, window.CANVASWIDTH, window.CANVASHEIGHT)
     hero = Squid(3, window.CANVASHEIGHT / 2) // make this an argument too.
   }

@@ -5,16 +5,19 @@ import Gameloop from './Gameloop'
 
 let gameloopTimeout
 const gameloop = new Gameloop()
+
 function Underworld(props) {
   const canvasElement = useRef(null)
+
   const updateGame = useCallback(() => {
     if (props.level.type === 'underworld') {
-      gameloop.update(1000 / window.FPS)
+      gameloop.update()
     }
 
     props.setGameState(gameloop.getState())
 
-    gameloopTimeout = setTimeout(() => updateGame(), 1000 / window.FPS)
+    // requestAnimationFrame itself was too fast. Seems weird to be using this and a timeout.
+    gameloopTimeout = setTimeout(() => requestAnimationFrame(updateGame), 15)
   }, [props])
 
   function pause() {

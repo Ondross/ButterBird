@@ -11,7 +11,7 @@ function Overworld(props) {
   return (
     <div className="overworld-container">
       Overworld
-      <img src={props.level.backgroundSrc} className="overworld-background" />
+      <img alt="overworld" src={props.level.backgroundSrc} className="overworld-background" />
       {props.level.shops.armory && <Armory />}
       {props.level.shops.barracks && <Barracks />}
     </div>

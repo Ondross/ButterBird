@@ -2,15 +2,15 @@ import Bullet from "./Bullet"
 
 export default function Weapon(char) {
   const bullets = []
-  const fireRate = 5 // bullets per second
+  const fireRate = 2 // bullets per second
   let lastFire = Infinity * -1
 
-  const drawSelf = (paused, canvas) => {
-    bullets.forEach(b => b.update(paused, canvas))
+  const drawSelf = (dt, paused, canvas) => {
+    bullets.forEach(b => b.update(dt, paused, canvas))
   }
-  const update = (paused, canvas, keysDown, gametime, charXVel, charYVel) => {
+  const update = (dt, paused, canvas, keysDown, gametime, charXVel, charYVel) => {
     if (paused) {
-      drawSelf(true, canvas)
+      drawSelf(dt, true, canvas)
       return
     }
     let xDir = 0
@@ -43,7 +43,7 @@ export default function Weapon(char) {
       bullets.push(new Bullet(char.x(), char.y(), xDir + charXVel * .02, yDir + charYVel * .02))
       lastFire = gametime
     }
-    drawSelf(false, canvas)
+    drawSelf(dt, false, canvas)
   }
 
   this.update = update

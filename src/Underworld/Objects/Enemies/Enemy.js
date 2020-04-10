@@ -2,7 +2,7 @@ import Util from "../../Util/Util"
 import {astar} from "../../Util/Astar"
 
 export default function Enemy(x, y, images, sounds) {  
-  const speed = .05 // px / frame
+  const speed = 4 // px / frame
   this.destroyed = false
   const baseWidth = 1
   const baseHeight = 1
@@ -29,7 +29,7 @@ export default function Enemy(x, y, images, sounds) {
   }
 
   const drawSelf = (canvas, gametime) => {
-    const imageIndex = Math.floor(gametime * 10) % images[this.facing].length
+    const imageIndex = Math.floor(gametime * 8) % images[this.facing].length
     const image = images[this.facing][imageIndex]
     canvas.drawImage(
       image,
@@ -42,7 +42,7 @@ export default function Enemy(x, y, images, sounds) {
 
   let lastRoomId = null
   let sameRoomCounter = 0
-  const update = (paused, canvas, hero, gametime, obstacles, worldGraph, roomId) => {
+  const update = (dt, paused, canvas, hero, gametime, obstacles, worldGraph, roomId) => {
     if (this.destroyed) {
       return
     }
@@ -86,6 +86,8 @@ export default function Enemy(x, y, images, sounds) {
           xVel *= .71
           yVel *= .71
         }
+        xVel *= dt
+        yVel *= dt
         if (xVel > yVel) {
           if (xVel > 0) {
             this.facing = 'right'

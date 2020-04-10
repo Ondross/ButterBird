@@ -4,7 +4,7 @@ import Util from "../../Util/Util"
 
 
 export default function Hero(x, y, images, sounds) {  
-  const speed = .2 // px / frame
+  const speed = 9 // units / sec
   const weapon = new Weapon(this)
   const width = 2.5
   const height = 2.5
@@ -25,7 +25,7 @@ export default function Hero(x, y, images, sounds) {
 
     // wiggle while moving.
     if (xv || yv) {
-      imageIndex = Math.floor(gametime * 10) % images[this.facing].length
+      imageIndex = Math.floor(gametime * 8) % images[this.facing].length
     } else {
       imageIndex = 0
     }
@@ -39,7 +39,7 @@ export default function Hero(x, y, images, sounds) {
     }
     if (this.facing === 'down' && blinking) {
       image = images['blink'][
-        Math.floor(gametime * 10) % images['blink'].length
+        Math.floor(gametime) % images['blink'].length
       ]
     } else {
       image = images[this.facing][imageIndex]
@@ -53,12 +53,12 @@ export default function Hero(x, y, images, sounds) {
     )
   }
 
-  const update = (paused, canvas, keysDown, gametime, obstacles) => {
+  const update = (dt, paused, canvas, keysDown, gametime, obstacles) => {
     if (this.destroyed) {
       return
     }
     if (paused) {
-      weapon.update(paused, canvas, keysDown, gametime, 0, 0)
+      weapon.update(dt, paused, canvas, keysDown, gametime, 0, 0)
       drawSelf(gametime, canvas, 0, 0)
       return
     }
@@ -111,6 +111,8 @@ export default function Hero(x, y, images, sounds) {
       yVel *= .71
       xVel *= 0.71
     }
+    xVel *= dt
+    yVel *= dt
 
     if (xVel || yVel) {
       const newX = x + xVel
@@ -120,7 +122,7 @@ export default function Hero(x, y, images, sounds) {
       y = newVals[1]
     }
 
-    weapon.update(paused, canvas, keysDown, gametime, xVel, yVel)
+    weapon.update(dt, paused, canvas, keysDown, gametime, xVel, yVel)
     drawSelf(gametime, canvas, xVel, yVel)
   }
 
