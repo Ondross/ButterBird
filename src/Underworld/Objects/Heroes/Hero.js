@@ -62,7 +62,11 @@ export default function Hero(images, sounds) {
     }
     if (paused) {
       weapon.update(dt, paused, canvas, keysDown, gametime, 0, 0)
-      drawSelf(gametime, canvas, 0, 0)
+
+      // don't draw the hero if this is the opening cutscene.
+      if (gametime > .1) {
+        drawSelf(gametime, canvas, 0, 0)
+      }
       return
     }
     let xVel = 0

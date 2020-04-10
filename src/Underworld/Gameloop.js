@@ -103,7 +103,9 @@ export default function World() {
     const now = Date.now()
     const delta = (now - lastUpdate) / 1000
     lastUpdate = now
-    gametime += delta
+    if (!paused) {
+      gametime += delta
+    }
     canvas.clear()
 
     canvas.drawImage(

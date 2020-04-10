@@ -25,6 +25,11 @@ function Overworld1() {
     'Intro': Underworld1,
     'Find a Friend': Underworld2,
   }
+
+  this.getSpeaker = characterId => ({
+    avatar: party[characterId].images.avatar[characterId].src,
+    name: party[characterId].name
+  })
 }
 
 // overworld levels don't get re-inited when we need them.

@@ -1,12 +1,13 @@
 export default {
   'Intro': [
-    {line: "My god...", speaker: 0},
+    { line: "My god...", speaker: 0 },
+    { line: "What was my name again?", speaker: 0, prompt: 'askName' },
     {line: "I woke up again?", speaker: 0},
     {line: "I can barely see a thing down here.", speaker: 0},
     {line: "This place smells like trash... So do I... And my only friend seems to have gone missing.", speaker: 0},
     {line: "It's been silent for... days? Who knows?", speaker: 0},
-    {line: "*sigh* ... I should collect some food.", speaker: 0},
-    {line: "Ugh... Come on... get motivated.", speaker: 0},
+    {line: "*sigh* ... I should collect some food.", speaker: 0 },
+    {line: "Ugh... Come on... get motivated.", speaker: 0 },
     {line: "Remember how to move? WASD.", speaker: 0},
   ],
   'FoundFood': [

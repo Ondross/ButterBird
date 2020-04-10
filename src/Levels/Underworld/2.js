@@ -35,6 +35,11 @@ function Underworld2() {
   this.name = 'Underworld2'
   this.type = "underworld"
   this.nextLevel = Overworld1
+
+  this.getSpeaker = characterId => ({
+    avatar: party[characterId].images.avatar[characterId].src,
+    name: party[characterId].name
+  })
 }
 
 export default () => new Underworld2()
