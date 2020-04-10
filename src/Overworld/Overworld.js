@@ -1,13 +1,19 @@
-import React from 'react';
-
+import React, { useEffect } from 'react';
+import './Overworld.css'
+import Armory from './Armory'
+import Barracks from './Barracks'
 
 function Overworld(props) {
-  if (!props.show) {
-    return (null)
-  }
+
+  // call this everytime we take an action, ie, click on a shop
+  useEffect(props.setGameState)
+
   return (
-    <div className="underworld-container">
+    <div className="overworld-container">
       Overworld
+      <img src={props.level.backgroundSrc} className="overworld-background" />
+      {props.level.shops.armory && <Armory />}
+      {props.level.shops.barracks && <Barracks />}
     </div>
   )
 }

@@ -32,5 +32,5 @@ export default function Underworld1() {
   this.script = script
   this.name = 'Underworld2'
   this.type = "underworld"
-  this.nextLevel = () => new Overworld1()
+  this.nextLevel = Overworld1
 }

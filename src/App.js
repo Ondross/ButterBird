@@ -5,13 +5,14 @@ import Underworld from './Underworld/Underworld'
 import UnderworldComplete from './Underworld/UnderworldComplete'
 import Dialogue from './Dialogue/Dialogue'
 import Underworld1 from './Levels/Underworld/1'
+import Overworld1 from './Levels/Overworld/1'
 
 window.CANVASWIDTH = 50
 window.CANVASHEIGHT = 24
 window.FPS = 45
 
 function App() {
-  const processUnderworldState = (state) => {
+  const processLevelState = (state) => {
     const command = gameState.level.update(state)
     if (command.playScene) {
       setGameState((state) => {
@@ -39,9 +40,9 @@ function App() {
 
   return (
     <div className="App">
-      <Underworld paused={gameState.scene} setGameState={processUnderworldState} level={gameState.level} />
+      <Underworld paused={gameState.scene} setGameState={processLevelState} level={gameState.level} />
       <UnderworldComplete finish={leaveUnderworld} show={gameState.showUnderworldComplete} />
-      <Overworld />
+      {gameState.level.type === 'overworld' && <Overworld level={gameState.level} setGameState={processLevelState} />}
       <Dialogue
         done={() => setScene(null)}
         level={gameState.level}

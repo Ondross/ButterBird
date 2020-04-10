@@ -1,0 +1,21 @@
+.shop-container {
+  position:absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  pointer-events: none;
+}
+
+.shop-icon-container {
+  position: absolute;
+  cursor: pointer;
+  border-radius: 30px;
+  pointer-events: all;
+}
+
+.shop-icon {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 15vw;
+}

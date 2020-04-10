@@ -9,6 +9,7 @@ function Dialogue(props) {
   const [speed, setSpeed] = useState(1)
   const [lines, setLines] = useState(null)
   const [nextLineReady, setNextLineReady] = useState(false)
+
   useEffect(() => {
     const typeText = () => {
       setTextIndex(val => val + 1)

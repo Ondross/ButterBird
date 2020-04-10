@@ -1,13 +1,13 @@
 export default function Canvas(canvasElement, game) {
   const ctx = canvasElement.getContext('2d')
 
-  const updateWidth = (windowWidth) => {
-    gridScale = windowWidth / window.CANVASWIDTH
+  const updateDimensions = (windowWidth, windowHeight) => {
+    gridScale = Math.min(windowWidth / window.CANVASWIDTH, windowHeight / window.CANVASHEIGHT)
   }
 
   let gridScale
-  updateWidth(window.innerWidth)
-  window.addEventListener('resize', e => updateWidth(e.target.innerWidth))
+  updateDimensions(window.innerWidth, window.innerHeight)
+  window.addEventListener('resize', e => updateDimensions(e.target.innerWidth, e.target.innerHeight))
 
   const clear = () => {
     canvasElement.width = window.CANVASWIDTH * gridScale

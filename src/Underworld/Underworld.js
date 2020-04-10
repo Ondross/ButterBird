@@ -8,7 +8,9 @@ const gameloop = new Gameloop()
 function Underworld(props) {
   const canvasElement = useRef(null)
   const updateGame = useCallback(() => {
-    gameloop.update(1000 / window.FPS)
+    if (props.level.type === 'underworld') {
+      gameloop.update(1000 / window.FPS)
+    }
 
     props.setGameState(gameloop.getState())
 
@@ -20,7 +22,9 @@ function Underworld(props) {
   }
 
   useEffect(() => {
-    gameloop.newLevel(props.level.levelParameters)
+    if (props.level.type === 'underworld') {
+      gameloop.newLevel(props.level.levelParameters)
+    }
   }, [props.level])
   useEffect(pause, [props.paused])
   useEffect(() => {
