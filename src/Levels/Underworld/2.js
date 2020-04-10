@@ -2,11 +2,12 @@ import Overworld1 from '../Overworld/1.js'
 import script from '../Scripts/Underworld/2.js'
 
 const background = new Image()
-background.src = '/images/backgrounds/dirt.jpg'
+background.src = '/images/backgrounds/art.png'
 
-export default function Underworld1() {
+function Underworld2() {
   let introPlayed = false
   let levelComplete = false
+  let died = false
 
   this.update = (gamestate) => {
     const command = {}
@@ -18,6 +19,10 @@ export default function Underworld1() {
     if (!levelComplete && gamestate.level.rooms.every(room => room.enemies.length === 0 && room.visited)) {
       command.underWorldComplete = true
       levelComplete = true
+    }
+    if (gamestate.events.dead && !died) {
+      command.playScene = 'YouDied'
+      died = true
     }
 
     return command
@@ -34,3 +39,5 @@ export default function Underworld1() {
   this.type = "underworld"
   this.nextLevel = Overworld1
 }
+
+export default () => new Underworld2()

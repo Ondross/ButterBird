@@ -1,4 +1,3 @@
-import Overworld1 from '../Overworld/1.js'
 import Underworld2 from '../Underworld/2.js'
 import script from '../Scripts/Underworld/1.js'
 
@@ -11,6 +10,7 @@ export default function Underworld1() {
   let enemiesExplained = false
   let firstKill = false
   let levelComplete = false
+  let died = false
 
   this.update = (gamestate) => {
     const command = {}
@@ -31,6 +31,10 @@ export default function Underworld1() {
       command.underWorldComplete = true
       levelComplete = true
     }
+    if (gamestate.events.dead && !died) {
+      command.playScene = 'YouDied'
+      died = true
+    }
 
     return command
   }
@@ -45,5 +49,5 @@ export default function Underworld1() {
   this.script = script
   this.name = 'Underworld1'
   this.type = "underworld"
-  this.nextLevel = Overworld1
+  this.nextLevel = Underworld2
 }

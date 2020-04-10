@@ -19,5 +19,8 @@ export default {
   ],
   'FirstKill': [
     "Nice! Something strange going on...",
+  ],
+  'YouDied': [
+    "Darn... Refresh the page and try again.",
   ]
 }
