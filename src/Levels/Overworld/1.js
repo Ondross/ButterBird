@@ -35,6 +35,6 @@ function Overworld1(party) {
 // overworld levels don't get re-inited when we need them.
 let overworld
 export default (party) => {
-  overworld = overworld || new Overworld1()
+  overworld = overworld || new Overworld1(party)
   return overworld
 }

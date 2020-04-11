@@ -42,4 +42,4 @@ function Underworld2(party) {
   })
 }
 
-export default () => new Underworld2()
+export default (party) => new Underworld2(party)
