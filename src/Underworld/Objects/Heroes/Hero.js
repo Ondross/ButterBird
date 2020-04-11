@@ -22,7 +22,12 @@ export default function Hero(images, sounds) {
     this.destroyed = true
   }
 
-  let blinkStart = 0
+  let blinkStart
+  const init = () => {
+    blinkStart = -999
+    weapon.init()
+  }
+
   const drawSelf = (gametime, canvas, xv, yv) => {
     let imageIndex
 
@@ -160,6 +165,7 @@ export default function Hero(images, sounds) {
   this.setPos = (newX, newY) => {x = newX; y = newY;}
   this.enterDoor = enterDoor
   this.update = update
+  this.init = init
   this.weapon = weapon
   this.destroy = destroy
   this.hitboxWidthOffset = width / 4

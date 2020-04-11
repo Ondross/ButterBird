@@ -3,12 +3,16 @@ import Bullet from "./Bullet"
 export default function Weapon(char) {
   const bullets = []
   const fireRate = 2 // bullets per second
-  let lastFire = Infinity * -1
+  let lastFire = -Infinity
 
+  const init = () => {
+    lastFire = -Infinity
+  }
   const drawSelf = (dt, paused, canvas) => {
     bullets.forEach(b => b.update(dt, paused, canvas))
   }
   const update = (dt, paused, canvas, keysDown, gametime, charXVel, charYVel) => {
+
     if (paused) {
       drawSelf(dt, true, canvas)
       return
@@ -47,6 +51,7 @@ export default function Weapon(char) {
   }
 
   this.update = update
+  this.init = init
   this.bullets = () => bullets
   this.clearBullets = () => {
     bullets.splice(0)

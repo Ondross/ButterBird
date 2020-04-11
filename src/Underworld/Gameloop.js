@@ -3,7 +3,7 @@ import LevelBuilder from './LevelGenerators/LevelBuilder'
 import Util from "./Util/Util"
 
 export default function World() {
-  let gametime = 0 // seconds
+  let gametime = null // seconds
   let gameEvents = {}
   let hero, level, canvas
   const levelBuilder = new LevelBuilder()
@@ -88,6 +88,8 @@ export default function World() {
   let paused = false
   let lastUpdate
   function update() {
+    gametime = gametime || 0
+    lastUpdate = lastUpdate || Date.now()
     if (!canvas || !level) {
       return
     }
@@ -138,11 +140,12 @@ export default function World() {
   }
 
   const newLevel = (levelParameters, party) => {
-    gametime = 0
-    lastUpdate = Date.now()
+    gametime = null
+    lastUpdate = null
     level = levelBuilder.build(levelParameters, window.CANVASWIDTH, window.CANVASHEIGHT)
     hero = party[0]
     hero.setPos(5, window.CANVASHEIGHT / 2)
+    hero.init()
   }
 
   this.update = update
