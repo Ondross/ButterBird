@@ -15,6 +15,7 @@ function Overworld1(party) {
   this.shops = {
     "armory": {},
     "barracks": {},
+    "cave": {},
   }
 
   this.backgroundSrc = '/images/backgrounds/marsOverworld.png'

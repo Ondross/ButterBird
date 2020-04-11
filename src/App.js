@@ -16,7 +16,7 @@ window.FPS = 45
 const party = [new Napkin()]
 
 function App() {
-  const [appState, setAppState] = useState({ level: new Underworld1(party) })
+  const [appState, setAppState] = useState({ level: Overworld1(party) })
 
   const nextLevel = () => setAppState(state => ({...state, level: appState.level.nextLevel(party), showUnderworldComplete: false }))
   const playScene = (scene) => setAppState(state => ({...state, scene: scene }))

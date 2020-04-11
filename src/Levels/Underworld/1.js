@@ -5,7 +5,7 @@ import script from '../Scripts/Underworld/1.js'
 const background = new Image()
 background.src = '/images/backgrounds/space.jpg'
 
-export default function Underworld1(party) {
+function Underworld1(party) {
   let introPlayed = false
   let enemiesExplained = false
   let firstKill = false
@@ -61,3 +61,5 @@ export default function Underworld1(party) {
     name: party[characterId].name
   })
 }
+
+export default (party) => new Underworld1(party)
