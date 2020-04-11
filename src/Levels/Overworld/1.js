@@ -14,7 +14,7 @@ function Overworld1(party) {
 
   this.shops = {
     "armory": {},
-    "barracks": {},
+    "shelter": {},
     "cave": {},
   }
 

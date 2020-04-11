@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import './Overworld.css'
 import Armory from './Armory'
-import Barracks from './Barracks'
+import Shelter from './Shelter'
 import Cave from './Cave'
 
 function Overworld(props) {
@@ -14,7 +14,7 @@ function Overworld(props) {
     <div className="overworld-container">
       <img alt="overworld" src={props.level.backgroundSrc} className="overworld-background" />
       {props.level.shops.armory && <Armory />}
-      {props.level.shops.barracks && <Barracks />}
+      {props.level.shops.shelter && <Shelter />}
       {props.level.shops.cave && <Cave />}
     </div>
   )
