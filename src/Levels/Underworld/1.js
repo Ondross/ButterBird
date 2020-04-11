@@ -8,7 +8,6 @@ function Underworld1() {
   let introPlayed = false
   let enemiesExplained = false
   let firstKill = false
-  let levelComplete = false
   let died = false
   let party
 
@@ -26,9 +25,8 @@ function Underworld1() {
       playScene('FirstKill')
       firstKill = true
     }
-    if (!levelComplete && gamestate.level.rooms.every(room => room.enemies.length === 0 && room.visited)) {
+    if (gamestate.level.rooms.every(room => room.enemies.length === 0 && room.visited)) {
       setUnderWorldComplete(true)
-      levelComplete = true
     }
     if (gamestate.events.dead && !died) {
       playScene('YouDied')

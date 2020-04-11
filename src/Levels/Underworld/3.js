@@ -4,14 +4,12 @@ const background = new Image()
 background.src = '/images/backgrounds/art.png'
 
 function Underworld3() {
-  let levelComplete = false
   let died = false
   let party
 
   this.update = (gamestate, playScene, setUnderWorldComplete) => {
-    if (!levelComplete && gamestate.level.rooms.every(room => room.enemies.length === 0 && room.visited)) {
+    if (gamestate.level.rooms.every(room => room.enemies.length === 0 && room.visited)) {
       setUnderWorldComplete(true)
-      levelComplete = true
     }
     if (gamestate.events.dead && !died) {
       playScene('YouDied')

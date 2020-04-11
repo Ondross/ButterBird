@@ -28,7 +28,7 @@ function App() {
     setLevel(appState.level.nextLevel || Overworld1)
   }
   const playScene = (scene) => setAppState(state => ({...state, scene: scene }))
-  const underworldComplete = () => setAppState(state => ({...state, showUnderworldComplete: true }))
+  const underworldComplete = () => appState.showUnderworldComplete || setAppState(state => ({...state, showUnderworldComplete: true }))
 
   return (
     <div className="App">

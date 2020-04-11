@@ -5,7 +5,6 @@ background.src = '/images/backgrounds/art.png'
 
 function Underworld2() {
   let introPlayed = false
-  let levelComplete = false
   let died = false
   let party
 
@@ -15,9 +14,8 @@ function Underworld2() {
       introPlayed = true
     }
 
-    if (!levelComplete && gamestate.level.rooms.every(room => room.enemies.length === 0 && room.visited)) {
+    if (gamestate.level.rooms.every(room => room.enemies.length === 0 && room.visited)) {
       setUnderWorldComplete(true)
-      levelComplete = true
     }
     if (gamestate.events.dead && !died) {
       playScene('YouDied')

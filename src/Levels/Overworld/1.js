@@ -24,7 +24,7 @@ function Overworld1() {
     "armory": {},
     "shelter": {},
     "cave": {
-      levels: [Underworld1, Underworld2, Underworld3]
+      levels: [Underworld1, Underworld3]
     },
   }
 
