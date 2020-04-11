@@ -25,18 +25,6 @@ export default function World() {
   function findAllCollisions() {
     const room = level.currentRoom
 
-    // Enemies x Hero
-    room.enemies.forEach(e => {
-      if (e.destroyed) {
-        return
-      }
-      if (!hero.destroyed) {
-        if (Util.checkForOverlap(e, hero)) {
-          hero.destroy()
-        }
-      }
-    })
-
     // Bullets x enemies, doors, and walls
     let enemyDestroyed = false
     hero.weapon && hero.weapon.bullets().forEach(b => {
@@ -60,8 +48,8 @@ export default function World() {
       })
     })
 
-    // stop tracking dead enemies
-    if (enemyDestroyed) {
+    // stop tracking dead enemies (unless )
+    if (enemyDestroyed && !hero.destroyed) {
       room.enemies = room.enemies.filter(e => !e.destroyed)
       gameEvents.enemyDestroyed = true
     }
@@ -81,6 +69,19 @@ export default function World() {
         alreadyInDoorway = true
       }
     })
+
+    // Enemies x Hero
+    room.enemies.forEach(e => {
+      if (e.destroyed) {
+        return
+      }
+      if (!hero.destroyed) {
+        if (Util.checkForOverlap(e, hero)) {
+          hero.destroy()
+        }
+      }
+    })
+
     alreadyInDoorway = enteredDoorway
   }
 
