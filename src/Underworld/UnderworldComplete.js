@@ -5,7 +5,7 @@ import './UnderworldComplete.css';
 function UnderworldComplete(props) {
   useEffect(() => {
     const keydown = (e) => {
-      if (props.show && (e.key === ' ' || e.key === 'escape')) {
+      if (props.show && (e.key === ' ' || e.key === 'Escape')) {
         props.finish()
       }
     }
