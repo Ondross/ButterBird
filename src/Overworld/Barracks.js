@@ -3,7 +3,7 @@ import ShopIcon from "./ShopIcon"
 
 function Barracks(props) {
   return (
-    <ShopIcon x="52%" y="7%" iconName="barracksSmall" />
+    <ShopIcon x="50%" y="7%" width="18vw" iconName="barracks" />
   )
 }
 

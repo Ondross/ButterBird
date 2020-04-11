@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import './Overworld.css'
 import Armory from './Armory'
 import Barracks from './Barracks'
+import Cave from './Cave'
 
 function Overworld(props) {
 
@@ -14,6 +15,7 @@ function Overworld(props) {
       <img alt="overworld" src={props.level.backgroundSrc} className="overworld-background" />
       {props.level.shops.armory && <Armory />}
       {props.level.shops.barracks && <Barracks />}
+      {props.level.shops.cave && <Cave />}
     </div>
   )
 }
