@@ -4,7 +4,6 @@ import "./BuildingInterior.css"
 function BuildingInterior(props) {
   useEffect(() => {
     const keydown = (e) => {
-      console.log("GOT IT", e.key)
       if (e.key === 'Escape') {
         props.back()
       }

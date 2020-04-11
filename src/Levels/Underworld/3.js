@@ -13,7 +13,7 @@ function Underworld3() {
       this.completed = true
     }
     if (gamestate.events.dead && !died) {
-      playScene('YouDied')
+      playScene(script.YouDied)
       died = true
     }
   }

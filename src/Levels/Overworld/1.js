@@ -7,22 +7,36 @@ import script from '../Scripts/Overworld/1'
 function Overworld1() {
   let introPlayed = false
   let caveScenePlayed = false
+  let shelterScenePlayed = false
   let party
 
   this.update = (playScene, info) => {
     if (!introPlayed) {
-      playScene('Welcome')
+      playScene(script.Welcome)
       introPlayed = true
     }
     if (info === 'caveShown' && !caveScenePlayed) {
       caveScenePlayed = true
-      playScene('FirstCaveEntrance')
+      playScene(script.FirstCaveEntrance)
+    }
+    if (info === 'shelterShown') {
+      let lines = []
+      if (!shelterScenePlayed) {
+        shelterScenePlayed = true
+        lines = lines.concat(script.FirstShelterEntrance)
+      }
+      if (party.length < 2) {
+        lines = lines.concat(script.UselessBuilding)
+      }
+      lines.length && playScene(lines)
     }
   }
 
   this.shops = {
     "armory": {},
-    "shelter": {},
+    "shelter": {
+      party: party
+    },
     "cave": {
       levels: [Underworld1, Underworld2, Underworld3]
     },
@@ -41,6 +55,7 @@ function Overworld1() {
   // call on entering the level
   this.init = (team) => {
     party = team
+    this.shops.shelter.party = party
   }
 }
 

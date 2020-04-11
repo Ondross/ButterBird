@@ -1,6 +1,6 @@
 export default {
   'Intro': [
-    { line: "Where am I? There's a light coming from that door.", speaker: 0 },
+    { pause: 500, line: "Where am I? There's a light coming from that door.", speaker: 0 },
     { line: "Okay, Let's keep going.", speaker: 0 },
   ],
   'YouDied': [

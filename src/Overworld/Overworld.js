@@ -15,8 +15,8 @@ function Overworld(props) {
   return (
     <div className="overworld-container">
       <img alt="overworld" src={props.level.backgroundSrc} className="overworld-background" />
-      {props.level.shops.armory && <Armory />}
-      {props.level.shops.shelter && <Shelter />}
+      {props.level.shops.armory && <Armory update={update} />}
+      {props.level.shops.shelter && <Shelter config={props.level.shops.shelter} update={update} />}
       {props.level.shops.cave && <Cave config={props.level.shops.cave} update={update} setLevel={props.setLevel} />}
     </div>
   )

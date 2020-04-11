@@ -28,13 +28,13 @@ function App() {
     const next = appState.level.nextLevel && appState.level.nextLevel()
     setLevel(next || Overworld1)
   }
-  const playScene = (scene) => setAppState(state => ({...state, scene: scene }))
+  const playScene = (lines) => setAppState(state => ({...state, lines: lines }))
   const underworldComplete = () => appState.showUnderworldComplete || setAppState(state => ({...state, showUnderworldComplete: true }))
 
   return (
     <div className="App">
       <Underworld
-        paused={appState.scene}
+        paused={appState.lines}
         playScene={playScene}
         underworldComplete={underworldComplete}
         level={appState.level}
@@ -50,7 +50,7 @@ function App() {
       <Dialogue
         done={() => playScene(null)}
         level={appState.level}
-        scene={appState.scene}
+        script={appState.lines}
       />
     </div>
   )

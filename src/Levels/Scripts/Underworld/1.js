@@ -14,7 +14,7 @@ export default {
     {line: "Yum. I feel a bit better.", speaker: 0},
   ],
   'ExplainEnemies': [
-    { pause: 800, line: "Huh... What is that thing doing here?", speaker: 0},
+    { pause: 500, line: "Huh... What is that thing doing here?", speaker: 0},
     {line: "Better kill it to be safe.", speaker: 0},
     {line: "Use the arrow keys. Ready?", speaker: 0},
   ],

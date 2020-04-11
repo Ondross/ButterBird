@@ -1,5 +1,5 @@
 export default {
   'FriendEncounter': [
-    {line: "Dude!", speaker: 0},
+    {pause: 500, line: "Dude!", speaker: 0},
   ],
 }

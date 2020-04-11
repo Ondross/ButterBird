@@ -45,7 +45,7 @@ function Dialogue(props) {
 
 
   useEffect(() => {
-    const newLines = (props.level && props.level.script && props.level.script[props.scene])
+    const newLines = props.script
     setLines(newLines)
 
     const nextLine = () => {
@@ -91,7 +91,7 @@ function Dialogue(props) {
         document.removeEventListener('keydown', keyDown)
         document.removeEventListener('keyup', releaseSpacebar)
       }
-    } else if (props.scene) {
+    } else if (props.script) {
       props.done()
       setLineIndex(0)
       setTextIndex(0)
@@ -102,15 +102,15 @@ function Dialogue(props) {
     return (null)
   }
 
-  const speaker = props.level.getSpeaker(lines[lineIndex].speaker) || {}
+  const speaker = (lines[lineIndex].speaker !== undefined && props.level.getSpeaker(lines[lineIndex].speaker)) || null
   const showPrompt = lines[lineIndex].prompt
   return (
     <div className="modal-container">
       <div className="dialogue-container">
-        <div className="avatar-highlight" />
-        <img alt="avatar" className="avatar" src={speaker.avatar} />
+        {speaker && <div className="avatar-highlight" />}
+        {speaker && <img alt="avatar" className="avatar" src={speaker.avatar} />}
         <div className="dialogue">
-          <div className="speaker-name">{speaker.name || '???'}</div>
+          {speaker && <div className="speaker-name">{speaker.name || '???'}</div>}
           <div className="dialogue-text">
             {lines[lineIndex].line.slice(0, textIndex)}
           </div>

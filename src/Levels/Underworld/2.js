@@ -10,7 +10,7 @@ function Underworld2() {
 
   this.update = (gamestate, playScene, setUnderWorldComplete) => {
     if (!introPlayed) {
-      playScene('Intro')
+      playScene(script.Intro)
       introPlayed = true
     }
 
@@ -19,7 +19,7 @@ function Underworld2() {
       setUnderWorldComplete(true)
     }
     if (gamestate.events.dead && !died) {
-      playScene('YouDied')
+      playScene(script.YouDied)
       died = true
     }
   }

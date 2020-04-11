@@ -13,16 +13,16 @@ function Underworld1() {
 
   this.update = (gamestate, playScene, setUnderWorldComplete) => {
     if (!introPlayed) {
-      playScene('Intro')
+      playScene(script.Intro)
       introPlayed = true
     }
 
     if (gamestate.level.currentRoom.enemies.length > 0 && !enemiesExplained) {
-      playScene('ExplainEnemies')
+      playScene(script.ExplainEnemies)
       enemiesExplained = true
     }
     if (gamestate.events.enemyDestroyed  && !firstKill) {
-      playScene('FirstKill')
+      playScene(script.FirstKill)
       firstKill = true
     }
     if (gamestate.level.rooms.every(room => room.enemies.length === 0 && room.visited)) {
@@ -30,7 +30,7 @@ function Underworld1() {
       setUnderWorldComplete(true)
     }
     if (gamestate.events.dead && !died) {
-      playScene('YouDied')
+      playScene(script.YouDied)
       died = true
     }
   }
