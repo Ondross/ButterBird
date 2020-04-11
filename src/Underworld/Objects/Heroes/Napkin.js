@@ -43,6 +43,12 @@ Object.keys(imagePaths).forEach(type => {
   })
 })
 
+const baseStats = {
+  attack: 1,
+  health: 1,
+  speed: 12,
+}
+
 export default function Napkin () {
-  return new Hero(images, sounds)
+  return new Hero(images, sounds, baseStats)
 }

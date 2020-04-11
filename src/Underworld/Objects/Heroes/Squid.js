@@ -41,6 +41,12 @@ Object.keys(imagePaths).forEach(type => {
   })
 })
 
-export default function Squid () {
-  return new Hero(images, sounds)
+const baseStats = {
+  attack: 2,
+  health: 1,
+  speed: 9,
+}
+
+export default function Squid() {
+  return new Hero(images, sounds, baseStats)
 }

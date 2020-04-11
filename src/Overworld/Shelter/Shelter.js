@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ShopIcon from "../ShopIcon"
 import BuildingInterior from "../BuildingInterior"
+import "./Shelter.css"
 
-function Shelter({update, config}) {
+function Shelter({update, config, paused}) {
   const [showShelter, setShowShelter] = useState(false)
 
   // I have to do this wacky thing to prevent an infinite loop
@@ -22,12 +23,17 @@ function Shelter({update, config}) {
     <>
       <ShopIcon x="10%" y="40%" onClick={() => setShowShelter(true)} iconName="shelter" />
       {showShelter && (
-        <BuildingInterior back={() => setShowShelter(false)} >
+        <BuildingInterior paused={paused} back={() => setShowShelter(false)} >
           <div className="heros-container">
             {config.party.map((hero) => (
               <div className="hero" key={hero.name || '???'} >
-                {hero.name || '???'}
                 <img src={hero.images.avatar[0].src} alt="avatar" className="shelter-avatar" />
+                <div className="hero-stats">
+                  <div className="hero-name"> {hero.name || '???'} </div>
+                  <div className="hero-stat"> Health: {hero.health || '???'} </div>
+                  <div className="hero-stat"> Attack: {hero.attack || '???'} </div>
+                  <div className="hero-stat"> Speed: {hero.speed || '???'} </div>
+                </div>
               </div>
             ))}
           </div>

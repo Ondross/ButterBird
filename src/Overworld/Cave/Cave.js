@@ -14,7 +14,7 @@ function Cave(props) {
     <>
       <ShopIcon x="43%" y="38%" onClick={() => setShowCave(true)} iconName="cave" />
       {showCave && (
-        <BuildingInterior back={() => setShowCave(false)}>
+        <BuildingInterior paused={props.paused} back={() => setShowCave(false)}>
           <div className="levels-container">
             {props.config.levels.map(level => (
               <div className={`level-entrance ${level.completed && "completed"}`} key={level.name} onClick={() => props.setLevel(level) } >

@@ -2,7 +2,7 @@ import React, {useState, useEffect, useRef } from 'react';
 import './Dialogue.css';
 
 let spacebarDown
-let lineReadyTimeout
+let nextLineReadyTimeout
 function Dialogue(props) {
   const [textIndex, setTextIndex] = useState(0)
   const [lineIndex, setLineIndex] = useState(0)
@@ -19,26 +19,29 @@ function Dialogue(props) {
   }, [inputRef, showInput])
 
   useEffect(() => {
+    const line = (lines && lines[lineIndex]) || null
+    const text = (line && line.text) || null
     const typeText = () => {
       setTextIndex(val => val + 1)
     }
 
-    if (textIndex < 1) {
-      clearTimeout(lineReadyTimeout)
+    if (textIndex < 1 && text && text.length > 1) {
+      clearTimeout(nextLineReadyTimeout)
+      setNextLineReady(false)
     }
 
     let timeout
-    if (lines && lines[lineIndex] && lines[lineIndex].line[textIndex]) {
-      const line = lines[lineIndex]
-      const punctuation = ['.', '?', '!', ','].indexOf(line.line[textIndex]) > -1
+    const moreTextAhead = text && text[textIndex]
+    if (moreTextAhead) {
+      const punctuation = ['.', '?', '!', ','].indexOf(text[textIndex]) > -1
       let pauseLength = punctuation ? 350 / speed : 30 / speed
       if (textIndex === 0 && line.pause) {
         pauseLength = line.pause
       }
       timeout = setTimeout(typeText, pauseLength)
     } else {
-      clearTimeout(lineReadyTimeout)
-      lineReadyTimeout = setTimeout(() => setNextLineReady(true), 500)
+      clearTimeout(nextLineReadyTimeout)
+      nextLineReadyTimeout = setTimeout(() => setNextLineReady(true), 500)
     }
     return () => {clearTimeout(timeout)}
   }, [props, lineIndex, lines, speed, textIndex])
@@ -104,6 +107,7 @@ function Dialogue(props) {
 
   const speaker = (lines[lineIndex].speaker !== undefined && props.level.getSpeaker(lines[lineIndex].speaker)) || null
   const showPrompt = lines[lineIndex].prompt
+
   return (
     <div className="modal-container">
       <div className="dialogue-container">
@@ -112,7 +116,7 @@ function Dialogue(props) {
         <div className="dialogue">
           {speaker && <div className="speaker-name">{speaker.name || '???'}</div>}
           <div className="dialogue-text">
-            {lines[lineIndex].line.slice(0, textIndex)}
+            {lines[lineIndex].text.slice(0, textIndex)}
           </div>
           {showInput && <input ref={inputRef} type='text' className="prompt-input" onChange={e => setInputValue(e.target.value)} />}
           {showInput && inputValue && <img alt="" src="/images/icons/enter.png" className="icon enter-icon" />}

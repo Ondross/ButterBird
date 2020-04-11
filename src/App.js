@@ -14,7 +14,7 @@ window.CANVASHEIGHT = 24
 window.FPS = 45
 
 const party = [new Napkin()]
-const startingLevel = Underworld1
+const startingLevel = Overworld1
 startingLevel.init(party)
 
 function App() {
@@ -34,7 +34,7 @@ function App() {
   return (
     <div className="App">
       <Underworld
-        paused={appState.lines}
+        paused={!!appState.lines}
         playScene={playScene}
         underworldComplete={underworldComplete}
         level={appState.level}
@@ -46,6 +46,7 @@ function App() {
         playScene={playScene}
         party={party}
         setLevel={setLevel}
+        paused={!!appState.lines}
       />}
       <Dialogue
         done={() => playScene(null)}

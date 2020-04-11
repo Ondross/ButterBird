@@ -8,6 +8,7 @@ function Overworld1() {
   let introPlayed = false
   let caveScenePlayed = false
   let shelterScenePlayed = false
+  let armoryScenePlayed = false
   let party
 
   this.update = (playScene, info) => {
@@ -28,6 +29,15 @@ function Overworld1() {
       if (party.length < 2) {
         lines = lines.concat(script.UselessBuilding)
       }
+      lines.length && playScene(lines)
+    }
+    if (info === 'armoryShown') {
+      let lines = []
+      if (!armoryScenePlayed) {
+        armoryScenePlayed = true
+        lines = lines.concat(script.FirstArmoryEntrance)
+      }
+      lines = lines.concat(script.UselessBuilding)
       lines.length && playScene(lines)
     }
   }

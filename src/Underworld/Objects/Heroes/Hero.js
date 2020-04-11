@@ -3,8 +3,10 @@ import Util from "../../Util/Util"
 
 
 
-export default function Hero(images, sounds) {  
-  const speed = 9 // units / sec
+export default function Hero(images, sounds, baseStats) {  
+  this.speed = baseStats.speed
+  this.attack = baseStats.attack // units / sec
+  this.health = baseStats.health
   const weapon = new Weapon(this)
   const width = 2.5
   const height = 2.5
@@ -20,6 +22,13 @@ export default function Hero(images, sounds) {
       sounds[0].play()
     }
     this.destroyed = true
+  }
+
+  const damage = () => {
+    this.health -= 1
+    if (this.health <= 0) {
+      destroy()
+    }
   }
 
   let blinkStart
@@ -82,19 +91,19 @@ export default function Hero(images, sounds) {
     keysDown.forEach((key) => {
       switch (key) {
         case ('w'):
-          yVel = speed * -1
+          yVel = this.speed * -1
           this.facing = 'up'
           return
         case ('s'):
-          yVel = speed
+          yVel = this.speed
           this.facing = 'down'
           return
         case ('a'):
-          xVel = speed * -1
+          xVel = this.speed * -1
           this.facing = 'left'
           return
         case ('d'):
-          xVel = speed
+          xVel = this.speed
           this.facing = 'right'
           return
         default:
@@ -168,6 +177,7 @@ export default function Hero(images, sounds) {
   this.init = init
   this.weapon = weapon
   this.destroy = destroy
+  this.damage = damage
   this.hitboxWidthOffset = width / 4
   this.width = () => width
   this.height = () => height

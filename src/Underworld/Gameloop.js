@@ -36,7 +36,7 @@ export default function World() {
         }
 
         if (Util.checkForOverlap(b, e)) {
-          enemyDestroyed = e.damage(.5)
+          enemyDestroyed = e.damage(hero.attack)
           b.destroy()
         }
       })
@@ -76,7 +76,7 @@ export default function World() {
       }
       if (!hero.destroyed) {
         if (Util.checkForOverlap(e, hero)) {
-          hero.destroy()
+          hero.damage()
         }
       }
     })
