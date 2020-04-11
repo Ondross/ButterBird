@@ -35,14 +35,17 @@ export default function Hero(images, sounds) {
 
       // blink every now and then
     let image
-    let blinking = gametime - blinkStart < .1
-    if (Math.random() > .97 && !blinking) {
+    let blinkLength = .2
+    let timeSinceBlink = gametime - blinkStart
+    let blinking = timeSinceBlink < blinkLength
+    if (Math.random() > .99 && !blinking) {
       blinkStart = gametime
       blinking = true
+      timeSinceBlink = 0
     }
     if (this.facing === 'down' && blinking) {
       image = images['blink'][
-        Math.floor(gametime) % images['blink'].length
+        Math.floor(timeSinceBlink / (blinkLength / images['blink'].length))
       ]
     } else {
       image = images[this.facing][imageIndex]
