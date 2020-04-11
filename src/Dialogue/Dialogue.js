@@ -28,9 +28,13 @@ function Dialogue(props) {
     }
 
     let timeout
-    if (lines && lines[lineIndex] && lines[lineIndex].line[textIndex + 1]) {
-      const punctuation = ['.', '?', '!', ','].indexOf(lines[lineIndex].line[textIndex]) > -1
-      const pauseLength = punctuation ? 350 / speed : 30 / speed
+    if (lines && lines[lineIndex] && lines[lineIndex].line[textIndex]) {
+      const line = lines[lineIndex]
+      const punctuation = ['.', '?', '!', ','].indexOf(line.line[textIndex]) > -1
+      let pauseLength = punctuation ? 350 / speed : 30 / speed
+      if (textIndex === 0 && line.pause) {
+        pauseLength = line.pause
+      }
       timeout = setTimeout(typeText, pauseLength)
     } else {
       clearTimeout(lineReadyTimeout)
@@ -108,7 +112,7 @@ function Dialogue(props) {
         <div className="dialogue">
           <div className="speaker-name">{speaker.name || '???'}</div>
           <div className="dialogue-text">
-            {lines[lineIndex].line.slice(0, textIndex + 1)}
+            {lines[lineIndex].line.slice(0, textIndex)}
           </div>
           {showInput && <input ref={inputRef} type='text' className="prompt-input" onChange={e => setInputValue(e.target.value)} />}
           {showInput && inputValue && <img alt="" src="/images/icons/enter.png" className="icon enter-icon" />}
