@@ -16,8 +16,9 @@ function Cave(props) {
         <div className="cave-container">
           <div className="levels-container">
             {props.config.levels.map(level => (
-              <div className="level-entrance" key={level.name} onClick={() => props.setLevel(level) } >
+              <div className={`level-entrance ${level.completed && "completed"}`} key={level.name} onClick={() => props.setLevel(level) } >
                 {level.name}
+                {level.completed && <div className="completed-tag">complete</div>}
               </div>
             ))}
           </div>

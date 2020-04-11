@@ -29,7 +29,7 @@ function Dialogue(props) {
 
     let timeout
     if (lines && lines[lineIndex] && lines[lineIndex].line[textIndex + 1]) {
-      const punctuation = ['.', '?', '!'].indexOf(lines[lineIndex].line[textIndex]) > -1
+      const punctuation = ['.', '?', '!', ','].indexOf(lines[lineIndex].line[textIndex]) > -1
       const pauseLength = punctuation ? 350 / speed : 30 / speed
       timeout = setTimeout(typeText, pauseLength)
     } else {

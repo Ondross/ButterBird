@@ -10,6 +10,7 @@ function Underworld3() {
   this.update = (gamestate, playScene, setUnderWorldComplete) => {
     if (gamestate.level.rooms.every(room => room.enemies.length === 0 && room.visited)) {
       setUnderWorldComplete(true)
+      this.completed = true
     }
     if (gamestate.events.dead && !died) {
       playScene('YouDied')
@@ -26,6 +27,7 @@ function Underworld3() {
   this.script = script
   this.name = 'Friend'
   this.type = 'underworld'
+  this.completed = false
 
   this.getSpeaker = characterId => ({
     avatar: party[characterId].images.avatar[characterId].src,

@@ -15,6 +15,7 @@ function Underworld2() {
     }
 
     if (gamestate.level.rooms.every(room => room.enemies.length === 0 && room.visited)) {
+      this.completed = true
       setUnderWorldComplete(true)
     }
     if (gamestate.events.dead && !died) {
@@ -32,6 +33,7 @@ function Underworld2() {
   this.script = script
   this.name = 'More Monsters'
   this.type = 'underworld'
+  this.completed = false
 
   this.getSpeaker = characterId => ({
     avatar: party[characterId].images.avatar[characterId].src,

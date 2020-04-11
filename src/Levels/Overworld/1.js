@@ -24,7 +24,7 @@ function Overworld1() {
     "armory": {},
     "shelter": {},
     "cave": {
-      levels: [Underworld1, Underworld3]
+      levels: [Underworld1, Underworld2, Underworld3]
     },
   }
 
@@ -32,10 +32,6 @@ function Overworld1() {
   this.name = "Overworld1"
   this.type = "overworld"
   this.script = script
-  this.levels = {
-    'Intro': Underworld1,
-    'Find a Friend': Underworld2,
-  }
 
   this.getSpeaker = characterId => ({
     avatar: party[characterId].images.avatar[characterId].src,

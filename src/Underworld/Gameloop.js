@@ -20,7 +20,6 @@ export default function World() {
     if (index !== -1) keysDown.splice(index, 1)
   })
 
-
   let alreadyInDoorway = false
   function findAllCollisions() {
     const room = level.currentRoom
@@ -127,6 +126,11 @@ export default function World() {
     Object.values(room.doors).forEach(door => door.update(canvas))
 
     findAllCollisions()
+
+    // For admin only
+    if (keysDown.indexOf('y') > -1) {
+      room.enemies = []
+    }
   }
 
   function getState() {

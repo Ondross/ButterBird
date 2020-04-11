@@ -26,6 +26,7 @@ function Underworld1() {
       firstKill = true
     }
     if (gamestate.level.rooms.every(room => room.enemies.length === 0 && room.visited)) {
+      this.completed = true
       setUnderWorldComplete(true)
     }
     if (gamestate.events.dead && !died) {
@@ -44,7 +45,15 @@ function Underworld1() {
   this.script = script
   this.name = 'Intro'
   this.type = "underworld"
-  this.nextLevel = Underworld2
+  this.completed = false
+
+  // tricky: the followup to this changes after you've beaten it the first time.
+  let nextLevel = Underworld2
+  this.nextLevel = () => {
+    const toReturn = nextLevel
+    nextLevel = null
+    return toReturn
+  }
   this.prompts = {
     askName: (name) => {
       party[0].name = name

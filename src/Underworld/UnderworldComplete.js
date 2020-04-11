@@ -1,8 +1,18 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './UnderworldComplete.css';
 
 
 function UnderworldComplete(props) {
+  useEffect(() => {
+    const keydown = (e) => {
+      if (props.show && (e.key === ' ' || e.key === 'escape')) {
+        props.finish()
+      }
+    }
+    document.addEventListener('keydown', keydown)
+    return () => document.removeEventListener('keydown', keydown)
+  }, [props])
+
   if (!props.show) {
     return (null)
   }
