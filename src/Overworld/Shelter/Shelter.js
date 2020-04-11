@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import ShopIcon from "./ShopIcon"
-import BuildingInterior from "./BuildingInterior"
+import ShopIcon from "../ShopIcon"
+import BuildingInterior from "../BuildingInterior"
 
-function Shelter({update}) {
+function Shelter({update, config}) {
   const [showShelter, setShowShelter] = useState(false)
 
   // I have to do this wacky thing to prevent an infinite loop
@@ -23,7 +23,14 @@ function Shelter({update}) {
       <ShopIcon x="10%" y="40%" onClick={() => setShowShelter(true)} iconName="shelter" />
       {showShelter && (
         <BuildingInterior back={() => setShowShelter(false)} >
-          (Under Construction) Cool. This will be a good place to sleep later on.
+          <div className="heros-container">
+            {config.party.map((hero) => (
+              <div className="hero" key={hero.name || '???'} >
+                {hero.name || '???'}
+                <img src={hero.images.avatar[0].src} alt="avatar" className="shelter-avatar" />
+              </div>
+            ))}
+          </div>
         </BuildingInterior>
       )}
     </>

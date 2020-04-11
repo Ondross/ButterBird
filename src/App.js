@@ -14,7 +14,7 @@ window.CANVASHEIGHT = 24
 window.FPS = 45
 
 const party = [new Napkin()]
-const startingLevel = Underworld1
+const startingLevel = Overworld1
 startingLevel.init(party)
 
 function App() {

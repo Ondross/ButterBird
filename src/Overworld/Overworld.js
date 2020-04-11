@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import './Overworld.css'
 import Armory from './Armory'
-import Shelter from './Shelter'
+import Shelter from './Shelter/Shelter'
 import Cave from './Cave/Cave'
 
 function Overworld(props) {
