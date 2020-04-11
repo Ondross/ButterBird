@@ -7,7 +7,7 @@ function ShopIcon(props) {
   const highlightPath = `/images/buildings/${props.iconName}Highlight.png`
   return (
     <div className="shop-container">
-      <div className="shop-icon-container" style={{bottom: props.y, right: props.x, width: props.width || '12vw'}}>
+      <div onClick={props.onClick} className="shop-icon-container" style={{bottom: props.y, right: props.x, width: props.width || '12vw'}}>
         <img
           alt=""
           className="shop-icon"

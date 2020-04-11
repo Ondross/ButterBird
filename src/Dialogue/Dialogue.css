@@ -1,8 +1,17 @@
+.modal-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  user-select: none;
+}
+
 .dialogue-container {
   position: absolute;
-  bottom: 20%;
-  width: 100%;
+  top: 60%;
   height: 25%;
+  width: 100%;
 }
 
 .dialogue {

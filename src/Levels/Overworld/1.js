@@ -1,21 +1,31 @@
-import Underworld1 from '../Underworld/1.js'
-import Underworld2 from '../Underworld/2.js'
-import script from '../Scripts/Overworld/1.js'
+import Underworld1 from '../Underworld/1'
+import Underworld2 from '../Underworld/2'
+import Underworld3 from '../Underworld/3'
+import script from '../Scripts/Overworld/1'
 
-function Overworld1(party) {
+
+function Overworld1() {
   let introPlayed = false
+  let caveScenePlayed = false
+  let party
 
-  this.update = (playScene) => {
+  this.update = (playScene, info) => {
     if (!introPlayed) {
       playScene('Welcome')
       introPlayed = true
+    }
+    if (info === 'caveShown' && !caveScenePlayed) {
+      caveScenePlayed = true
+      playScene('FirstCaveEntrance')
     }
   }
 
   this.shops = {
     "armory": {},
     "shelter": {},
-    "cave": {},
+    "cave": {
+      levels: [Underworld1, Underworld2, Underworld3]
+    },
   }
 
   this.backgroundSrc = '/images/backgrounds/marsOverworld.png'
@@ -31,11 +41,12 @@ function Overworld1(party) {
     avatar: party[characterId].images.avatar[characterId].src,
     name: party[characterId].name
   })
+
+  // call on entering the level
+  this.init = (team) => {
+    party = team
+  }
 }
 
-// overworld levels don't get re-inited when we need them.
-let overworld
-export default (party) => {
-  overworld = overworld || new Overworld1(party)
-  return overworld
-}
+export default new Overworld1()
+

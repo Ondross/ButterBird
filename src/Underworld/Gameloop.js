@@ -49,7 +49,7 @@ export default function World() {
         }
 
         if (Util.checkForOverlap(b, e)) {
-          enemyDestroyed = e.damage(.4)
+          enemyDestroyed = e.damage(.5)
           b.destroy()
         }
       })

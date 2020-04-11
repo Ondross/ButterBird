@@ -1,20 +1,14 @@
-import script from '../Scripts/Underworld/2'
+import script from '../Scripts/Underworld/3'
 
 const background = new Image()
 background.src = '/images/backgrounds/art.png'
 
-function Underworld2() {
-  let introPlayed = false
+function Underworld3() {
   let levelComplete = false
   let died = false
   let party
 
   this.update = (gamestate, playScene, setUnderWorldComplete) => {
-    if (!introPlayed) {
-      playScene('Intro')
-      introPlayed = true
-    }
-
     if (!levelComplete && gamestate.level.rooms.every(room => room.enemies.length === 0 && room.visited)) {
       setUnderWorldComplete(true)
       levelComplete = true
@@ -32,7 +26,7 @@ function Underworld2() {
   }
 
   this.script = script
-  this.name = 'More Monsters'
+  this.name = 'Friend'
   this.type = 'underworld'
 
   this.getSpeaker = characterId => ({
@@ -46,4 +40,4 @@ function Underworld2() {
   }
 }
 
-export default new Underworld2()
+export default new Underworld3()

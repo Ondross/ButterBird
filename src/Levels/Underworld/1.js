@@ -1,16 +1,16 @@
-import Underworld2 from '../Underworld/2.js'
-import script from '../Scripts/Underworld/1.js'
-
+import Underworld2 from './2'
+import script from '../Scripts/Underworld/1'
 
 const background = new Image()
 background.src = '/images/backgrounds/space.jpg'
 
-function Underworld1(party) {
+function Underworld1() {
   let introPlayed = false
   let enemiesExplained = false
   let firstKill = false
   let levelComplete = false
   let died = false
+  let party
 
   this.update = (gamestate, playScene, setUnderWorldComplete) => {
     if (!introPlayed) {
@@ -44,7 +44,7 @@ function Underworld1(party) {
   }
 
   this.script = script
-  this.name = 'Underworld1'
+  this.name = 'Intro'
   this.type = "underworld"
   this.nextLevel = Underworld2
   this.prompts = {
@@ -60,6 +60,11 @@ function Underworld1(party) {
     avatar: party[characterId].images.avatar[characterId].src,
     name: party[characterId].name
   })
+
+  // call on entering the level
+  this.init = (team) => {
+    party = team
+  }
 }
 
-export default (party) => new Underworld1(party)
+export default new Underworld1()

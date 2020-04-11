@@ -101,17 +101,19 @@ function Dialogue(props) {
   const speaker = props.level.getSpeaker(lines[lineIndex].speaker) || {}
   const showPrompt = lines[lineIndex].prompt
   return (
-    <div className="dialogue-container">
-      <div className="avatar-highlight" />
-      <img alt="avatar" className="avatar" src={speaker.avatar} />
-      <div className="dialogue">
-        <div className="speaker-name">{speaker.name || '???'}</div>
-        <div className="dialogue-text">
-          {lines[lineIndex].line.slice(0, textIndex + 1)}
+    <div className="modal-container">
+      <div className="dialogue-container">
+        <div className="avatar-highlight" />
+        <img alt="avatar" className="avatar" src={speaker.avatar} />
+        <div className="dialogue">
+          <div className="speaker-name">{speaker.name || '???'}</div>
+          <div className="dialogue-text">
+            {lines[lineIndex].line.slice(0, textIndex + 1)}
+          </div>
+          {showInput && <input ref={inputRef} type='text' className="prompt-input" onChange={e => setInputValue(e.target.value)} />}
+          {showInput && inputValue && <img alt="" src="/images/icons/enter.png" className="icon enter-icon" />}
+          {nextLineReady && !showPrompt && <img alt="" src="/images/icons/spacebar.png" className="icon spacebar-icon" />}
         </div>
-        {showInput && <input ref={inputRef} type='text' className="prompt-input" onChange={e => setInputValue(e.target.value)} />}
-        {showInput && inputValue && <img alt="" src="/images/icons/enter.png" className="icon enter-icon" />}
-        {nextLineReady && !showPrompt && <img alt="" src="/images/icons/spacebar.png" className="icon spacebar-icon" />}
       </div>
     </div>
   )

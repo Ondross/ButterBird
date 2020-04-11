@@ -14,11 +14,19 @@ window.CANVASHEIGHT = 24
 window.FPS = 45
 
 const party = [new Napkin()]
+const startingLevel = Underworld1
+startingLevel.init(party)
 
 function App() {
-  const [appState, setAppState] = useState({ level: Overworld1(party) })
+  const [appState, setAppState] = useState({ level: startingLevel })
 
-  const nextLevel = () => setAppState(state => ({...state, level: appState.level.nextLevel(party), showUnderworldComplete: false }))
+  const setLevel = (level) => {
+    level.init(party)
+    setAppState(state => ({ ...state, level: level, showUnderworldComplete: false }))
+  }
+  const nextLevel = () => {
+    setLevel(appState.level.nextLevel || Overworld1)
+  }
   const playScene = (scene) => setAppState(state => ({...state, scene: scene }))
   const underworldComplete = () => setAppState(state => ({...state, showUnderworldComplete: true }))
 
@@ -36,6 +44,7 @@ function App() {
         level={appState.level}
         playScene={playScene}
         party={party}
+        setLevel={setLevel}
       />}
       <Dialogue
         done={() => playScene(null)}
