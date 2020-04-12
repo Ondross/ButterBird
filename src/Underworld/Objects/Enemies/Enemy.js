@@ -41,7 +41,7 @@ export default function Enemy(x, y, images, sounds) {
 
   let lastRoomId = null
   let sameRoomCounter = 0
-  const update = (dt, paused, canvas, hero, gametime, obstacles, worldGraph, roomId) => {
+  const update = (gametime, dt, paused, canvas, hero, obstacles, worldGraph, roomId) => {
     if (this.destroyed) {
       return
     }

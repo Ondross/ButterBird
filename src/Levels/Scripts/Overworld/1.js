@@ -19,4 +19,9 @@ export default {
   'UselessBuilding': [
     { pause: 500, text: "Not much to do here now.", speaker: 0 },
   ],
+  'ShelterSecondRecruit': [
+    { pause: 500, text: "We can chill here.", speaker: 0 },
+    { text: "This is nice!", speaker: 1 },
+    { text: "I bet I could rig up a lab in here and upgrade us.", speaker: 1 },
+  ],
 }

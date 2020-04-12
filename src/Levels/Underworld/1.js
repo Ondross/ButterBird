@@ -64,7 +64,7 @@ function Underworld1() {
   // 0 usually refers to the first character in your party.
   // each level has to figure it out.
   this.getSpeaker = characterId => ({
-    avatar: party[characterId].images.avatar[characterId].src,
+    avatar: party[characterId].images.avatar[0].src,
     name: party[characterId].name
   })
 

@@ -4,6 +4,7 @@ function Level(parameters, maxWidth, maxHeight) {
   this.currentRoom = RoomBuilder(maxWidth, maxHeight, 0, parameters.background)
   this.currentRoom.visited = true
   this.rooms = [this.currentRoom]
+  this.npcs = []
 
   let room = this.currentRoom
   for (let i = 0; i < parameters.numRooms -1; i++) {
@@ -22,6 +23,13 @@ function Level(parameters, maxWidth, maxHeight) {
     room = newRoom
     this.rooms.push(room)
   }
+
+  parameters.npcs && parameters.npcs.forEach(npc => {
+    const roomNumber = this.rooms.length ? (Math.floor(Math.random() * (this.rooms.length - 1)) + 1) : 0
+    this.rooms[roomNumber].addNpc(npc)
+    this.npcs.push(npc)
+  })
+  
 
   this.rooms.forEach(room => room.generateWalls())
 

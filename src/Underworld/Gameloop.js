@@ -81,6 +81,17 @@ export default function World() {
       }
     })
 
+    // NPCs x Hero
+    room.npcs.forEach(npc => {
+      if (npc.destroyed) {
+        return
+      }
+      if (Util.checkForOverlap(npc, hero)) {
+        gameEvents.recruitNpc = npc
+        npc.recruited = true
+      }
+    })
+
     alreadyInDoorway = enteredDoorway
   }
 
@@ -118,9 +129,11 @@ export default function World() {
       level.currentRoom.height,
       true
     )
-    hero.update(delta, paused, canvas, keysDown, gametime, room.walls.concat(Object.values(room.doors)))
+
+    room.npcs.forEach(npc => npc.update(gametime, delta, paused, canvas, keysDown, []))
+    hero.update(gametime, delta, paused, canvas, keysDown, room.walls.concat(Object.values(room.doors)))
     room.enemies.forEach(enemy =>
-      enemy.update(delta, paused, canvas, hero, gametime, room.walls.concat(room.enemies), room.graph, room.id)
+      enemy.update(gametime, delta, paused, canvas, hero, room.walls.concat(room.enemies), room.graph, room.id)
     )
     room.walls.forEach(wall => wall.update(canvas))
     Object.values(room.doors).forEach(door => door.update(canvas))

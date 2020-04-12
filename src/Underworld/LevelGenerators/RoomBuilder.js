@@ -164,14 +164,26 @@ function Room(width, height, background) {
     this.enemies.push(enemy)
   }
 
+  const addNpc = (npc) => {
+    // Hack: our walls are place in quarters. Place NPCs in thirds until we get smarter.
+    npc.setPos(
+      (Math.floor(2 * Math.random()) + 1) * (width / 3),
+      2 + Math.random() * (height - 4))
+    npc.setNpc(true)
+
+    this.npcs.push(npc)
+  }
+
   this.generateWalls = generateWalls
   this.addDoor = addDoor
   this.addEnemy = addEnemy
+  this.addNpc = addNpc
   this.width = width
   this.height = height
   this.walls = []
   this.doors = {}
   this.enemies = []
+  this.npcs = []
   this.backgroundImage = background
   this.grid = EmptyGrid(width, height)
   this.generateGraph = () => {

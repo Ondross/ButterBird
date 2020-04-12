@@ -11,7 +11,7 @@ export default function Weapon(char) {
   const drawSelf = (dt, paused, canvas) => {
     bullets.forEach(b => b.update(dt, paused, canvas))
   }
-  const update = (dt, paused, canvas, keysDown, gametime, charXVel, charYVel) => {
+  const update = (gametime, dt, paused, canvas, keysDown, charXVel, charYVel) => {
 
     if (paused) {
       drawSelf(dt, true, canvas)

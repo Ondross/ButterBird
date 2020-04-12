@@ -9,6 +9,7 @@ function Overworld1() {
   let caveScenePlayed = false
   let shelterScenePlayed = false
   let armoryScenePlayed = false
+  let shelterSecondRecruitPlayed = false
   let party
 
   this.update = (playScene, info) => {
@@ -28,6 +29,8 @@ function Overworld1() {
       }
       if (party.length < 2) {
         lines = lines.concat(script.UselessBuilding)
+      } else if (!shelterSecondRecruitPlayed) {
+        lines = lines.concat(script.ShelterSecondRecruit)
       }
       lines.length && playScene(lines)
     }
@@ -58,7 +61,7 @@ function Overworld1() {
   this.script = script
 
   this.getSpeaker = characterId => ({
-    avatar: party[characterId].images.avatar[characterId].src,
+    avatar: party[characterId].images.avatar[0].src,
     name: party[characterId].name
   })
 

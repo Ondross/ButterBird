@@ -35,7 +35,7 @@ export default function Bullet(initialX, initialY, xDir, yDir) {
   let width = .7
   let height = .7
   this.destroyed = false
-  let speed = 12
+  let speed = 15
 
   // Only for 45 deg bullets
   // if (xDir && yDir) {

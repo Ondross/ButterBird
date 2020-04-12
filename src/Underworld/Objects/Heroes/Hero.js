@@ -41,13 +41,13 @@ export default function Hero(images, sounds, baseStats) {
     let imageIndex
 
     // wiggle while moving.
-    if (xv || yv) {
+    if (xv || yv || this.isNpc) {
       imageIndex = Math.floor(gametime * 8) % images[this.facing].length
     } else {
       imageIndex = 0
     }
 
-      // blink every now and then
+    // blink every now and then
     let image
     let blinkLength = .2
     let timeSinceBlink = gametime - blinkStart
@@ -73,12 +73,12 @@ export default function Hero(images, sounds, baseStats) {
     )
   }
 
-  const update = (dt, paused, canvas, keysDown, gametime, obstacles) => {
+  const update = (gametime, dt, paused, canvas, keysDown, obstacles) => {
     if (this.destroyed) {
       return
     }
-    if (paused) {
-      weapon.update(dt, paused, canvas, keysDown, gametime, 0, 0)
+    if (paused || (this.isNpc && !this.recruited)) {
+      weapon.update(gametime, dt, paused, canvas, this.isNpc ? [] : keysDown || [], 0, 0)
 
       // don't draw the hero if this is the opening cutscene.
       if (gametime > .1) {
@@ -146,7 +146,7 @@ export default function Hero(images, sounds, baseStats) {
       y = newVals[1]
     }
 
-    weapon.update(dt, paused, canvas, keysDown, gametime, xVel, yVel)
+    weapon.update(gametime, dt, paused, canvas, keysDown, xVel, yVel)
     drawSelf(gametime, canvas, xVel, yVel)
   }
 
@@ -181,4 +181,7 @@ export default function Hero(images, sounds, baseStats) {
   this.hitboxWidthOffset = width / 4
   this.width = () => width
   this.height = () => height
+  this.setNpc = (npc) => {
+    this.isNpc = npc
+  }
 }

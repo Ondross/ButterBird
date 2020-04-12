@@ -37,7 +37,7 @@ function Underworld2() {
   this.completed = false
 
   this.getSpeaker = characterId => ({
-    avatar: party[characterId].images.avatar[characterId].src,
+    avatar: party[characterId].images.avatar[0].src,
     name: party[characterId].name
   })
 

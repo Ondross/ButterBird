@@ -4,7 +4,7 @@ import Overworld from './Overworld/Overworld'
 import Underworld from './Underworld/Underworld'
 import UnderworldComplete from './Underworld/UnderworldComplete'
 import Dialogue from './Dialogue/Dialogue'
-import Underworld1 from './Levels/Underworld/1'
+import Underworld1 from './Levels/Underworld/3'
 import Overworld1 from './Levels/Overworld/1'
 import Squid from './Underworld/Objects/Heroes/Squid';
 import Napkin from './Underworld/Objects/Heroes/Napkin';
@@ -40,7 +40,7 @@ function App() {
         level={appState.level}
         party={party}
       />
-      <UnderworldComplete finish={nextLevel} show={appState.showUnderworldComplete} />
+      <UnderworldComplete finish={nextLevel} show={appState.showUnderworldComplete && !appState.lines} />
       {appState.level.type === 'overworld' && <Overworld
         level={appState.level}
         playScene={playScene}
