@@ -25,7 +25,8 @@ function Level(parameters, maxWidth, maxHeight) {
   }
 
   parameters.npcs && parameters.npcs.forEach(npc => {
-    const roomNumber = this.rooms.length ? (Math.floor(Math.random() * (this.rooms.length - 1)) + 1) : 0
+    // avoid the first and last rooms.
+    const roomNumber = (this.rooms.length > 2) ? (Math.floor(Math.random() * (this.rooms.length - 2)) + 1) : (this.rooms.length - 1)
     this.rooms[roomNumber].addNpc(npc)
     this.npcs.push(npc)
   })

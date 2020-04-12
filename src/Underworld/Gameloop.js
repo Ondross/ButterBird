@@ -27,7 +27,11 @@ export default function World() {
 
     // Bullets x enemies, doors, and walls
     let enemyDestroyed = false
-    hero.weapon && hero.weapon.bullets().forEach(b => {
+    let bullets = [...hero.weapon.bullets()]
+    tailgaters.forEach((tg) => {
+      bullets = bullets.concat(tg.weapon.bullets())
+    })
+    bullets.forEach(b => {
       if (b.destroyed) {
         return
       }
