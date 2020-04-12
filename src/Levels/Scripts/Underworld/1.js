@@ -6,7 +6,7 @@ export default {
     {text: "This place smells like trash... So do I... And my only friend seems to have gone missing.", speaker: 0},
     {text: "It's been silent for... days? Who knows?", speaker: 0},
     { text: "*sigh* ... I should collect some food.", speaker: 0 },
-    { text: "What was my name again?", speaker: 0, prompt: 'askName' },
+    { text: "What was my name again?", speaker: 0, prompt: 'askName', maxLength: 20 },
     {text: "Come on then... get motivated.", speaker: 0 },
     {text: "Remember how to move? WASD.", speaker: 0},
   ],

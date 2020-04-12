@@ -101,12 +101,14 @@ function Dialogue(props) {
     }
   }, [setSpeed, setLineIndex, setTextIndex, lineIndex, props, lines, textIndex, nextLineReady, inputValue, setShowInput])
 
-  if (!lines || !lines[lineIndex]) {
+
+  const line = lines && lines[lineIndex]
+  if (!line) {
     return (null)
   }
 
-  const speaker = (lines[lineIndex].speaker !== undefined && props.level.getSpeaker(lines[lineIndex].speaker)) || null
-  const showPrompt = lines[lineIndex].prompt
+  const speaker = (line.speaker !== undefined && props.level.getSpeaker(line.speaker)) || null
+  const showPrompt = line.prompt
 
   return (
     <div className="modal-container">
@@ -116,9 +118,9 @@ function Dialogue(props) {
         <div className="dialogue">
           {speaker && <div className="speaker-name">{speaker.name || '???'}</div>}
           <div className="dialogue-text">
-            {lines[lineIndex].text.slice(0, textIndex)}
+            {line.text.slice(0, textIndex)}
           </div>
-          {showInput && <input ref={inputRef} type='text' className="prompt-input" onChange={e => setInputValue(e.target.value)} />}
+          {showInput && <input maxLength={line.maxLength} ref={inputRef} type='text' className="prompt-input" onChange={e => setInputValue(e.target.value)} />}
           {showInput && inputValue && <img alt="" src="/images/icons/enter.png" className="icon enter-icon" />}
           {nextLineReady && !showPrompt && <img alt="" src="/images/icons/spacebar.png" className="icon spacebar-icon" />}
         </div>
