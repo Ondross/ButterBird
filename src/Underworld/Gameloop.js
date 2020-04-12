@@ -164,10 +164,10 @@ export default function World() {
     return state
   }
 
-  const newLevel = (levelParameters, party) => {
+  const newLevel = (levelTemplate, party) => {
     gametime = null
     lastUpdate = null
-    level = levelBuilder.build(levelParameters, window.CANVASWIDTH, window.CANVASHEIGHT)
+    level = levelBuilder.build(levelTemplate, window.CANVASWIDTH, window.CANVASHEIGHT)
     hero = party[0]
     hero.setPos(5, window.CANVASHEIGHT / 2)
     hero.init()

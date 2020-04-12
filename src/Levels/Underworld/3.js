@@ -39,7 +39,7 @@ function Underworld3() {
     }
   }
 
-  this.levelParameters = {
+  this.parameters = {
     numRooms: 4,
     averageEnemiesPerRoom: 3,
     background: background,

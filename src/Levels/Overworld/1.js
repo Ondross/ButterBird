@@ -18,7 +18,7 @@ function Overworld1() {
       playScene(script.Welcome)
       introPlayed = true
     }
-    if (party.length > 1) {
+    if (party.length > 1 && this.shops.cave.levels.indexOf(Underworld4) === -1) {
       this.shops.cave.levels.push(Underworld4)
     }
     if (info === 'caveShown' && !caveScenePlayed) {

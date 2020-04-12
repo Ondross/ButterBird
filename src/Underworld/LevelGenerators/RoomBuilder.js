@@ -3,7 +3,7 @@ import Wall from '../Objects/Obstacles/Wall'
 import Door from '../Objects/Obstacles/Door'
 import Blob from "../Objects/Enemies/Blob"
 import Squid from "../Objects/Enemies/Squid"
-import Prune from "../Objects/Enemies/Prune"
+import Germ from "../Objects/Enemies/Germ"
 import Util from "../Util/Util"
 
 function EmptyGrid(width, height) {
@@ -146,7 +146,7 @@ function Room(width, height, background) {
   }
 
   const addEnemy = () => {
-    const enemyClass = [Blob, Prune, Squid][Math.floor(Math.random() * 3)]
+    const enemyClass = [Blob, Germ, Squid][Math.floor(Math.random() * 3)]
     const enemy = new enemyClass(
       7 + Math.random() * (width - 12) ,
       2 + Math.random() * (height - 4))
