@@ -9,12 +9,12 @@ export default {
   ],
   'FirstShelterEntrance': [
     { pause: 500, text: "Hello?", speaker: 0 },
-    { pause: 500, text: "..." },
+    { text: "... (wind blows)" },
     { text: "Seems abandoned.", speaker: 0 },
-    { text: "This will be a good place to rest and recover.", speaker: 0 },
+    { text: "This might be a good place to rest and recover.", speaker: 0 },
   ],
   'FirstArmoryEntrance': [
-    { pause: 500, text: "Looks like a place to buy some better weapons.", speaker: 0 },
+    { pause: 500, text: "Shopkeeper is on break. I'll come back for some weapons later.", speaker: 0 },
   ],
   'UselessBuilding': [
     { pause: 500, text: "Not much to do here now.", speaker: 0 },

@@ -8,9 +8,8 @@ export default function Enemy(x, y, images, sounds) {
   const baseHeight = 1
   let width = 1
   let height = 1
-  let health = 1
+  let health = 2
   this.facing = 'down'
-
 
   const destroy = () => {
     this.destroyed = true
@@ -20,8 +19,8 @@ export default function Enemy(x, y, images, sounds) {
   }
   const damage = (val) => {
     health -= val
-    width =  baseWidth * (health / 1) * .5 + .5
-    height =  baseHeight * (health / 1) * .5 + .5
+    width = baseWidth * (health / 2) * .5 + .5
+    height = baseHeight * (health / 2) * .5 + .5
     if (health <= 0) {
       destroy()
       return true
