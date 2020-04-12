@@ -44,7 +44,7 @@ export default function Weapon(char) {
     })
     const reloaded = (gametime - lastFire) > (1 / fireRate)
     if ((xDir || yDir) && reloaded) {
-      bullets.push(new Bullet(char.x(), char.y(), xDir + charXVel * .02, yDir + charYVel * .02))
+      bullets.push(new Bullet(char.range, char.x(), char.y(), xDir + charXVel * .02, yDir + charYVel * .02))
       lastFire = gametime
     }
     drawSelf(dt, false, canvas)

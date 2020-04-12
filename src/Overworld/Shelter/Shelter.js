@@ -31,8 +31,9 @@ function Shelter({update, config, paused}) {
                 <div className="hero-stats">
                   <div className="hero-name"> {hero.name || '???'} </div>
                   <div className="hero-stat"> Health: {hero.health || '???'} </div>
-                  <div className="hero-stat"> Attack: {hero.attack || '???'} </div>
                   <div className="hero-stat"> Speed: {hero.speed || '???'} </div>
+                  <div className="hero-stat"> Attack: {hero.attack || '???'} </div>
+                  <div className="hero-stat"> Range: {hero.range || '???'} </div>
                 </div>
               </div>
             ))}

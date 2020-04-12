@@ -45,6 +45,7 @@ const baseStats = {
   attack: 2,
   health: 1,
   speed: 9,
+  range: 5,
 }
 
 export default function Squid() {

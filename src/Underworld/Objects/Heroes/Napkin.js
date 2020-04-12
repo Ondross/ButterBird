@@ -47,6 +47,7 @@ const baseStats = {
   attack: 1,
   health: 1,
   speed: 12,
+  range: 10,
 }
 
 export default function Napkin () {

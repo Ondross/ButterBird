@@ -2,9 +2,10 @@ import Weapon from "../Weapons/Weapon"
 import Util from "../../Util/Util"
 
 export default function Hero(images, sounds, baseStats) {  
-  this.speed = baseStats.speed
-  this.attack = baseStats.attack // units / sec
+  this.speed = baseStats.speed // units / sec
+  this.attack = baseStats.attack
   this.health = baseStats.health
+  this.range = baseStats.range
   const weapon = new Weapon(this)
   const width = 2.5
   const height = 2.5

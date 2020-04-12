@@ -29,11 +29,11 @@ const sounds = [
   return sound
 })
 
-export default function Bullet(initialX, initialY, xDir, yDir) {
+export default function Bullet(range, initialX, initialY, xDir, yDir) {
   let x = initialX
   let y = initialY
-  let width = .7
-  let height = .7
+  let width = 7 / range
+  let height = 7 / range
   this.destroyed = false
   let speed = 15
 
@@ -49,29 +49,40 @@ export default function Bullet(initialX, initialY, xDir, yDir) {
   const yVel = speed * yDir
 
   const destroy = () => {
+    if (this.destroyed) {
+      return
+    }
     const sound = sounds[Math.floor(Math.random() * sounds.length)]
     sound.currentTime = 0
     sound.play()
-    this.destroyed = true
+    this.destroyed = 1
   }
 
   const sound = sounds[Math.floor(Math.random() * sounds.length)]
   sound.currentTime = 0
   sound.play()
 
+  const distance = (a, b) => Math.sqrt((a.x - b.x)**2 + (a.y - b.y)**2)
 
   const update = (dt, paused, canvas) => {
     if (this.popped) {
       return
     }
-    if (!paused) {
+    if (!paused && !this.destroyed) {
       x += xVel * dt
       y += yVel * dt
     }
+    if (distance({x: x, y: y}, {x: initialX, y: initialY}) > range) {
+      destroy()
+    }
 
     let image = images[Math.floor(Math.random() * images.length)]
-    if (this.destroyed) {
+
+    // todo: use gametime instead of a counter
+    if (this.destroyed && this.destroyed < 5) {
       image = poppedImages[0]
+      this.destroyed++
+    } else if (this.destroyed) {
       this.popped = true
     }
     canvas.drawImage(
