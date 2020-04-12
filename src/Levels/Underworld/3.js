@@ -2,7 +2,7 @@ import script from '../Scripts/Underworld/3'
 import Squid from '../../Underworld/Objects/Heroes/Squid'
 
 const background = new Image()
-background.src = '/images/backgrounds/art.png'
+background.src = '/images/backgrounds/space.jpg'
 
 function Underworld3() {
   let died = false
@@ -40,7 +40,7 @@ function Underworld3() {
   }
 
   this.levelParameters = {
-    numRooms: 2,
+    numRooms: 4,
     averageEnemiesPerRoom: 3,
     background: background,
     npcs: [new Squid()]

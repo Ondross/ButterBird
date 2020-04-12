@@ -2,7 +2,7 @@ import Underworld2 from './2'
 import script from '../Scripts/Underworld/1'
 
 const background = new Image()
-background.src = '/images/backgrounds/space.jpg'
+background.src = '/images/backgrounds/space2.jpg'
 
 function Underworld1() {
   let introPlayed = false

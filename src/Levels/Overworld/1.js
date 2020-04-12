@@ -1,6 +1,7 @@
 import Underworld1 from '../Underworld/1'
 import Underworld2 from '../Underworld/2'
 import Underworld3 from '../Underworld/3'
+import Underworld4 from '../Underworld/4'
 import script from '../Scripts/Overworld/1'
 
 
@@ -16,6 +17,9 @@ function Overworld1() {
     if (!introPlayed) {
       playScene(script.Welcome)
       introPlayed = true
+    }
+    if (party.length > 1) {
+      this.shops.cave.levels.push(Underworld4)
     }
     if (info === 'caveShown' && !caveScenePlayed) {
       caveScenePlayed = true
