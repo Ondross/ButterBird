@@ -1,8 +1,6 @@
 import Weapon from "../Weapons/Weapon"
 import Util from "../../Util/Util"
 
-
-
 export default function Hero(images, sounds, baseStats) {  
   this.speed = baseStats.speed
   this.attack = baseStats.attack // units / sec

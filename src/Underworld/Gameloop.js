@@ -7,6 +7,7 @@ export default function World() {
   let tailgaters = [] // NPCs that follow you around.
   let gameEvents = {}
   let hero, level, canvas
+  let paused = false
   const levelBuilder = new LevelBuilder()
 
   const keysDown = [] // ordered array: oldest to newest events
@@ -14,6 +15,10 @@ export default function World() {
     const key = e.key.toLowerCase()
     const index = keysDown.indexOf(key)
     if (index === -1) keysDown.push(key)
+
+    if (key === 'r' && !paused) {
+      rotateHeroes()
+    }
   })
   document.addEventListener("keyup", e => {
     const key = e.key.toLowerCase()
@@ -102,7 +107,6 @@ export default function World() {
     alreadyInDoorway = enteredDoorway
   }
 
-  let paused = false
   let lastUpdate
   function update() {
     gametime = gametime || 0
@@ -149,7 +153,7 @@ export default function World() {
     findAllCollisions()
 
     // For admin only
-    if (keysDown.indexOf('y') > -1) {
+    if (keysDown.indexOf('y') > -1 && !paused) {
       room.enemies = []
     }
   }
@@ -164,14 +168,24 @@ export default function World() {
     return state
   }
 
+  let heroIndex = 0
+  let team = []
   const newLevel = (levelTemplate, party) => {
     gametime = null
     lastUpdate = null
     level = levelBuilder.build(levelTemplate, window.CANVASWIDTH, window.CANVASHEIGHT)
-    hero = party[0]
+    hero = party[heroIndex]
+    team = party
     hero.setPos(5, window.CANVASHEIGHT / 2)
     hero.init()
     tailgaters = []
+  }
+
+  const rotateHeroes = () => {
+    heroIndex = (heroIndex + 1) % team.length
+    team[heroIndex].setPos(hero.x(), hero.y())
+    hero = team[heroIndex]
+    hero.init()
   }
 
   this.update = update

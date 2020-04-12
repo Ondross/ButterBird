@@ -19,7 +19,8 @@ export default {
     {text: "Use the arrow keys. Ready?", speaker: 0},
   ],
   'FirstKill': [
-    {text: "Nice! Something strange going on...", speaker: 0},
+    { pause: 500, text: "Nice!", speaker: 0 },
+    { text: "Something strange going on...", speaker: 0 },
   ],
   'YouDied': [
     {text: "Darn... Refresh the page and try again.", speaker: 0},
