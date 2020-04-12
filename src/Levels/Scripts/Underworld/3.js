@@ -8,8 +8,9 @@ export default {
   ],
   'FriendRecruited': [
     { pause: 500, text: "What's going on? I went above ground and saw some wild shit.", speaker: 0 },
-    { text: "Uh... Are you in your right mind <hero>? You remember my name?", speaker: 1, prompt: 'askName', maxLength: 20 },
+    { text: "Above ground? Are you in your right mind <hero>?", speaker: 1 },
     { text: "Yes! I'm being serious.", speaker: 0 },
+    { text: "<hero>... look at me. What's my name?", speaker: 1, prompt: 'askName', maxLength: 20 },
     { text: "Okay. Let's go. We can talk at home.", speaker: 1 },
     { text: "Home is infested with this stuff. Follow me.", speaker: 0 },
   ],

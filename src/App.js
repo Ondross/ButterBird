@@ -6,7 +6,6 @@ import UnderworldComplete from './Underworld/UnderworldComplete'
 import Dialogue from './Dialogue/Dialogue'
 import Underworld1 from './Levels/Underworld/1'
 import Overworld1 from './Levels/Overworld/1'
-import Squid from './Underworld/Objects/Heroes/Squid';
 import Napkin from './Underworld/Objects/Heroes/Napkin';
 
 window.CANVASWIDTH = 50

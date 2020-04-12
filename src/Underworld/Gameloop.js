@@ -4,6 +4,7 @@ import Util from "./Util/Util"
 
 export default function World() {
   let gametime = null // seconds
+  let tailgaters = [] // NPCs that follow you around.
   let gameEvents = {}
   let hero, level, canvas
   const levelBuilder = new LevelBuilder()
@@ -63,6 +64,7 @@ export default function World() {
         if (!alreadyInDoorway) {
           level.enterDoor(door.whichWall)
           hero.enterDoor(door)
+          tailgaters.forEach(tg => tg.enterDoor(door))
         }
         enteredDoorway = true
         alreadyInDoorway = true
@@ -82,13 +84,14 @@ export default function World() {
     })
 
     // NPCs x Hero
-    room.npcs.forEach(npc => {
+    room.npcs.forEach((npc, idx) => {
       if (npc.destroyed) {
         return
       }
       if (Util.checkForOverlap(npc, hero)) {
         gameEvents.recruitNpc = npc
         npc.recruited = true
+        tailgaters.push(room.npcs.splice(idx, 1)[0])
       }
     })
 
@@ -131,6 +134,7 @@ export default function World() {
     )
 
     room.npcs.forEach(npc => npc.update(gametime, delta, paused, canvas, keysDown, []))
+    tailgaters.forEach(npc => npc.update(gametime, delta, paused, canvas, keysDown, []))
     hero.update(gametime, delta, paused, canvas, keysDown, room.walls.concat(Object.values(room.doors)))
     room.enemies.forEach(enemy =>
       enemy.update(gametime, delta, paused, canvas, hero, room.walls.concat(room.enemies), room.graph, room.id)
@@ -163,6 +167,7 @@ export default function World() {
     hero = party[0]
     hero.setPos(5, window.CANVASHEIGHT / 2)
     hero.init()
+    tailgaters = []
   }
 
   this.update = update

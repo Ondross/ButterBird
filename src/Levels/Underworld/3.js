@@ -47,7 +47,7 @@ function Underworld3() {
   }
 
   this.script = script
-  this.name = 'Friend'
+  this.name = 'Find a Friend'
   this.type = 'underworld'
   this.completed = false
 
