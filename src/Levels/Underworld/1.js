@@ -9,6 +9,7 @@ function Underworld1() {
   let enemiesExplained = false
   let firstKill = false
   let died = false
+  let gameOver = false
   let party
 
   this.update = (gamestate, playScene, setUnderWorldComplete) => {
@@ -32,6 +33,10 @@ function Underworld1() {
     if (gamestate.events.dead && !died) {
       playScene(script.YouDied)
       died = true
+    }
+    if (gamestate.events.gameOver && !gameOver) {
+      playScene(script.GameOver)
+      gameOver = true
     }
   }
 

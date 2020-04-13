@@ -115,7 +115,18 @@ export default function World() {
       return
     }
     if (hero.destroyed) {
-      gameEvents.dead = true
+      team.splice(heroIndex, 1)
+      heroIndex = heroIndex % team.length
+      if (team[heroIndex]) {
+        team[heroIndex].setPos(hero.x(), hero.y())
+        hero = team[heroIndex]
+        hero.setInvincible(gametime, 3)
+      }
+      if (team.length < 1) {
+        gameEvents.gameOver = true
+      } else {
+        gameEvents.dead = true
+      }
     }
     const room = level.currentRoom
     if (room.enemies.length === 0) {

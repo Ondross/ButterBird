@@ -23,6 +23,9 @@ export default {
     { text: "Something strange going on...", speaker: 0 },
   ],
   'YouDied': [
-    {text: "Darn... Refresh the page and try again.", speaker: 0},
+    { text: "Ho...ly... Oh god... I guess it's up to me now.", speaker: 0 },
+  ],
+  'GameOver': [
+    {text: "Darn... Refresh the page and try again."},
   ]
 }

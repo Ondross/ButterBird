@@ -23,7 +23,11 @@ export default function Hero(images, sounds, baseStats) {
     this.destroyed = true
   }
 
+  let invincible = false
   const damage = () => {
+    if (invincible) {
+      return
+    }
     this.health -= 1
     if (this.health <= 0) {
       destroy()
@@ -34,6 +38,7 @@ export default function Hero(images, sounds, baseStats) {
   const init = () => {
     blinkStart = -999
     weapon.init()
+    invincibleTimeout = -Infinity
   }
 
   const drawSelf = (gametime, canvas, xv, yv) => {
@@ -72,10 +77,17 @@ export default function Hero(images, sounds, baseStats) {
     )
   }
 
+  let invincibleTimeout = -Infinity
+  const setInvincible = (startTime, duration) => {
+    invincibleTimeout = startTime + duration
+  }
+
   const update = (gametime, dt, paused, canvas, keysDown, obstacles) => {
     if (this.destroyed) {
       return
     }
+    invincible = gametime < invincibleTimeout
+
     if (paused || (this.isNpc && !this.recruited)) {
       weapon.update(gametime, dt, paused, canvas, this.isNpc ? [] : keysDown || [], 0, 0)
 
@@ -180,6 +192,7 @@ export default function Hero(images, sounds, baseStats) {
   this.hitboxWidthOffset = width / 4
   this.width = () => width
   this.height = () => height
+  this.setInvincible = setInvincible
   this.setNpc = (npc) => {
     this.isNpc = npc
   }

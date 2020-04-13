@@ -14,4 +14,10 @@ export default {
     { text: "Okay. Let's go. We can talk at home.", speaker: 1 },
     { text: "Home is infested with this stuff. Follow me.", speaker: 0 },
   ],
+  'YouDied': [
+    { text: "Ho...ly... Oh god... I guess it's up to me now.", speaker: 0 },
+  ],
+  'GameOver': [
+    { text: "Darn... Refresh the page and try again." },
+  ]
 }

@@ -6,6 +6,7 @@ background.src = '/images/backgrounds/space.jpg'
 
 function Underworld3() {
   let died = false
+  let gameOver = false
   let friendEncountered = false
   let party
   let level
@@ -27,6 +28,10 @@ function Underworld3() {
     if (gamestate.events.dead && !died) {
       playScene(script.YouDied)
       died = true
+    }
+    if (gamestate.events.gameOver && !gameOver) {
+      playScene(script.GameOver)
+      gameOver = true
     }
     if (gamestate.level.currentRoom.npcs.length > 0 && !friendEncountered) {
       playScene(editScene(script.FriendEncounter))
@@ -61,7 +66,6 @@ function Underworld3() {
 
   this.prompts = {
     askName: (name) => {
-      console.log(party)
       party[1].name = name
     }
   }

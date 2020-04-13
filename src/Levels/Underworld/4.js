@@ -6,6 +6,7 @@ background.src = '/images/backgrounds/cave.jpg'
 function Underworld4() {
   let introPlayed = false
   let died = false
+  let gameOver = false
   let party
 
   this.update = (gamestate, playScene, setUnderWorldComplete) => {
@@ -21,6 +22,10 @@ function Underworld4() {
     if (gamestate.events.dead && !died) {
       playScene(script.YouDied)
       died = true
+    }
+    if (gamestate.events.gameOver && !gameOver) {
+      playScene(script.GameOver)
+      gameOver = true
     }
   }
 
