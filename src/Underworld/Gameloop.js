@@ -8,6 +8,8 @@ export default function World() {
   let gameEvents = {}
   let hero, level, canvas
   let paused = false
+  let musicPlayer
+  let songPlaying
   const levelBuilder = new LevelBuilder()
 
   const keysDown = [] // ordered array: oldest to newest events
@@ -167,6 +169,16 @@ export default function World() {
     if (keysDown.indexOf('y') > -1 && !paused) {
       room.enemies = []
     }
+
+    if (musicPlayer) {
+      if (room.enemies.length && songPlaying !== 'fight') {
+        musicPlayer.play('fight')
+        songPlaying = 'fight'
+      } else if (!room.enemies.length && songPlaying !== 'calm') {
+        musicPlayer.play('calm')
+        songPlaying = 'calm'
+      }
+    }
   }
 
   function getState() {
@@ -208,6 +220,9 @@ export default function World() {
   }
   this.setScale = (scale) => {
     canvas && canvas.setScale(scale)
+  }
+  this.setMusicPlayer = (player) => {
+    musicPlayer = player
   }
   this.pause = (pause) => {
     paused = pause

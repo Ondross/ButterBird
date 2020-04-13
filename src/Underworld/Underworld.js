@@ -38,13 +38,15 @@ function Underworld(props) {
     return () => {clearTimeout(gameloopTimeout)}
   }, [canvasElement, updateGame])
 
+  useEffect(() => {
+    gameloop.setMusicPlayer(props.musicPlayer)
+  }, [])
+
   if (props.level.type !== 'underworld') {
     return (null)
   }
 
-  return (
-      <canvas ref={canvasElement} />
-  )
+  return <canvas ref={canvasElement} />
 }
 
 export default Underworld;
