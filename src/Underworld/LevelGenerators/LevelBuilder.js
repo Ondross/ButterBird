@@ -18,8 +18,13 @@ function Level(level, maxWidth, maxHeight) {
       Math.floor(Math.random() * (avgEnemies * 2 - minEnemies)) + minEnemies,
       level.parameters.background
     )
-    room.addDoor('E', newRoom)
-    newRoom.addDoor('W', room)
+    if (Math.random() > .5) {
+      room.addDoor('S', newRoom)
+      newRoom.addDoor('N', room)
+    } else {
+      room.addDoor('E', newRoom)
+      newRoom.addDoor('W', room)
+    }
     room = newRoom
     this.rooms.push(room)
   }

@@ -58,16 +58,18 @@ function Room(width, height, background) {
   }
 
   const addDoor = (whichWall, room) => {
-    const locations = {
-      'E': {x: width - .2, y: height / 2},
-      'W': {x: .3, y: height / 2 },
+    const configs = {
+      'E': { x: width - .2, y: height / 2 , width: 1, height: height / 3, src: "/images/obstacles/doors/vertical.png"},
+      'W': { x: .3, y: height / 2 , width: 1, height: height / 3, src: "/images/obstacles/doors/vertical.png"},
+      'S': { x: width / 2, y: height - .2, width: width / 3, height: 1, src: "/images/obstacles/doors/horizontal.png"},
+      'N': { x: width / 2, y: .3, width: width / 3, height: 1, src: "/images/obstacles/doors/horizontal.png"},
     }
-    const location = locations[whichWall]
-    this.doors[whichWall] = new Door("/images/obstacles/doors/vertical.png",
-      location.x,
-      location.y,
-      1,
-      height/3,
+    const config = configs[whichWall]
+    this.doors[whichWall] = new Door(config.src,
+      config.x,
+      config.y,
+      config.width,
+      config.height,
       room,
       whichWall
     )
@@ -149,7 +151,7 @@ function Room(width, height, background) {
     const enemyClass = [Blob, Germ, Squid][Math.floor(Math.random() * 3)]
     const enemy = new enemyClass(
       10 + Math.random() * (width - 12) ,
-      2 + Math.random() * (height - 4))
+      10 + Math.random() * (height - 12))
 
     let nearDoor = false
     Object.values(this.doors).forEach((door) => {

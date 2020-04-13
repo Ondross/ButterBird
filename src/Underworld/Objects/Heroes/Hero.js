@@ -171,10 +171,10 @@ export default function Hero(images, sounds, baseStats) {
       x = door.nextRoom.width - doorOffset
       y = door.nextRoom.height / 2
     } else if (door.whichWall === 'S') {
-      y = door.nextRoom.height - doorOffset
+      y = doorOffset
       x = door.nextRoom.width / 2
     } else if (door.whichWall === 'N') {
-      y = doorOffset
+      y = door.nextRoom.height - doorOffset
       x = door.nextRoom.width / 2
     }
     this.weapon.clearBullets()
