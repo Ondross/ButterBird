@@ -9,7 +9,6 @@ export default function World() {
   let hero, level, canvas
   let paused = false
   let musicPlayer
-  let songPlaying
   const levelBuilder = new LevelBuilder()
 
   const keysDown = [] // ordered array: oldest to newest events
@@ -169,16 +168,6 @@ export default function World() {
     if (keysDown.indexOf('y') > -1 && !paused) {
       room.enemies = []
     }
-
-    if (musicPlayer) {
-      if (room.enemies.length && songPlaying !== 'fight') {
-        musicPlayer.play('fight')
-        songPlaying = 'fight'
-      } else if (!room.enemies.length && songPlaying !== 'calm') {
-        musicPlayer.play('calm')
-        songPlaying = 'calm'
-      }
-    }
   }
 
   function getState() {
@@ -198,17 +187,20 @@ export default function World() {
     lastUpdate = null
     level = levelBuilder.build(levelTemplate, window.CANVASWIDTH, window.CANVASHEIGHT)
     hero = party[heroIndex]
+    party.forEach(h => h.init())
     team = party
     hero.setPos(5, window.CANVASHEIGHT / 2)
-    hero.init()
     tailgaters = []
+
+    if (musicPlayer) {
+      musicPlayer.play('fight')
+    }
   }
 
   const rotateHeroes = () => {
     heroIndex = (heroIndex + 1) % team.length
     team[heroIndex].setPos(hero.x(), hero.y())
     hero = team[heroIndex]
-    hero.init()
   }
 
   this.update = update
@@ -223,6 +215,7 @@ export default function World() {
   }
   this.setMusicPlayer = (player) => {
     musicPlayer = player
+    musicPlayer.play('fight')
   }
   this.pause = (pause) => {
     paused = pause

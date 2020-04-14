@@ -9,6 +9,10 @@ function Overworld(props) {
   // call this everytime we take an action, ie, click on a shop
   useEffect(() => props.level.update(props.playScene))
 
+  useEffect(() => {
+      props.musicPlayer.play('calm')
+  }, [props.musicPlayer])
+
   const update = info => props.level.update(props.playScene, info)
 
   return (

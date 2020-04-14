@@ -13,8 +13,6 @@ export default function MusicPlayer(songs) {
 
   // todo: handle this being called more than once in two seconds
   // todo: make the transition a little smoother. The midpoint has the volumes at 50/50 right now. Not great.
-  const transitionTime = 2000
-  const transitionSteps = 10
   const maxVolume = .6
   const transition = (newSong) => {
     if (!songPlaying) {
@@ -24,16 +22,19 @@ export default function MusicPlayer(songs) {
       return
     }
 
-    newSong.play()
-    songPlaying.volume = Math.max(songPlaying.volume - (1 / transitionSteps), 0)
-    newSong.volume = Math.min(newSong.volume + (1 / transitionSteps), 1)
+    if (newSong.volume > .2) {
+      newSong.play()
+    }
 
-    if (songPlaying.volume === 0) {
+    songPlaying.volume = Math.max(songPlaying.volume / 1.05, 0)
+    newSong.volume = Math.min(Math.max(newSong.volume * 1.05, .05), 1)
+
+    if (songPlaying.volume < .1) {
       songPlaying.pause()
       songPlaying = newSong
     } else {
       clearTimeout(newSongTimeout)
-      newSongTimeout = setTimeout(() => transition(newSong), transitionTime / transitionSteps)
+      newSongTimeout = setTimeout(() => transition(newSong), 60)
     }
 
     // todo: handle when the song ends better than this.
@@ -51,5 +52,15 @@ export default function MusicPlayer(songs) {
     }
   }
 
+  // between .5 and 1
+  const setIntensity = (level) => {
+    if (songPlaying) {
+      songPlaying.volume = level
+      // experimenting with playback rate between 1 and 1.2
+     // songPlaying.playbackRate = level * .4 + .8
+    }
+  }
+
   this.play = play
+  this.setIntensity = setIntensity
 }

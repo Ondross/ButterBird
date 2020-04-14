@@ -53,6 +53,7 @@ function App() {
         party={party}
         setLevel={setLevel}
         paused={!!appState.lines}
+        musicPlayer={musicPlayer}
       />}
       <Dialogue
         done={() => playScene(null)}

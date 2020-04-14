@@ -40,7 +40,7 @@ function Underworld(props) {
 
   useEffect(() => {
     gameloop.setMusicPlayer(props.musicPlayer)
-  }, [])
+  }, [props.musicPlayer])
 
   if (props.level.type !== 'underworld') {
     return (null)
