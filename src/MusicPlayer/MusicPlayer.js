@@ -18,6 +18,7 @@ export default function MusicPlayer(songs) {
     if (!songPlaying) {
       songPlaying = newSong
       songPlaying.volume = maxVolume
+      songPlaying.load()
       songPlaying.play()
       return
     }

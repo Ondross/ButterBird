@@ -193,7 +193,7 @@ export default function World() {
     tailgaters = []
 
     if (musicPlayer) {
-      musicPlayer.play('fight')
+      musicPlayer.play('calm')
     }
   }
 
@@ -215,7 +215,7 @@ export default function World() {
   }
   this.setMusicPlayer = (player) => {
     musicPlayer = player
-    musicPlayer.play('fight')
+    musicPlayer.play('calm')
   }
   this.pause = (pause) => {
     paused = pause

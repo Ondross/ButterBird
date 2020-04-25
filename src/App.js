@@ -16,7 +16,7 @@ window.FPS = 45
 
 const musicPlayer = new MusicPlayer({
   'fight': '/songs/Truth Magnum.mp3',
-  'calm': '/songs/Frequency Necrosis.mp3',
+  'calm': '/songs/explore.mp3',
 })
 const party = [new Napkin()]
 const startingLevel = Underworld1
