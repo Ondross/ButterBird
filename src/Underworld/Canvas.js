@@ -49,7 +49,20 @@ export default function Canvas(canvasElement, game) {
     }
   }
 
+  // For debugging
+  const drawRect = (x, y, width, height) => {
+    const xOffset = (window.CANVASWIDTH - game.getLevel().currentRoom.width) / 2
+    const yOffset = (window.CANVASHEIGHT - game.getLevel().currentRoom.height) / 2
+
+    ctx.fillStyle = "#FF0000";
+    ctx.fillRect(
+      (x + xOffset) * gridScale,
+      (y + yOffset) * gridScale,
+      width * gridScale,
+      height * gridScale)
+  }
+
   this.clear = clear
   this.drawImage = drawImage
-  this.ctx = ctx // for debugging only
+  this.drawRect = drawRect
 }

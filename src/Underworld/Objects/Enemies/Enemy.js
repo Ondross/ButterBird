@@ -119,10 +119,9 @@ export default function Enemy(x, y, images, sounds) {
         }
 
         // // for debugging a-star
-        // canvas.fillStyle = "#FF0000";
-        // canvas.fillRect(result[0].x * window.GRIDSCALE, result[0].y * window.GRIDSCALE, window.GRIDSCALE, window.GRIDSCALE);
+        // console.log(result[0].x, result[0].y, modifiedRoomGraph.grid[result[0].x][result[0].y])
+        // canvas.drawRect(result[0].x, result[0].y, 1, 1)
       }
-
     }
     drawSelf(canvas, gametime)
   }
