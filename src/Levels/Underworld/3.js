@@ -40,7 +40,7 @@ function Underworld3() {
 
   this.parameters = {
     numRooms: 4,
-    averageEnemiesPerRoom: 3,
+    averageEnemiesPerRoom: 2,
     background: background,
     npcs: [new Squid()]
   }

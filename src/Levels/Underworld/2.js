@@ -24,7 +24,7 @@ function Underworld2() {
 
   this.parameters = {
     numRooms: 2,
-    averageEnemiesPerRoom: 3,
+    averageEnemiesPerRoom: 2,
     minimumEnemiesPerRoom: 1,
     background: background,
   }
