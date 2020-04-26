@@ -10,14 +10,14 @@ function Level(level, maxWidth, maxHeight, difficulty) {
 
   let room = this.currentRoom
   for (let i = 0; i < level.parameters.numRooms -1; i++) {
-    // any side with a door should go up against the edge of the screen.
-    // that makes it easier so you can end up outside the walls.
     const minEnemies = level.parameters.minimumEnemiesPerRoom || 0
     const avgEnemies = (level.parameters.averageEnemiesPerRoom || 0) * difficulty
+    const numEnemies = Math.floor(Math.random() * (avgEnemies * 2 - minEnemies)) + minEnemies
+
     const newRoom = RoomBuilder(
       Math.floor(maxWidth / (1 + (Math.random() * .5))),
       Math.floor(maxHeight / (1 + (Math.random() * .5))),
-      Math.floor(Math.random() * (avgEnemies * 2 - minEnemies)) + minEnemies,
+      numEnemies,
       level.parameters.background
     )
     if (Math.random() > .5) {

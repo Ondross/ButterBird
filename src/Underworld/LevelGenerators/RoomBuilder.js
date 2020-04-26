@@ -152,13 +152,18 @@ function Room(width, height, background) {
       10 + Math.random() * (width - 12) ,
       10 + Math.random() * (height - 12))
 
-    let nearDoor = false
+    let overlap = false
     Object.values(this.doors).forEach((door) => {
       if (Util.checkForOverlap(enemy, door)) {
-        nearDoor = true
+        overlap = true
       }
     })
-    if (nearDoor) {
+    Object.values(this.enemies).forEach((otherEnemy) => {
+      if (Util.checkForOverlap(enemy, otherEnemy)) {
+        overlap = true
+      }
+    })
+    if (overlap) {
       return addEnemy()
     }
 
