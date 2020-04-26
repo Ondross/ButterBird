@@ -123,7 +123,7 @@ export default function World() {
         hero = team[heroIndex]
         hero.setInvincible(gametime, 3)
       }
-      if (team.length < 1) {
+      if (team.filter(hero => !hero.isNpc).length < 1) {
         gameEvents.gameOver = true
       } else {
         gameEvents.dead = true
