@@ -1,6 +1,8 @@
 import RoomBuilder from './RoomBuilder'
 
-function Level(level, maxWidth, maxHeight) {
+// Difficulty (int: 1–3) affects number of enemies
+// TODO: health and speed
+function Level(level, maxWidth, maxHeight, difficulty) {
   this.currentRoom = RoomBuilder(maxWidth, maxHeight, 0, level.parameters.background)
   this.currentRoom.visited = true
   this.rooms = [this.currentRoom]
@@ -11,7 +13,7 @@ function Level(level, maxWidth, maxHeight) {
     // any side with a door should go up against the edge of the screen.
     // that makes it easier so you can end up outside the walls.
     const minEnemies = level.parameters.minimumEnemiesPerRoom || 0
-    const avgEnemies = level.parameters.averageEnemiesPerRoom || 0
+    const avgEnemies = (level.parameters.averageEnemiesPerRoom || 0) * difficulty
     const newRoom = RoomBuilder(
       Math.floor(maxWidth / (1 + (Math.random() * .5))),
       Math.floor(maxHeight / (1 + (Math.random() * .5))),
@@ -48,7 +50,7 @@ function Level(level, maxWidth, maxHeight) {
 }
 
 export default function LevelBuilder() {
-  this.build = (level, maxWidth, maxHeight) => {
-    return new Level(level, maxWidth, maxHeight)
+  this.build = (level, maxWidth, maxHeight, difficulty) => {
+    return new Level(level, maxWidth, maxHeight, difficulty)
   }
 }

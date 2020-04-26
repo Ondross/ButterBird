@@ -3,6 +3,7 @@ import './App.css';
 import Overworld from './Overworld/Overworld'
 import Underworld from './Underworld/Underworld'
 import UnderworldComplete from './Underworld/UnderworldComplete'
+import StartScreen from './StartScreen'
 import Dialogue from './Dialogue/Dialogue'
 import Underworld1 from './Levels/Underworld/1'
 import Overworld1 from './Levels/Overworld/1'
@@ -20,10 +21,9 @@ const musicPlayer = new MusicPlayer({
 })
 const party = [new Napkin()]
 const startingLevel = Underworld1
-startingLevel.init(party)
 
 function App() {
-  const [appState, setAppState] = useState({ level: startingLevel })
+  const [appState, setAppState] = useState({ level: {type: "startScreen", nextLevel: () => startingLevel} })
 
   const setLevel = (level) => {
     level.init(party)
@@ -33,7 +33,8 @@ function App() {
     const next = appState.level.nextLevel && appState.level.nextLevel()
     setLevel(next || Overworld1)
   }
-  const playScene = (lines) => setAppState(state => ({...state, lines: lines }))
+  const playScene = (lines) => setAppState(state => ({ ...state, lines: lines }))
+  const setDifficulty = (difficulty) => setAppState(state => ({ ...state, difficulty: difficulty }))
   const underworldComplete = () => appState.showUnderworldComplete || setAppState(state => ({...state, showUnderworldComplete: true }))
 
   return (
@@ -45,6 +46,7 @@ function App() {
         level={appState.level}
         musicPlayer={musicPlayer}
         party={party}
+        difficulty={appState.difficulty}
       />
       <UnderworldComplete finish={nextLevel} show={appState.showUnderworldComplete && !appState.lines} />
       {appState.level.type === 'overworld' && <Overworld
@@ -55,6 +57,7 @@ function App() {
         paused={!!appState.lines}
         musicPlayer={musicPlayer}
       />}
+      {appState.level.type === "startScreen" && <StartScreen start={nextLevel} setDifficulty={setDifficulty} />}
       <Dialogue
         done={() => playScene(null)}
         level={appState.level}

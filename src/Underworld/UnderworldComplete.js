@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import './UnderworldComplete.css';
+import '../Modal.css';
 
 
 function UnderworldComplete(props) {
@@ -17,10 +17,10 @@ function UnderworldComplete(props) {
     return (null)
   }
   return (
-    <div className="underworld-complete-container">
-      <div className="underworld-complete" onClick={props.finish}>
+    <div className="modal-container">
+      <div className="modal" onClick={props.finish}>
         Congratulations!
-        <div className="done-button">next level</div>
+        <div className="modal-button">next level</div>
       </div>   
     </div>
   )

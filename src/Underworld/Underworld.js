@@ -26,9 +26,9 @@ function Underworld(props) {
 
   useEffect(() => {
     if (props.level.type === 'underworld') {
-      gameloop.newLevel(props.level, props.party)
+      gameloop.newLevel(props.level, props.party, props.difficulty)
     }
-  }, [props.level, props.party])
+  }, [props.level, props.party, props.difficulty])
   useEffect(pause, [props.paused])
   useEffect(() => {
     if (canvasElement.current) {

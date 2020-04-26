@@ -182,10 +182,10 @@ export default function World() {
 
   let heroIndex = 0
   let team = []
-  const newLevel = (levelTemplate, party) => {
+  const newLevel = (levelTemplate, party, difficulty) => {
     gametime = null
     lastUpdate = null
-    level = levelBuilder.build(levelTemplate, window.CANVASWIDTH, window.CANVASHEIGHT)
+    level = levelBuilder.build(levelTemplate, window.CANVASWIDTH, window.CANVASHEIGHT, difficulty)
     hero = party[heroIndex]
     party.forEach(h => h.init())
     team = party
@@ -215,7 +215,6 @@ export default function World() {
   }
   this.setMusicPlayer = (player) => {
     musicPlayer = player
-    musicPlayer.play('calm')
   }
   this.pause = (pause) => {
     paused = pause
