@@ -22,10 +22,4 @@ export default {
     { pause: 500, text: "Nice!", speaker: 0 },
     { text: "Something strange going on...", speaker: 0 },
   ],
-  'YouDied': [
-    { text: "Ho...ly... Oh god... I guess it's up to me now.", speaker: 0 },
-  ],
-  'GameOver': [
-    {text: "Darn... Refresh the page and try again."},
-  ]
 }

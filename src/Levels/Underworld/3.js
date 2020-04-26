@@ -1,19 +1,20 @@
 import script from '../Scripts/Underworld/3'
+import Common from './common'
 import Squid from '../../Underworld/Objects/Heroes/Squid'
 
 const background = new Image()
 background.src = '/images/backgrounds/space.jpg'
 
 function Underworld3() {
-  let died = false
-  let gameOver = false
+  const common = new Common()
   let friendEncountered = false
   let party
   let level
   let friendRecruited = false
 
   // todo, abstract some of this into a shared function.
-  this.update = (gamestate, playScene, setUnderWorldComplete, addRecruit) => {
+  this.update = (gamestate, playScene, setUnderWorldComplete) => {
+    common.update(gamestate, playScene)
     level = gamestate.level
     const editScene = (lines) => {
       return lines.map(line => (
@@ -25,14 +26,6 @@ function Underworld3() {
       setUnderWorldComplete(true)
       this.completed = true
     }
-    if (gamestate.events.dead && !died) {
-      playScene(script.YouDied)
-      died = true
-    }
-    if (gamestate.events.gameOver && !gameOver) {
-      playScene(script.GameOver)
-      gameOver = true
-    }
     if (gamestate.level.currentRoom.npcs.length > 0 && !friendEncountered) {
       playScene(editScene(script.FriendEncounter))
       friendEncountered = true
@@ -40,6 +33,7 @@ function Underworld3() {
     if (gamestate.events.recruitNpc && !friendRecruited) {
       playScene(editScene(script.FriendRecruited))
       friendRecruited = true
+      gamestate.events.recruitNpc.isNpc = false
       party.push(gamestate.events.recruitNpc)
     }
   }

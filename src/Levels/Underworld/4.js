@@ -1,15 +1,16 @@
 import script from '../Scripts/Underworld/4'
+import Common from './common'
 
 const background = new Image()
 background.src = '/images/backgrounds/cave.jpg'
 
 function Underworld4() {
+  const common = new Common()
   let introPlayed = false
-  let died = false
-  let gameOver = false
   let party
 
   this.update = (gamestate, playScene, setUnderWorldComplete) => {
+    common.update(gamestate, playScene)
     if (!introPlayed) {
       playScene(script.Intro)
       introPlayed = true
@@ -18,14 +19,6 @@ function Underworld4() {
     if (gamestate.level.rooms.every(room => room.enemies.length === 0 && room.visited)) {
       this.completed = true
       setUnderWorldComplete(true)
-    }
-    if (gamestate.events.dead && !died) {
-      playScene(script.YouDied)
-      died = true
-    }
-    if (gamestate.events.gameOver && !gameOver) {
-      playScene(script.GameOver)
-      gameOver = true
     }
   }
 
