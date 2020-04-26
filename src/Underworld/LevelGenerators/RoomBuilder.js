@@ -1,4 +1,3 @@
-import { Graph } from "../Util/Astar"
 import Wall from '../Objects/Obstacles/Wall'
 import Door from '../Objects/Obstacles/Door'
 import Blob from "../Objects/Enemies/Blob"
@@ -144,7 +143,7 @@ function Room(width, height, background) {
 
     Math.random() > .5 && addWall(Math.round(width / 2), Math.round(height / 2), Math.round(width / 5), 1)
 
-    this.generateGraph()
+    this.enemies.forEach(e => e.updateRoomGrid(this.grid))
   }
 
   const addEnemy = () => {
@@ -188,9 +187,6 @@ function Room(width, height, background) {
   this.npcs = []
   this.backgroundImage = background
   this.grid = EmptyGrid(width, height)
-  this.generateGraph = () => {
-    this.graph = new Graph(this.grid, { diagonal: true })
-  }
 }
 
 export default function RoomBuilder(width, height, numEnemies, background) {

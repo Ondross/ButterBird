@@ -157,7 +157,7 @@ export default function World() {
     tailgaters.forEach(npc => npc.update(gametime, delta, paused, canvas, keysDown, []))
     hero.update(gametime, delta, paused, canvas, keysDown, room.walls.concat(Object.values(room.doors)))
     room.enemies.forEach(enemy =>
-      enemy.update(gametime, delta, paused, canvas, hero, room.walls.concat(room.enemies), room.graph, room.id)
+      enemy.update(gametime, delta, paused, canvas, hero, room.walls.concat(room.enemies), room.id)
     )
     room.walls.forEach(wall => wall.update(canvas))
     Object.values(room.doors).forEach(door => door.update(canvas))

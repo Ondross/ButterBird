@@ -1,13 +1,13 @@
 import Util from "../../Util/Util"
-import {astar} from "../../Util/Astar"
+import {astar, Graph} from "../../Util/Astar"
 
 export default function Enemy(x, y, images, sounds) {  
   const speed = 4 // px / frame
   this.destroyed = false
-  const baseWidth = 1
-  const baseHeight = 1
-  let width = 1
-  let height = 1
+  const baseWidth = 2
+  const baseHeight = 2
+  let width = 2
+  let height = 2
   let health = 2
   this.facing = 'down'
 
@@ -21,9 +21,13 @@ export default function Enemy(x, y, images, sounds) {
     health -= val
     width = baseWidth * (health / 2) * .5 + .5
     height = baseHeight * (health / 2) * .5 + .5
+
     if (health <= 0) {
       destroy()
       return true
+    } else {
+      // We're smaller and can get through smaller passageways now.
+      updateRoomGrid(roomGrid)
     }
   }
 
@@ -41,7 +45,7 @@ export default function Enemy(x, y, images, sounds) {
 
   let lastRoomId = null
   let sameRoomCounter = 0
-  const update = (gametime, dt, paused, canvas, hero, obstacles, worldGraph, roomId) => {
+  const update = (gametime, dt, paused, canvas, hero, obstacles, roomId) => {
     if (this.destroyed) {
       return
     }
@@ -60,17 +64,28 @@ export default function Enemy(x, y, images, sounds) {
     if (sameRoomCounter > window.FPS / 2) {
       const xGridLocation = Math.floor(x)
       const yGridLocation = Math.floor(y)
-      const heroXGridLocation = Math.floor(hero.x())
-      const heroYGridLocation = Math.floor(hero.y())
-      const start = worldGraph.grid[xGridLocation][yGridLocation]
-      const end = worldGraph.grid[heroXGridLocation][heroYGridLocation]
+      const start = modifiedRoomGraph.grid[xGridLocation][yGridLocation]
+
+      // If the hero is against a wall, and we're larger than her,
+      // a-star will rightly tell us there is no path.
+      // Attacking the hero's corners won't work, because we don't know which corner
+      // is up against a wall.
+
+      // That said, the hero still has a trick: she can be on non-integer locations.
+      // To solve this, we give walls a high, but not infinite weight, and hope that the path
+      // planner never tries to send enemies through them.
+
+      const heroXGridLocation = Math.round(hero.x())
+      const heroYGridLocation = Math.round(hero.y())
+
+      const end = modifiedRoomGraph.grid[heroXGridLocation][heroYGridLocation]
       
       let result = []
       try {
-        result = astar.search(worldGraph, start, end)
+        result = astar.search(modifiedRoomGraph, start, end)
       } catch (e) {
         console.error(e)
-        console.log(start, end, worldGraph.grid)
+        console.log(start, end, modifiedRoomGraph.grid)
         console.log(xGridLocation, yGridLocation)
       }
     
@@ -126,6 +141,49 @@ export default function Enemy(x, y, images, sounds) {
     drawSelf(canvas, gametime)
   }
 
+
+  // For a-star to work, this needs to be called when the room is initialized,
+  // as well as anytime walls are created or destroyed
+  let modifiedRoomGraph
+  let roomGrid
+  const updateRoomGrid = (roomGridInfo) => {
+    roomGrid = roomGridInfo
+    const roomGridCopy = JSON.parse(JSON.stringify(roomGrid))
+    // For each cell, determine if we can fit in the space, assuming we are centered on that cell.
+    // Each wall is a -1. Each free space is a 1. We essentially need to inflate the walls a little,
+    // if this enemy is larger than a single cell.
+
+    // For every 2 cells over 1 that the enemy takes up, we need to look 1 cell further out.
+    // Multiplying by -1 ensures that Math.round rounds .5 down.
+    // So if the enemy is 1.0 tall, we don't expand the walls at all. But if the enemy is 1.1 tall
+    // it cannot occupy squares that are adjacent to walls.
+    const heightDistanceToCheck = -1 * Math.round(-1 * height / 2)
+    const widthDistanceToCheck = -1 * Math.round(-1 * width / 2)
+
+    roomGridCopy.forEach((col, x) => {
+      col.forEach((_, y) => {
+
+        if (roomGridCopy[x][y] === 0) {
+          for (let i = (-1 * widthDistanceToCheck); i <= widthDistanceToCheck; i++) {
+            for (let j = (-1 * heightDistanceToCheck); j <= heightDistanceToCheck; j++) {
+              const positiveNumbers = ((x + i) >= 0) && ((y + j) >=0)
+              const inRoom = ((x + i) < roomGridCopy.length) && ((y + j) < col.length)
+              if (positiveNumbers && inRoom && roomGridCopy[x + i][y + j] !== 0) {
+                // True walls are infinite weight.
+                // 999 allows enemies to go toward areas in space near walls where they can't fit
+                // but might need to chase something
+                roomGridCopy[x + i][y + j] = 9999999999999
+              }
+            }
+          }
+        }
+      })
+    })
+
+    modifiedRoomGraph = new Graph(roomGridCopy, { diagonal: true })
+  }
+
+  this.updateRoomGrid = updateRoomGrid
   this.update = update
   this.x = () => x
   this.y = () => y
