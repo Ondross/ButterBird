@@ -198,7 +198,7 @@ export default function World() {
   }
 
   const rotateHeroes = () => {
-    heroIndex = (heroIndex + 1) % team.length
+    heroIndex = (heroIndex + 1) % (team.length - tailgaters.length)
     team[heroIndex].setPos(hero.x(), hero.y())
     hero = team[heroIndex]
   }
